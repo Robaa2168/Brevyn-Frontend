@@ -20,7 +20,7 @@ const AppLayout = () => {
       {!excludedRoutes.includes(location.pathname) && <Navbar />}
       
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="*" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
