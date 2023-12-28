@@ -32,7 +32,7 @@ const Dashboard = () => {
       <div className="lg:flex lg:flex-row p-4 rounded-lg border border-gray-200">
         <Sidebar changeComponent={setActiveComponent} />
         {/* Main content */}
-        <div className="mx-4 mt-8 p-4 rounded-lg border border-gray-200 flex-grow flex flex-col">
+        <div className="mx-4 mt-8  rounded-lg border border-gray-200 flex-grow flex flex-col">
           {/* Render the active component */}
           {componentMap[activeComponent]}
         </div>
