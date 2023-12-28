@@ -29,7 +29,14 @@ const MarketPlace = () => {
 
     return (
         <div className="container mx-auto p-4 bg-white rounded-lg shadow-md">
-            <h2 className="text-lg font-bold mb-4">Market Place</h2>
+             <h2 className="text-lg font-bold mb-2">Market Place</h2>
+        <div className="bg-yellow-100 border border-yellow-400 p-4 rounded-md mb-4">
+         
+        <p className="text-yellow-700 text-xs">
+        Direct deposits may not be available in certain countries. We suggest that users consider obtaining impact points through the Market Place where all sellers are verified and compliant with the rules ensuring a worry-free experience.
+</p>
+
+        </div>
             {offers.map((offer) => (
     <div key={offer.id} className="flex flex-col sm:flex-row items-center justify-between p-4 border border-gray-300 rounded-md space-y-4 sm:space-y-0">
         <div className="flex-grow flex flex-col sm:flex-row items-center sm:space-x-3 mb-3 sm:mb-0">
