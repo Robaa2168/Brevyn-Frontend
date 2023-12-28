@@ -17,8 +17,6 @@ const Signup = () => {
         password: '',
         confirmPassword: '',
         phoneNumber: '',
-        firstName: '',
-        lastName: '',
         imageUrl: [],
     });
 
@@ -99,8 +97,6 @@ const Signup = () => {
                 email: signupData.email,
                 password: signupData.password,
                 phoneNumber: signupData.phoneNumber,
-                firstName: signupData.firstName,
-                lastName: signupData.lastName,
                 profileImage: profileImageUrl,
             };
 
@@ -187,38 +183,6 @@ const Signup = () => {
                                 </div>
                             )}
                         </div>
-
-                        <div className="grid xs:grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-    {/* First Name Input Field */}
-    <div className="mb-2 relative">
-        <label htmlFor="first-name" className="sr-only">First Name</label>
-        <input
-            id="first-name"
-            name="firstName"
-            type="text"
-            required
-            className="text-xs sm:text-sm block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-            placeholder="First Name"
-            value={signupData.firstName}
-            onChange={handleInputChange}
-        />
-    </div>
-
-    {/* Last Name Input Field */}
-    <div className="mb-3 relative">
-        <label htmlFor="last-name" className="sr-only">Last Name</label>
-        <input
-            id="last-name"
-            name="lastName"
-            type="text"
-            required
-            className="text-xs sm:text-sm block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-            placeholder="Last Name"
-            value={signupData.lastName}
-            onChange={handleInputChange}
-        />
-    </div>
-</div>
 
 {/* Email Address Input Field */}
 <div className="mb-3 relative">
