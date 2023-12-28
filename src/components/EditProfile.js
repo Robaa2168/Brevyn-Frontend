@@ -73,7 +73,7 @@ const EditProfile = ({ initialData, onCancel }) => {
     <div className="container mx-auto p-4 sm:p-6 md:p-8 bg-white rounded-lg shadow-md">
       {/* Error Message */}
       {error && (
-        <div className="mb-4 p-4 bg-red-100 border-l-4 border-red-500 text-red-700">
+        <div className="mb-4 p-4 text-xs sm:text-xs  bg-red-100 border-l-4 border-red-500 text-red-700">
           <p>{error}</p>
         </div>
       )}
