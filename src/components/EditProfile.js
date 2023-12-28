@@ -19,7 +19,7 @@ const EditProfile = ({ onSave, onCancel, initialData }) => {
       <form onSubmit={handleSubmit} className="space-y-4 md:grid md:grid-cols-2 md:gap-4">
         {/* Dynamic form fields based on initialData */}
         {Object.entries(formData).map(([key, value]) =>
-          key !== 'profilePictureUrl' && ( // Assuming you're not editing the picture URL here
+          key !== 'profilePictureUrl' && ( 
             <div key={key} className="md:flex md:items-center">
               <label htmlFor={key} className="text-xs sm:text-xs md:text-sm block mb-2 md:mb-0 md:w-1/3">{key}</label>
               <input
