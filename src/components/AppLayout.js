@@ -24,10 +24,10 @@ const AppLayout = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/wallet" element={<WalletDashboard />} />
-        <Route path="/purchase" element={<PurchasePage />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/dashboard"  element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/wallet"  element={<ProtectedRoute><WalletDashboard /></ProtectedRoute>} />
+        <Route path="/purchase"  element={<ProtectedRoute><PurchasePage /></ProtectedRoute>} />
+        <Route path="/chat"  element={<ProtectedRoute><Chat /></ProtectedRoute>} />
       </Routes>
       {!excludedRoutes.includes(location.pathname) && (
           <Footer />
