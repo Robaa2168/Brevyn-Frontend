@@ -191,19 +191,32 @@ const DonationsPreviewPage = () => {
 
 
                                 {/* Outline Action Buttons */}
-                                <div className="mt-4 flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 sm:justify-end">
-                                    <button onClick={handleStatusToggle} disabled={isSubmitting} className="flex text-xs items-center px-3 py-1 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition duration-200 ease-in-out">
-                                        {isSubmitting && action !== '' ? <FaSpinner className="mr-2 animate-spin" /> : linkData?.status === 'active' ? <FaToggleOff className="mr-2" /> : <FaToggleOn className="mr-2" />}
-                                        {isSubmitting && action === 'deactivating' ? 'Deactivating...' : isSubmitting && action === 'activating' ? 'Activating...' : linkData?.status === 'active' ? 'Deactivate' : 'Activate'}
-                                    </button>
-                                    <button onClick={() => navigate(`/link/edit/${linkData._id}`)} disabled={isSubmitting} className="flex  text-xs items-center px-3 py-1 text-green-500 border border-green-500 rounded hover:bg-green-100 transition duration-200 ease-in-out">
-                                        <FaEdit className="mr-2" />Edit
-                                    </button>
-                                    <button onClick={handleDelete} disabled={isSubmitting} className="flex items-center text-xs px-3 py-1 text-red-500 border border-red-500 rounded hover:bg-red-100 transition duration-200 ease-in-out">
-                                        {isSubmitting && action === 'deleting' ? <FaSpinner className="mr-2 animate-spin" /> : <FaTrashAlt className="mr-2" />}
-                                        {isSubmitting && action === 'deleting' ? 'Deleting...' : 'Delete'}
-                                    </button>
-                                </div>
+<div className="mt-4 flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 sm:justify-end">
+    <button
+        onClick={handleStatusToggle}
+        disabled={isSubmitting}
+        className="flex items-center justify-center text-xs px-3 py-1 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition duration-200 ease-in-out"
+    >
+        {isSubmitting && action !== '' ? <FaSpinner className="mr-2 animate-spin" /> : linkData?.status === 'active' ? <FaToggleOff className="mr-2" /> : <FaToggleOn className="mr-2" />}
+        {isSubmitting && action === 'deactivating' ? 'Deactivating...' : isSubmitting && action === 'activating' ? 'Activating...' : linkData?.status === 'active' ? 'Deactivate' : 'Activate'}
+    </button>
+    <button
+        onClick={() => navigate(`/link/edit/${linkData._id}`)}
+        disabled={isSubmitting}
+        className="flex items-center justify-center text-xs px-3 py-1 text-green-500 border border-green-500 rounded hover:bg-green-100 transition duration-200 ease-in-out"
+    >
+        <FaEdit className="mr-2" />Edit
+    </button>
+    <button
+        onClick={handleDelete}
+        disabled={isSubmitting}
+        className="flex items-center justify-center text-xs px-3 py-1 text-red-500 border border-red-500 rounded hover:bg-red-100 transition duration-200 ease-in-out"
+    >
+        {isSubmitting && action === 'deleting' ? <FaSpinner className="mr-2 animate-spin" /> : <FaTrashAlt className="mr-2" />}
+        {isSubmitting && action === 'deleting' ? 'Deleting...' : 'Delete'}
+    </button>
+</div>
+
 
                             </div>
                         ) : (
