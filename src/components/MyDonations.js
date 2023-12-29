@@ -24,6 +24,7 @@ const MyDonations = () => {
                         Authorization: `Bearer ${user.token}`,
                     },
                 });
+                console.log(response.data)
                 setDonationLinks(response.data);
             } catch (error) {
                 console.error("Error fetching donation links: ", error);
@@ -106,7 +107,7 @@ const MyDonations = () => {
                                 {/* Profile Picture and Link Details */}
                                 <div className="w-full md:flex md:items-center md:space-x-4 flex-1 min-w-0 text-center md:text-left">
                                     {/* Profile picture centered on small screens and left-aligned on larger screens */}
-                                    <img src={link.profilePic} alt="Profile" className="w-10 h-10 rounded-full mx-auto md:mx-0" />
+                                    <img src={link.image} alt="Profile" className="w-10 h-10 rounded-full mx-auto md:mx-0" />
                                     {/* Adjustments for text */}
                                     <div className="flex-1 min-w-0">
                                         {/* Title with ellipsis overflow */}

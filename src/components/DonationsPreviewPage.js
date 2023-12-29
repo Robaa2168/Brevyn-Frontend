@@ -7,11 +7,12 @@ import { FaCopy, FaEdit, FaTrashAlt, FaToggleOn, FaToggleOff } from 'react-icons
 import { FaSpinner } from 'react-icons/fa';
 import Lottie from 'lottie-react';
 import loadingAnimation from './lottie/loading.json';
+import Modal from 'react-modal';
 
 
 function truncateURL(url, maxLength) {
     // Define the length for the start and end strings
-    const startChars = 15; 
+    const startChars = 15;
     const endChars = maxLength - startChars; // Reserve the rest for the end
 
     if (url.length <= maxLength) {
@@ -37,6 +38,9 @@ const DonationsPreviewPage = () => {
     const [error, setError] = useState('');
     const [action, setAction] = useState('');
     const [copySuccess, setCopySuccess] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false); // For controlling modal display
+    const [modalType, setModalType] = useState(''); // To distinguish between delete and deactivate
+
 
 
     useEffect(() => {
@@ -73,7 +77,7 @@ const DonationsPreviewPage = () => {
         setAction('deleting');
 
         try {
-            const response = await api.delete(`/delete-link/${linkData.id}`, {
+            const response = await api.delete(`/api/donations/delete-link/${linkData._id}`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },
@@ -81,8 +85,7 @@ const DonationsPreviewPage = () => {
 
             if (response.status === 200) {
                 console.log('Donation link deleted successfully');
-                // Here, instead of redirecting, update UI to reflect deletion
-                setLinkData(null); // Assuming you use null or similar logic when a link is deleted
+                setLinkData(null);
             } else {
                 throw new Error('Failed to delete donation link');
             }
@@ -122,18 +125,38 @@ const DonationsPreviewPage = () => {
     };
 
 
-  
-    
-        const handleCopyClick = async () => {
-            try {
-                await navigator.clipboard.writeText(`https://brevyn.vercel.app/donate/${linkData.uniqueIdentifier}`);
-                setCopySuccess('Copied!');
-                setTimeout(() => setCopySuccess(''), 2000);
-            } catch (err) {
-                setCopySuccess('Failed to copy!');
-            }
-        };
-     
+
+
+    const handleCopyClick = async () => {
+        try {
+            await navigator.clipboard.writeText(`https://brevyn.vercel.app/donate/${linkData.uniqueIdentifier}`);
+            setCopySuccess('Copied!');
+            setTimeout(() => setCopySuccess(''), 2000);
+        } catch (err) {
+            setCopySuccess('Failed to copy!');
+        }
+    };
+
+    const openModal = (type) => {
+        setModalType(type);
+        setIsModalOpen(true);
+    };
+
+    // Close modal function
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setAction("");
+    };
+
+    // Confirm action inside modal
+    const confirmAction = async () => {
+        if (modalType === "delete") {
+            await handleDelete(); // call delete function
+        } else if (modalType === "deactivate") {
+            await handleStatusToggle(); // call deactivate function
+        }
+        closeModal(); // Close the modal after action
+    };
 
     return (
         <div className="bg-emerald-50 min-h-screen pb-20 flex flex-col">
@@ -153,6 +176,11 @@ const DonationsPreviewPage = () => {
                                         {error}
                                     </div>
                                 )}
+                                 <img
+                        src={linkData.image || 'defaultImage.jpg'} // Replace 'defaultImage.jpg' with your default image
+                        alt="Donation"
+                        className="w-full max-w-md mx-auto rounded-lg"
+                    />
                                 <p className="text-md mb-4 text-gray-600 text-center">{linkData.description}</p>
                                 {/* Stats with a subtle background */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-gray-500 bg-emerald-100 p-4 rounded-lg">
@@ -173,49 +201,48 @@ const DonationsPreviewPage = () => {
                                     </div>
                                     <span className="text-xs font-semibold">{`${calculateProgress().toFixed(2)}%`}</span>
                                 </div>
-                               {/* Constructed URL and Copy to Clipboard Section */}
-{/* Constructed URL and Copy to Clipboard Section */}
-<div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
-    <span className="text-xs font-medium shrink-0">Donation Link:</span>
-    <div className="flex bg-gray-100 p-2 rounded items-center">
-        {/* Content fitting div */}
-        <span className="text-xs block overflow-hidden text-ellipsis whitespace-nowrap sm:text-sm">
-            {truncateURL(`https://brevyn.vercel.app/donation/${linkData.uniqueIdentifier}`, 25)}  
-        </span>
-        <button onClick={handleCopyClick} className="ml-2 text-blue-500 hover:text-blue-700 transition duration-200">
-            <FaCopy />
-        </button>
-    </div>
-    {copySuccess && <span className="text-green-500 text-xs">{copySuccess}</span>}
-</div>
+                                {/* Constructed URL and Copy to Clipboard Section */}
+                                <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                                    <span className="text-xs font-medium shrink-0">Donation Link:</span>
+                                    <div className="flex bg-gray-100 p-2 rounded items-center">
+                                        {/* Content fitting div */}
+                                        <span className="text-xs block overflow-hidden text-ellipsis whitespace-nowrap sm:text-sm">
+                                            {truncateURL(`https://brevyn.vercel.app/donation/${linkData.uniqueIdentifier}`, 25)}
+                                        </span>
+                                        <button onClick={handleCopyClick} className="ml-2 text-blue-500 hover:text-blue-700 transition duration-200">
+                                            <FaCopy />
+                                        </button>
+                                    </div>
+                                    {copySuccess && <span className="text-green-500 text-xs">{copySuccess}</span>}
+                                </div>
 
 
                                 {/* Outline Action Buttons */}
-<div className="mt-4 flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 sm:justify-end">
-    <button
-        onClick={handleStatusToggle}
-        disabled={isSubmitting}
-        className="flex items-center justify-center text-xs px-3 py-1 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition duration-200 ease-in-out"
-    >
-        {isSubmitting && action !== '' ? <FaSpinner className="mr-2 animate-spin" /> : linkData?.status === 'active' ? <FaToggleOff className="mr-2" /> : <FaToggleOn className="mr-2" />}
-        {isSubmitting && action === 'deactivating' ? 'Deactivating...' : isSubmitting && action === 'activating' ? 'Activating...' : linkData?.status === 'active' ? 'Deactivate' : 'Activate'}
-    </button>
-    <button
-        onClick={() => navigate(`/link/edit/${linkData._id}`)}
-        disabled={isSubmitting}
-        className="flex items-center justify-center text-xs px-3 py-1 text-green-500 border border-green-500 rounded hover:bg-green-100 transition duration-200 ease-in-out"
-    >
-        <FaEdit className="mr-2" />Edit
-    </button>
-    <button
-        onClick={handleDelete}
-        disabled={isSubmitting}
-        className="flex items-center justify-center text-xs px-3 py-1 text-red-500 border border-red-500 rounded hover:bg-red-100 transition duration-200 ease-in-out"
-    >
-        {isSubmitting && action === 'deleting' ? <FaSpinner className="mr-2 animate-spin" /> : <FaTrashAlt className="mr-2" />}
-        {isSubmitting && action === 'deleting' ? 'Deleting...' : 'Delete'}
-    </button>
-</div>
+                                <div className="mt-4 flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 sm:justify-end">
+                                    <button
+                                        onClick={() => openModal("deactivate")}
+                                        disabled={isSubmitting}
+                                        className="flex items-center justify-center text-xs px-3 py-1 text-blue-500 border border-blue-500 rounded hover:bg-blue-100 transition duration-200 ease-in-out"
+                                    >
+                                        {isSubmitting && action !== '' ? <FaSpinner className="mr-2 animate-spin" /> : linkData?.status === 'active' ? <FaToggleOff className="mr-2" /> : <FaToggleOn className="mr-2" />}
+                                        {isSubmitting && action === 'deactivating' ? 'Deactivating...' : isSubmitting && action === 'activating' ? 'Activating...' : linkData?.status === 'active' ? 'Deactivate' : 'Activate'}
+                                    </button>
+                                    <button
+                                        onClick={() => navigate(`/link/edit/${linkData._id}`)}
+                                        disabled={isSubmitting}
+                                        className="flex items-center justify-center text-xs px-3 py-1 text-green-500 border border-green-500 rounded hover:bg-green-100 transition duration-200 ease-in-out"
+                                    >
+                                        <FaEdit className="mr-2" />Edit
+                                    </button>
+                                    <button
+                                        onClick={() => openModal("delete")}
+                                        disabled={isSubmitting}
+                                        className="flex items-center justify-center text-xs px-3 py-1 text-red-500 border border-red-500 rounded hover:bg-red-100 transition duration-200 ease-in-out"
+                                    >
+                                        {isSubmitting && action === 'deleting' ? <FaSpinner className="mr-2 animate-spin" /> : <FaTrashAlt className="mr-2" />}
+                                        {isSubmitting && action === 'deleting' ? 'Deleting...' : 'Delete'}
+                                    </button>
+                                </div>
 
 
                             </div>
@@ -225,9 +252,54 @@ const DonationsPreviewPage = () => {
                             </div>
                         )}
                     </div>
+                    <Modal
+    isOpen={isModalOpen}
+    onRequestClose={closeModal}
+    className="fixed inset-0 overflow-y-auto" // Ensures modal is fixed and centered
+>
+    <div className="flex items-center justify-center min-h-screen text-center sm:block sm:p-0">
+        {/* Background overlay */}
+        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        
+        {/* Modal content */}
+        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full mx-4 md:mx-8 p-4 border border-gray-300 bg-gray-50">
+           
+<div style={{ textAlign: 'center' }}>
+    <h2 style={{ color: '#50c878' }}>
+        {
+            modalType === "delete" ? 
+            "Are you sure you want to delete this donation link?" : 
+            `Are you sure you want to ${linkData?.status === "active" ? "deactivate" : "activate"} this donation link?`
+        }
+    </h2>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
+        {isSubmitting && (
+            <>
+                <FaSpinner className="animate-spin" style={{ marginRight: '10px' }} />
+                {
+                    modalType === "deactivate" ? 
+                    <span>{linkData?.status === "active" ? "Deactivating..." : "Activating..."}</span> :
+                    modalType === "delete" &&
+                    <span style={{ color: 'red' }}>Deleting...</span> // Deleting... in red
+                }
+            </>
+        )}
+    </div>
+    <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+        <button onClick={confirmAction} style={{ backgroundColor: '#50c878', color: 'white', padding: '10px 20px', borderRadius: '5px', border: 'none', cursor: 'pointer' }}>Yes</button>
+        <button onClick={closeModal} style={{ backgroundColor: '#c4c4c4', color: 'white', padding: '10px 20px', borderRadius: '5px', border: 'none', cursor: 'pointer' }}>No</button>
+    </div>
+</div>
+</div>
+</div>
+
+</Modal>
+
+                </div>
                 </div>
             </div>
-        </div>
     );
 };
 
