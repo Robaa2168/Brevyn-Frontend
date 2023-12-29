@@ -10,6 +10,8 @@ import ProtectedRoute from './ProtectedRoute';
 import WalletDashboard from './wallet/WalletDashboard';
 import PurchasePage from './wallet/PurchasePage';
 import Chat from './wallet/Chat';
+import DonationsPreviewPage from './DonationsPreviewPage';
+import EditDonationLink from './EditDonationLink';
 
 const AppLayout = () => {
   const location = useLocation();
@@ -28,6 +30,8 @@ const AppLayout = () => {
         <Route path="/wallet"  element={<ProtectedRoute><WalletDashboard /></ProtectedRoute>} />
         <Route path="/purchase"  element={<ProtectedRoute><PurchasePage /></ProtectedRoute>} />
         <Route path="/chat"  element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+        <Route path="/donation-link/:id"  element={<ProtectedRoute><DonationsPreviewPage /></ProtectedRoute>} />
+        <Route path="/link/edit/:id"  element={<ProtectedRoute><EditDonationLink /></ProtectedRoute>} />
       </Routes>
       {!excludedRoutes.includes(location.pathname) && (
           <Footer />
