@@ -11,7 +11,7 @@ import loadingAnimation from './lottie/loading.json';
 
 function truncateURL(url, maxLength) {
     // Define the length for the start and end strings
-    const startChars = 12; // Length of "https://"
+    const startChars = 15; 
     const endChars = maxLength - startChars; // Reserve the rest for the end
 
     if (url.length <= maxLength) {
