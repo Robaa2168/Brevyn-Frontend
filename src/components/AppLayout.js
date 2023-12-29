@@ -16,11 +16,16 @@ import EditDonationLink from './EditDonationLink';
 
 const AppLayout = () => {
   const location = useLocation();
-  const excludedRoutes = ['/login', '/signup', '/KYC', '/verify', '/forgot-password', '/verify_forgot', '/create_password'];
+  const excludedRoutes = ['/login', '/signup', '/KYC', '/donate/*', '/forgot-password', '/verify_forgot', '/create_password'];
+  const dynamicRoutesToExclude = ['/donate', '/donation-link'];
+
+  const isExcludedRoute = excludedRoutes.includes(location.pathname) ||
+  dynamicRoutesToExclude.some(route => location.pathname.startsWith(route));
+
 
   return (
     <>
-      {!excludedRoutes.includes(location.pathname) && <Navbar />}
+      {!isExcludedRoute && <Navbar />}
       
       <Routes>
         <Route path="*" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
@@ -35,9 +40,7 @@ const AppLayout = () => {
         <Route path="/donation-link/:id"  element={<ProtectedRoute><DonationsPreviewPage /></ProtectedRoute>} />
         <Route path="/link/edit/:id"  element={<ProtectedRoute><EditDonationLink /></ProtectedRoute>} />
       </Routes>
-      {!excludedRoutes.includes(location.pathname) && (
-          <Footer />
-        )}
+      {!isExcludedRoute && <Footer />}
     </>
   );
 };

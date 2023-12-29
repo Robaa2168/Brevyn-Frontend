@@ -46,6 +46,29 @@ const DonationPage = () => {
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    const fetchDataAndIncrementViews = async () => {
+      try {
+        // First fetch the link data
+        const response = await api.get(`/api/donations/donate/${linkId}`);
+        setLinkData(response.data);
+  
+        // After successful fetch, increment the view count
+        await api.post(`/api/donations/view/${linkId}`);
+        console.log('View count incremented');
+      } catch (error) {
+        console.error("Error in operations: ", error);
+        // Handle error here
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchDataAndIncrementViews();
+  }, [linkId]);
+  
+
+
   const calculateProgress = () => {
     if (linkData) {
       const progress = (linkData.totalDonations / linkData.targetAmount) * 100;
@@ -62,20 +85,7 @@ const DonationPage = () => {
     }));
   };
 
-  useEffect(() => {
-    const fetchLinkData = async () => {
-      try {
-        const response = await api.get(`/api/donations/donate/${linkId}`);
-        setLinkData(response.data);
-      } catch (error) {
-        console.error("Error fetching donation link: ", error);
-        // Handle error here
-      }
-      setIsLoading(false);
-    };
 
-    fetchLinkData();
-  }, [linkId]);
 
   const handleDonateClick = () => {
     setIsDonating(!isDonating); // Toggle donation form view
