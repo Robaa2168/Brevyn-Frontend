@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Lottie from "lottie-react";
 import cryingEmoji from "./lottie/crying-emoji.json";
 import emptyAnimation from "./lottie/noLinks.json";
+import loadingAnimation from './lottie/loading.json'; 
 import api from '../api'; // update this path to your api configuration
 import { useUser } from './context'; 
 
@@ -50,6 +51,11 @@ const MyDonations = () => {
     const viewDonationLink = (linkId) => {
        navigate(`/donation-link/${linkId}`);
     };
+
+        // Truncate function
+        const truncate = (text, length) => {
+            return text.length > length ? `${text.substring(0, length)}...` : text;
+        };
     
     return (
         <div className="container mx-auto p-4 bg-white rounded-lg shadow">
@@ -100,7 +106,9 @@ const MyDonations = () => {
 
                     {/* Donation Links List */}
                     {isLoading ? (
-                        <div>Loading...</div>
+                           <div className="flex justify-center items-center py-4">
+                           <Lottie animationData={loadingAnimation} style={{ width: 100, height: 100 }} />
+                       </div>
                     ) : donationLinks.length > 0 ? (
                         donationLinks.map((link, index) => (
                             <div key={index} className="flex flex-col md:flex-row items-center justify-between p-4 border rounded-lg mb-2 shadow space-y-4 md:space-y-0">
@@ -110,11 +118,9 @@ const MyDonations = () => {
                                     <img src={link.image} alt="Profile" className="w-10 h-10 rounded-full mx-auto md:mx-0" />
                                     {/* Adjustments for text */}
                                     <div className="flex-1 min-w-0">
-                                        {/* Title with ellipsis overflow */}
-                                        <h4 className="font-semibold text-sm sm:text-base truncate">{link.title}</h4>
-                                        {/* Description with ellipsis overflow (if needed) */}
-                                        <p className="text-xs sm:text-sm text-gray-500 truncate">{link.description}</p>
-                                    </div>
+                                    <h4 className="font-semibold text-sm sm:text-base truncate">{truncate(link.title, 50)}</h4>
+                                    <p className="text-xs sm:text-sm text-gray-500 truncate w-full max-w-full">{truncate(link.description, 100)}</p>
+                                </div>
                                 </div>
 
                                 {/* Status and Action */}

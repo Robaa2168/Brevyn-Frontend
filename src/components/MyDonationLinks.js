@@ -18,10 +18,10 @@ const MyDonationLinks = () => {
         <div className="container mx-auto p-4">
             <h2 className="text-lg font-bold mb-4 text-emerald-700">My Donation Links</h2>
             <div className="space-y-4">
-                {links.map(link => (
+                {links.map((link) => (
                     <div key={link.id} className="p-4 border border-emerald-500 rounded">
                         <h3 className="text-md font-semibold">{link.title}</h3>
-                        <p className="mb-2">{link.description}</p>
+                        <p className="mb-2 description">{link.description}</p>
                         <span className={`inline-block px-3 py-1 rounded-full text-sm font-semibold text-white ${link.status === 'active' ? 'bg-emerald-500' : 'bg-gray-500'}`}>
                             {link.status}
                         </span>
@@ -38,3 +38,4 @@ const MyDonationLinks = () => {
 };
 
 export default MyDonationLinks;
+

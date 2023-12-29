@@ -85,7 +85,8 @@ const DonationsPreviewPage = () => {
 
             if (response.status === 200) {
                 console.log('Donation link deleted successfully');
-                setLinkData(null);
+                // Navigate back after successful deletion
+                navigate(-1);
             } else {
                 throw new Error('Failed to delete donation link');
             }
@@ -96,6 +97,7 @@ const DonationsPreviewPage = () => {
             setIsSubmitting(false);
         }
     };
+
 
     const handleStatusToggle = async () => {
         setIsSubmitting(true);
@@ -176,11 +178,15 @@ const DonationsPreviewPage = () => {
                                         {error}
                                     </div>
                                 )}
-                                 <img
-                        src={linkData.image || 'defaultImage.jpg'} // Replace 'defaultImage.jpg' with your default image
-                        alt="Donation"
-                        className="w-full max-w-md mx-auto rounded-lg"
-                    />
+                                <div className="flex justify-center py-4">
+                                    <img
+                                        src={linkData.image || 'defaultImage.jpg'}
+                                        alt="Donation"
+                                        className="max-w-md max-h-60 w-full object-cover rounded-lg shadow-lg"
+                                        style={{ minHeight: '30vh' }} // Use viewport height for responsive design
+                                    />
+                                </div>
+
                                 <p className="text-md mb-4 text-gray-600 text-center">{linkData.description}</p>
                                 {/* Stats with a subtle background */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-gray-500 bg-emerald-100 p-4 rounded-lg">
@@ -207,7 +213,7 @@ const DonationsPreviewPage = () => {
                                     <div className="flex bg-gray-100 p-2 rounded items-center">
                                         {/* Content fitting div */}
                                         <span className="text-xs block overflow-hidden text-ellipsis whitespace-nowrap sm:text-sm">
-                                            {truncateURL(`https://brevyn.vercel.app/donation/${linkData.uniqueIdentifier}`, 25)}
+                                            {truncateURL(`https://brevyn.vercel.app/donation/${linkData.uniqueIdentifier}`, 22)}
                                         </span>
                                         <button onClick={handleCopyClick} className="ml-2 text-blue-500 hover:text-blue-700 transition duration-200">
                                             <FaCopy />
@@ -253,53 +259,53 @@ const DonationsPreviewPage = () => {
                         )}
                     </div>
                     <Modal
-    isOpen={isModalOpen}
-    onRequestClose={closeModal}
-    className="fixed inset-0 overflow-y-auto" // Ensures modal is fixed and centered
->
-    <div className="flex items-center justify-center min-h-screen text-center sm:block sm:p-0">
-        {/* Background overlay */}
-        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-        </div>
-        
-        {/* Modal content */}
-        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full mx-4 md:mx-8 p-4 border border-gray-300 bg-gray-50">
-           
-<div style={{ textAlign: 'center' }}>
-    <h2 style={{ color: '#50c878' }}>
-        {
-            modalType === "delete" ? 
-            "Are you sure you want to delete this donation link?" : 
-            `Are you sure you want to ${linkData?.status === "active" ? "deactivate" : "activate"} this donation link?`
-        }
-    </h2>
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
-        {isSubmitting && (
-            <>
-                <FaSpinner className="animate-spin" style={{ marginRight: '10px' }} />
-                {
-                    modalType === "deactivate" ? 
-                    <span>{linkData?.status === "active" ? "Deactivating..." : "Activating..."}</span> :
-                    modalType === "delete" &&
-                    <span style={{ color: 'red' }}>Deleting...</span> // Deleting... in red
-                }
-            </>
-        )}
-    </div>
-    <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-        <button onClick={confirmAction} style={{ backgroundColor: '#50c878', color: 'white', padding: '10px 20px', borderRadius: '5px', border: 'none', cursor: 'pointer' }}>Yes</button>
-        <button onClick={closeModal} style={{ backgroundColor: '#c4c4c4', color: 'white', padding: '10px 20px', borderRadius: '5px', border: 'none', cursor: 'pointer' }}>No</button>
-    </div>
-</div>
-</div>
-</div>
+                        isOpen={isModalOpen}
+                        onRequestClose={closeModal}
+                        className="fixed inset-0 overflow-y-auto" // Ensures modal is fixed and centered
+                    >
+                        <div className="flex items-center justify-center min-h-screen text-center sm:block sm:p-0">
+                            {/* Background overlay */}
+                            <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                            </div>
 
-</Modal>
+                            {/* Modal content */}
+                            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full mx-4 md:mx-8 p-4 border border-gray-300 bg-gray-50">
 
-                </div>
+                                <div style={{ textAlign: 'center' }}>
+                                    <h2 style={{ color: '#50c878' }}>
+                                        {
+                                            modalType === "delete" ?
+                                                "Are you sure you want to delete this donation link?" :
+                                                `Are you sure you want to ${linkData?.status === "active" ? "deactivate" : "activate"} this donation link?`
+                                        }
+                                    </h2>
+                                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
+                                        {isSubmitting && (
+                                            <>
+                                                <FaSpinner className="animate-spin" style={{ marginRight: '10px' }} />
+                                                {
+                                                    modalType === "deactivate" ?
+                                                        <span>{linkData?.status === "active" ? "Deactivating..." : "Activating..."}</span> :
+                                                        modalType === "delete" &&
+                                                        <span style={{ color: 'red' }}>Deleting...</span> // Deleting... in red
+                                                }
+                                            </>
+                                        )}
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+                                        <button onClick={confirmAction} style={{ backgroundColor: '#50c878', color: 'white', padding: '10px 20px', borderRadius: '5px', border: 'none', cursor: 'pointer' }}>Yes</button>
+                                        <button onClick={closeModal} style={{ backgroundColor: '#c4c4c4', color: 'white', padding: '10px 20px', borderRadius: '5px', border: 'none', cursor: 'pointer' }}>No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </Modal>
+
                 </div>
             </div>
+        </div>
     );
 };
 
