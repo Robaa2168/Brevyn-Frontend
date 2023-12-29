@@ -7,6 +7,7 @@ import Lottie from "lottie-react";
 import successAnimation from "./lottie/success-animation.json";
 import successConfetti from './lottie/success-confetti.json';
 import { useUser } from './context';
+import { Helmet } from 'react-helmet';
 
 
 function truncateURL(url, maxLength) {
@@ -148,6 +149,25 @@ const DonationPage = () => {
 
   return (
     <div className="min-h-screen bg-emerald-50 flex flex-col items-center justify-center py-12">
+      <Helmet>
+        <title>{`Donate to ${linkData?.title}`}</title>
+        <meta name="description" content={`Help support ${linkData?.title} by donating. Every bit helps!`} />
+        
+        {/* Standard meta tags */}
+        <meta property="og:url" content={`https://brevyn.vercel.app/donation/${linkData?.uniqueIdentifier}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`Donate to ${linkData?.title}`} />
+        <meta property="og:description" content={`Help support ${linkData?.title} by donating. Every bit helps!`} />
+        <meta property="og:image" content={linkData?.image || 'defaultImage.jpg'} />
+
+        {/* Twitter meta tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`Donate to ${linkData?.title}`} />
+        <meta name="twitter:description" content={`Help support ${linkData?.title} by donating. Every bit helps!`} />
+        <meta name="twitter:image" content={linkData?.image || 'defaultImage.jpg'} />
+
+        {/* Add additional meta tags for other platforms if necessary */}
+      </Helmet>
       {isLoading ? (
         <div className="text-center">
           <FaSpinner className="animate-spin text-emerald-500 text-4xl" />
