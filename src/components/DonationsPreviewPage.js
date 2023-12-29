@@ -180,7 +180,7 @@ const DonationsPreviewPage = () => {
     <div className="flex bg-gray-100 p-2 rounded items-center">
         {/* Content fitting div */}
         <span className="text-xs block overflow-hidden text-ellipsis whitespace-nowrap sm:text-sm">
-            {truncateURL(`https://brevyn.vercel.app/donation/${linkData.uniqueIdentifier}`, 20)}  
+            {truncateURL(`https://brevyn.vercel.app/donation/${linkData.uniqueIdentifier}`, 25)}  
         </span>
         <button onClick={handleCopyClick} className="ml-2 text-blue-500 hover:text-blue-700 transition duration-200">
             <FaCopy />
