@@ -29,14 +29,16 @@ const Hero = () => {
     >
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
       <div className="relative h-full flex flex-col justify-center items-center text-white px-4 sm:px-6 lg:px-8">
-        <motion.h1
-          variants={animationVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-center"
-        >
-          Making a Difference Together
-        </motion.h1>
+      <motion.h1
+  variants={animationVariants}
+  initial="hidden"
+  animate={inView ? "visible" : "hidden"}
+  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-center"
+  style={{ fontFamily: '"Dancing Script", cursive' }} // inline style for custom font
+>
+  Making a Difference Together
+</motion.h1>
+
         <motion.p
           variants={animationVariants}
           initial="hidden"

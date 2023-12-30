@@ -1,10 +1,13 @@
 // components/CommentModal.js
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import { FaSpinner, FaHeart } from 'react-icons/fa';
 import api from '../api'; // Ensure API is set up to handle requests
 import { useUser } from "./context";
 import { formatDistanceToNow } from 'date-fns';
+import { FaPaperPlane, FaPaperclip } from 'react-icons/fa';
+
+
 
 const CommentModal = ({ onClose, comments, impactId, impactTitle, isLoading }) => {
     const navigate = useNavigate(); // Hook for navigation
@@ -45,20 +48,14 @@ const CommentModal = ({ onClose, comments, impactId, impactTitle, isLoading }) =
             setIsSubmitting(false); // End submission process
         }
     };
-
     const handleReaction = async (commentId) => {
-        console.log("Handling reaction for comment:", commentId);
-        console.log("Current Comments Data:", commentsData);
         if (!user || !user.token) {
             navigate('/login');
             return;
         }
-    
-        // Capture the current state before making any changes
-        const currentComments = commentsData.slice();
-    
+
         // Optimistically update UI for immediate feedback
-        const updatedComments = commentsData.map(comment => {
+        const optimisticUpdatedComments = commentsData.map(comment => {
             if (comment._id === commentId) {
                 const isLiked = comment.likedByCurrentUser;
                 return {
@@ -69,22 +66,23 @@ const CommentModal = ({ onClose, comments, impactId, impactTitle, isLoading }) =
             }
             return comment;
         });
-        console.log("Optimistically updated comments:", updatedComments);
-        setCommentsData(updatedComments);
-    
+
+        setCommentsData(optimisticUpdatedComments);
+
         try {
             // Make API call to toggle the like status
             const response = await api.patch(`/api/comments/${commentId}/likes`, {}, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
-    
+
             // Update comment data with response from the server
-            setCommentsData(commentsData.map(comment => {
+            setCommentsData(optimisticUpdatedComments.map(comment => {
                 if (comment._id === commentId) {
+                    // Ensure we use the server's response to set the final state
                     return {
                         ...comment,
-                        likes: response.data.likes, // Update likes from server
-                        likedByCurrentUser: response.data.likedByCurrentUser, // Ensure server response property name matches
+                        likes: response.data.likes, // Use server's likes count
+                        likedByCurrentUser: response.data.userHasLiked, // Use server's liked status
                     };
                 }
                 return comment;
@@ -92,10 +90,10 @@ const CommentModal = ({ onClose, comments, impactId, impactTitle, isLoading }) =
         } catch (error) {
             console.error("Error toggling like for comment: ", error);
             // Revert optimistic update if necessary by restoring the previous state
-            setCommentsData(currentComments);
+            setCommentsData(optimisticUpdatedComments); // revert back to what was before the optimistic update
         }
     };
-    
+
 
 
     return (
@@ -142,8 +140,8 @@ const CommentModal = ({ onClose, comments, impactId, impactTitle, isLoading }) =
                             </div>
                         ) : comments.length > 0 ? (
 
-                            comments.map((comment, index) => (
-                                <div key={index} className="mb-3 border-b border-gray-200 pb-2">
+                            commentsData.map((comment) => (
+                                <div key={comment._id} className="mb-3 border-b border-gray-200 pb-2">
                                     {/* Comment Content */}
                                     <div className="flex space-x-2">
                                         {/* User Avatar */}
@@ -174,7 +172,6 @@ const CommentModal = ({ onClose, comments, impactId, impactTitle, isLoading }) =
                                             </button>
                                             <div className="text-gray-500 ml-2">{comment.likes}</div>
                                         </div>
-
                                     </div>
                                 </div>
                             ))
@@ -186,23 +183,31 @@ const CommentModal = ({ onClose, comments, impactId, impactTitle, isLoading }) =
                     </div>
 
                     {/* Comment Input */}
-                    <div className="px-4 py-3 bg-gray-50 border-t border-gray-200">
-                        <textarea
-                            className="w-full p-2 border border-gray-300 rounded resize-none focus:ring-emerald-200 focus:border-emerald-500"
-                            rows="3"
+                    <div className="flex items-center space-x-2 px-4 py-3 bg-gray-50 border-t border-gray-200">
+                        <FaPaperclip className="text-gray-500 cursor-pointer hidden sm:block" />
+                        <input
+                            type="text"
                             value={newComment}
                             onChange={handleCommentChange}
-                            placeholder="Add a comment..."
-                            disabled={isLoading}  // Disable input when loading
-                        ></textarea>
+                            placeholder="Type a message..."
+                            className="flex-1 p-2 border border-emerald-300 rounded-lg focus:outline-none focus:border-emerald-500 text-sm sm:text-base"
+                        />
                         <button
-                            className="mt-2 px-4 py-2 bg-emerald-500 text-white rounded hover:bg-emerald-600 focus:ring-2 focus:ring-emerald-600 focus:ring-opacity-50"
+                            type="submit"
                             onClick={handleCommentSubmit}
-                            disabled={isSubmitting || isLoading}
+                            className="bg-emerald-500 text-white p-2 rounded-lg focus:outline-none hover:bg-emerald-600"
+                            disabled={isSubmitting} // Disable the button while submitting
                         >
-                            {isSubmitting ? 'Submitting...' : 'Submit'}
+                            {isSubmitting ? (
+                                <FaSpinner className="animate-spin text-sm sm:text-base" />
+                            ) : (
+                                <FaPaperPlane className="text-sm sm:text-base" />
+                            )}
                         </button>
+
                     </div>
+
+
                 </div>
             </div>
         </div>

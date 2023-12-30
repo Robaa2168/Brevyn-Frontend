@@ -9,12 +9,11 @@ import { useUser } from './context';
 import CommentModal from './CommentModal';
 
 
-function Impact({ _id, imageUrl, title, description, impressions, likes, comments, shares, userHasLiked }) {
+function Impact({ _id, imageUrl, title, description, impressions, likes, comments, commentCount, userHasLiked }) {
     const { user } = useUser();
     const navigate = useNavigate();
     const [likesCount, setLikesCount] = useState(likes);
     const [hasLiked, setHasLiked] = useState(userHasLiked);
-    const [commentCount, setCommentCount] = useState(comments);
     const [impressionCount, setImpressionCount] = useState(impressions);
     const [showComments, setShowComments] = useState(false);
     const [commentsData, setCommentsData] = useState([]);
@@ -55,29 +54,27 @@ function Impact({ _id, imageUrl, title, description, impressions, likes, comment
         fetchComments();
     }, [showComments, _id]);
 
+
     const handleLike = async () => {
         if (!user || !user.token) {
             navigate('/login');
             return;
         }
-
+    
+        // Optimistically update the UI
         const newLikeStatus = !hasLiked;
         setHasLiked(newLikeStatus);
         setLikesCount((prev) => (newLikeStatus ? prev + 1 : prev - 1));
-
+    
         try {
+            // Make API call to toggle the like status
             const response = await api.patch(`/api/impacts/${_id}/likes`, {}, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
-
-            // Check if 'likes' and 'userHasLiked' are present in the response
-            if (typeof response.data.likes === 'number' && typeof response.data.userHasLiked === 'boolean') {
-                setLikesCount(response.data.likes);
-                setHasLiked(response.data.userHasLiked); // Update based on the actual status from the server
-            } else {
-                // Handle unexpected response structure
-                throw new Error("Invalid response structure from server.");
-            }
+    
+            // Update state based on the server's response
+            setLikesCount(response.data.likes);
+            setHasLiked(response.data.userHasLiked);
         } catch (error) {
             console.error("Error toggling like: ", error);
             // Revert to the previous state if there's an error
@@ -85,7 +82,7 @@ function Impact({ _id, imageUrl, title, description, impressions, likes, comment
             setLikesCount((prev) => (!newLikeStatus ? prev + 1 : prev - 1));
         }
     };
-
+    
 
     const handleimpressionCount = () => {
         // Implement comment functionality here
@@ -105,10 +102,11 @@ function Impact({ _id, imageUrl, title, description, impressions, likes, comment
                 <p className="text-gray-600 mb-4 truncate">{description}</p>
 
                 <div className="flex space-x-4 justify-end">
-                    <button className="flex items-center space-x-1" onClick={handleLike} aria-label="Like">
-                        {hasLiked ? <FiHeart className="text-red-500" /> : <IoHeartOutline className="text-gray-500" />}
-                        <span>{likesCount}</span>
-                    </button>
+                <button className="flex items-center space-x-1" onClick={handleLike} aria-label="Like">
+    {hasLiked ? <FiHeart className="text-red-500" /> : <IoHeartOutline className="text-gray-500" />}
+    <span>{likesCount}</span>
+</button>
+
                     <button className="flex items-center space-x-1" onClick={handleOpenComments} aria-label="Comments">
                         <FiMessageCircle className="text-gray-500" />
                         <span>{commentCount}</span>

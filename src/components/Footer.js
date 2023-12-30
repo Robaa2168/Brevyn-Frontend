@@ -38,7 +38,7 @@ const Footer = () => {
         <div className="footer-container bg-white shadow-md p-4 fixed bottom-0 inset-x-0 mt-10 md:hidden">
             <div className="footer-icons flex justify-around">
                 {/* Home Icon */}
-                <div className="icon home-icon text-emerald-500" onClick={() => navigate('/dashboard')}>
+                <div className="icon home-icon text-emerald-500" onClick={() => navigate('/home')}>
                     <FaHome size={20} />
                 </div>
 
