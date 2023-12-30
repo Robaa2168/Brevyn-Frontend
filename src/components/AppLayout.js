@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Login from './auth/Login';
+import Home from './Home';
 import Signup from './auth/Signup';
 import Profile from './Profile';
 import Dashboard from './dashboard';
@@ -13,6 +14,7 @@ import Chat from './wallet/Chat';
 import Donations from './Donations';
 import DonationsPreviewPage from './DonationsPreviewPage';
 import EditDonationLink from './EditDonationLink';
+import CreateImpact from './CreateImpact';
 
 const AppLayout = () => {
   const location = useLocation();
@@ -29,6 +31,7 @@ const AppLayout = () => {
       
       <Routes>
         <Route path="*" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
@@ -39,6 +42,7 @@ const AppLayout = () => {
         <Route path="/donate/:uniqueIdentifier" element={<Donations />} />
         <Route path="/donation-link/:id"  element={<ProtectedRoute><DonationsPreviewPage /></ProtectedRoute>} />
         <Route path="/link/edit/:id"  element={<ProtectedRoute><EditDonationLink /></ProtectedRoute>} />
+        <Route path="/CreateImpact"  element={<ProtectedRoute><CreateImpact /></ProtectedRoute>} />
       </Routes>
       {!isExcludedRoute && <Footer />}
     </>
