@@ -3,11 +3,11 @@ import React from 'react';
 import { BiDollarCircle } from 'react-icons/bi';
 import { AiOutlineTeam, AiOutlineCalendar } from 'react-icons/ai';
 import { MdOutlineVolunteerActivism } from 'react-icons/md';
+import { useUser } from "../context";
 
 const Wallet = () => {
-    // Dummy data for the sake of example
-    const balance = 350; // Mock balance
-    const impactPoints = 1500; // Mock impact points
+    const { user, login } = useUser();
+
     const transactions = [
         { id: 1, type: 'credit', amount: 0, date: '2024', name: "Donation Received" },
         { id: 2, type: 'debit', amount: 0, date: '2024', name: "Funds Withdrawn" },
@@ -20,7 +20,7 @@ const Wallet = () => {
             <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center justify-between">
                 <div>
                     <h5 className="text-sm">Balance</h5>
-                    <p className="text-xs md:text-sm font-bold">${balance}</p>
+                    <p className="text-xs md:text-sm font-bold">${user?.balance}</p>
                 </div>
                 <div className="rounded-full bg-emerald-500 bg-opacity-20 p-2">
                     <BiDollarCircle className="text-emerald-500 text-xl" />
@@ -31,7 +31,7 @@ const Wallet = () => {
             <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center justify-between">
                 <div>
                     <h5 className="text-sm">Impact Points</h5>
-                    <p className="text-xs md:text-sm font-bold">{impactPoints} pts</p>
+                    <p className="text-xs md:text-sm font-bold">{user?.points} pts</p>
                 </div>
                 <div className="rounded-full bg-emerald-500 bg-opacity-20 p-2">
                     <MdOutlineVolunteerActivism className="text-emerald-500 text-xl" />

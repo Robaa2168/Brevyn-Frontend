@@ -78,7 +78,7 @@ const PurchasePage = () => {
                 onClick={handleBuyNowClick}
                 className="w-full sm:w-auto border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white py-2 px-4 rounded transition duration-300"
             >
-                Buy now
+                Start Trade
             </button>
                         <button className="border border-gray-300 text-gray-600 hover:bg-gray-300 hover:text-white py-2 px-4 rounded ">
                             Cancel

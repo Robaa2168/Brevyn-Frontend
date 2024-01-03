@@ -27,7 +27,7 @@ const Membership = () => {
     <div className="border rounded-lg p-6 flex flex-col justify-between  flex-1">
         <div>
             <h3 className="text-md font-extrabold mb-4 text-center">Premium Tier</h3>
-            <p className="text-green-500 text-xl font-bold mb-4 text-center">$300/year</p>
+            <p className="text-green-500 text-xl font-bold mb-4 text-center">300 Points/year</p>
             <ul className="text-xs mb-6 text-center">
                 <li>Create unlimited donation links</li>
                 <li>Withdraw donations</li>

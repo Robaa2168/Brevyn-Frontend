@@ -70,28 +70,28 @@ const Profile = () => {
                                     </span>
 
 
-                                    <div className="text-xs text-gray-500 mt-1">{`Joined: ${new Date(user?.primaryInfo?.joinedDate).toLocaleDateString()}`}</div>
+                                    <div className="text-xs text-gray-500 mt-1">{`Joined: ${new Date(user?.primaryInfo?.createdAt).toLocaleDateString()}`}</div>
                                 </div>
                             </div>
-                            <div className="col-span-2">
-                                <dl>
-                                    {information.map((item, index) => (
-                                        <div key={index} className={`flex items-center px-2 py-3 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
-                                            <div className="text-xs font-medium text-gray-500 flex items-center">
-                                                {item.icon}
-                                            </div>
-                                            <div className="ml-2 flex-1">
-                                                <dt className="text-xs font-medium text-gray-500">
-                                                    {item.label}
-                                                </dt>
-                                                <dd className="text-xs text-gray-900">
-                                                    {item.value}
-                                                </dd>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </dl>
-                            </div>
+                            <div className="md:grid md:grid-cols-2">
+  {information.map((item, index) => (
+    <div
+      key={index}
+      className={`flex items-center px-2 py-3 ${
+        index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+      }`}
+    >
+      <div className="text-xs font-medium text-gray-500 flex items-center">
+        {item.icon}
+      </div>
+      <div className="ml-2 flex-1">
+        <dt className="text-xs font-medium text-gray-500">{item.label}</dt>
+        <dd className="text-xs text-gray-900">{item.value}</dd>
+      </div>
+    </div>
+  ))}
+</div>
+
                         </div>
                     </div>
 
