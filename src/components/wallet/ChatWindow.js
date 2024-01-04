@@ -114,11 +114,11 @@ const ChatWindow = () => {
         value={newMessage}
         onChange={(e) => setNewMessage(e.target.value)}
         placeholder="Type a message..."
-        className="flex-1 p-2 border border-emerald-300 rounded-lg focus:outline-none focus:border-emerald-500 " // Adjust the width based on screen size
+        className="flex-1 text-xs p-2 border border-emerald-300 rounded-lg focus:outline-none focus:border-emerald-500 " // Adjust the width based on screen size
     />
     <button
         type="submit"
-        className="bg-emerald-500 text-white p-2 rounded-lg focus:outline-none hover:bg-emerald-600"
+        className="text-xs bg-emerald-500 text-white p-2 rounded-lg focus:outline-none hover:bg-emerald-600"
     >
         <FaPaperPlane />
     </button>
