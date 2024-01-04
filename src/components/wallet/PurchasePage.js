@@ -66,7 +66,7 @@ const PurchasePage = () => {
 
 
     return (
-        <div className="bg-emerald-50 min-h-screen flex flex-col justify-center items-center pt-4 px-2 sm:px-4">
+        <div className="bg-emerald-50 min-h-screen flex flex-col justify-center items-center pt-4 px-2 sm:px-4 pb-20">
             <ToastContainer position="top-center" />
 
             {/* Purchase form container */}
@@ -133,17 +133,18 @@ const PurchasePage = () => {
                 </div>
                 <div className="flex flex-col p-4 gap-4">
                     <div className="flex flex-col md:flex-row w-full gap-2 md:gap-4 mb-4">
-                        <button
-                            onClick={handleBuyNowClick}
-                            disabled={loading}
-                            className={`w-full sm:w-auto border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white py-2 px-4 rounded transition duration-300 ${loading ? "bg-emerald-500 text-white" : ""
-                                }`}
-                        >
-                            <div className="flex items-center">
-                                {loading ? <FaSpinner className="animate-spin mr-2" /> : null}
-                                {loading ? "Starting Trade..." : "Start Trade"}
-                            </div>
-                        </button>
+                    <button
+    onClick={handleBuyNowClick}
+    disabled={loading}
+    className={`w-full sm:w-auto border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white py-2 px-4 rounded transition duration-300 ${loading ? "bg-emerald-500 text-white" : ""
+    }`}
+>
+    <div className="flex items-center justify-center"> 
+        {loading ? <FaSpinner className="animate-spin mr-2" /> : null}
+        {loading ? "Starting Trade..." : "Start Trade"}
+    </div>
+</button>
+
 
 
                         <button className="border border-gray-300 text-gray-600 hover:bg-gray-300 hover:text-white py-2 px-4 rounded ">
