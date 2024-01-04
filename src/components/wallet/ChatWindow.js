@@ -64,16 +64,17 @@ const ChatWindow = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="flex items-center">
-                        <span className="flex items-center text-green-800 text-xs font-semibold mr-2 bg-green-50 border border-green-200 rounded-md py-1 px-2">
-                            <FaThumbsUp className="mr-1" />
-                            {sellerProfile?.positiveFeedback}
-                        </span>
-                        <span className="flex items-center text-red-800 text-xs font-semibold bg-red-100 border border-red-200 rounded-md py-1 px-2">
-                            <FaThumbsDown className="mr-1" />
-                            {sellerProfile?.negativeFeedback}
-                        </span>
-                    </div>
+                    <div className="flex items-center ml-auto text-right"> {/* Add ml-auto and text-right */}
+    <span className="flex items-center text-green-800 text-xs font-semibold mr-2 bg-green-50 border border-green-200 rounded-md py-1 px-2">
+        <FaThumbsUp className="mr-1" />
+        {sellerProfile?.positiveFeedback}
+    </span>
+    <span className="flex items-center text-red-800 text-xs font-semibold bg-red-100 border border-red-200 rounded-md py-1 px-2">
+        <FaThumbsDown className="mr-1" />
+        {sellerProfile?.negativeFeedback}
+    </span>
+</div>
+
                 </div>
 
 
