@@ -2,29 +2,28 @@
 import React, { useState } from 'react';
 import { FaRegClock, FaRegStar, FaRegBuilding } from 'react-icons/fa';
 import { HiOutlineShoppingBag } from "react-icons/hi";
+import { useNavigate } from 'react-router-dom';
 
 const MarketPlace = () => {
-    // Dummy data for marketplace offers
+    const navigate = useNavigate();
     const [offers, setOffers] = useState([
         {
             id: 1,
             username: 'SassyZingel394',
             paymentMethod: 'Bank Transfer',
-            seenTime: '11 hours',
+            seenTime: 'online',
             transactionTime: '5 min',
-            rate: '1 USD = 2 points',
-            rateChange: '-3.4%',
-            minPurchase: '50 points',
+            rate: '1 USD = 1 point',
+            rateChange: '-2%',
+            minPurchase: '10 points',
             maxPurchase: '1000 points',
-            currency: 'COP'
+            currency: 'USD'
         },
         // More offers...
     ]);
 
-    const handleBuy = (offerId) => {
-        // Placeholder for buy logic
-        console.log(`Buying from offer with ID: ${offerId}`);
-        // Here you would probably set up a redirect to a purchase page or open a modal
+    const handleBuy = () => {
+        navigate('/purchase');
     };
 
     return (
@@ -51,7 +50,7 @@ const MarketPlace = () => {
                 </p>
                 <p className="text-sm text-gray-500">
                     <span className="inline-block h-2 w-2 bg-green-600 rounded-full mr-2"></span>
-                    Seen {offer.seenTime} ago
+                     {offer.seenTime} 
                 </p>
             </div>
         </div>
@@ -67,7 +66,7 @@ const MarketPlace = () => {
             <p className="text-sm">Max purchase: {offer.maxPurchase}</p>
         </div>
         <button
-            onClick={() => handleBuy(offer.id)}
+            onClick={() => handleBuy()}
             className="flex items-center justify-center text-sm text-emerald-600 border border-emerald-600 hover:bg-emerald-600 hover:text-white py-2 px-4 rounded transition-colors duration-200 ease-in-out w-full sm:w-auto"
         >
             Buy <HiOutlineShoppingBag className="ml-2" size={20} />

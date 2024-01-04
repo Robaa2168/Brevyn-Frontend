@@ -1,18 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FaSpinner } from 'react-icons/fa';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import api from '../../api';
 import { FaRegClock, FaShieldAlt, FaRegStar, FaCheck, FaCheckCircle, FaThumbsUp, FaThumbsDown, FaInfoCircle } from 'react-icons/fa';
 import { HiOutlineExclamationCircle, HiOutlineChevronDown, HiOutlineChevronUp } from 'react-icons/hi';
 import { useNavigate, Link } from "react-router-dom";
+import { useUser } from "../context";
 
 const PurchasePage = () => {
+    const { user } = useUser();
     const navigate = useNavigate();
-    
-    const handleBuyNowClick = () => {
-        // Navigate to the /chat route
-        navigate('/chat');
+    const [points, setPoints] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handlePointsChange = (e) => {
+        const value = e.target.value;
+        if (!isNaN(value) && value >= 0) {
+            setPoints(value);
+        }
     };
+
+    const handleBuyNowClick = async () => {
+        // Check if points are not empty or zero
+        if (!points || points <= 0) {
+            toast.error("Please enter a valid amount of points to buy.");
+            return; // Exit the function early
+        }
+    
+        setLoading(true);
+        try {
+            const amount = points; // Assuming 1 point = 1 USD
+            const response = await api.post('/api/trade/start', {
+                points,
+                amount
+            }, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                }
+            });
+    
+            // Check response status and navigate with tradeId
+            if (response.status === 200 || response.status === 201) {
+                toast.success('Trade started successfully! Redirecting...');
+                
+                // Extract tradeId from the response
+                const tradeId = response.data.tradeId;
+    
+                // Delay navigation to allow the user to read the toast message
+                setTimeout(() => {
+                    navigate(`/chat/${tradeId}`); // Navigate to chat with the tradeId
+                }, 5000); // Adjust time as needed
+    
+            } else {
+                throw new Error('Failed to initiate trade. Please try again.');
+            }
+        } catch (error) {
+            toast.error('Error starting trade: ' + (error.response?.data?.message || error.message));
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+
+
 
     return (
         <div className="bg-emerald-50 min-h-screen flex flex-col justify-center items-center pt-4 px-2 sm:px-4">
+            <ToastContainer position="top-center" />
 
             {/* Purchase form container */}
             <div className="max-w-4xl w-full p-4 bg-white rounded-lg border border-gray-300 mt-4">
@@ -21,7 +76,7 @@ const PurchasePage = () => {
                     How many points do you want to Buy?
                 </div>
 
-                <div className=" flex flex-col md:flex-row md:justify-between p-4 gap-4">
+                <div className="flex flex-col md:flex-row md:justify-between p-4 gap-4">
                     <div className="flex flex-col w-full md:w-1/2">
                         <label htmlFor="points" className="text-xs font-semibold mb-2">I want</label>
                         <div className="relative">
@@ -30,6 +85,8 @@ const PurchasePage = () => {
                                 id="points"
                                 placeholder="points"
                                 className="p-2 pl-2 pr-10 border rounded text-xs sm:text-xs md:text-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 w-full"
+                                value={points}
+                                onChange={handlePointsChange}
                             />
                             <span className="absolute inset-y-0 right-2 flex items-center text-gray-500 text-xs pointer-events-none">
                                 points
@@ -45,7 +102,9 @@ const PurchasePage = () => {
                                 type="text"
                                 id="amountToPay"
                                 placeholder="Amount"
+                                readOnly  // Make this field read-only
                                 className="p-2 pl-2 pr-10 border rounded text-xs sm:text-xs md:text-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 w-full"
+                                value={points} // The value is the same number of points (1 point = 1 USD)
                             />
                             <span className="absolute inset-y-0 right-2 flex items-center text-gray-500 text-xs pointer-events-none">
                                 USD
@@ -74,12 +133,19 @@ const PurchasePage = () => {
                 </div>
                 <div className="flex flex-col p-4 gap-4">
                     <div className="flex flex-col md:flex-row w-full gap-2 md:gap-4 mb-4">
-                    <button
-                onClick={handleBuyNowClick}
-                className="w-full sm:w-auto border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white py-2 px-4 rounded transition duration-300"
-            >
-                Start Trade
-            </button>
+                        <button
+                            onClick={handleBuyNowClick}
+                            disabled={loading}
+                            className={`w-full sm:w-auto border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white py-2 px-4 rounded transition duration-300 ${loading ? "bg-emerald-500 text-white" : ""
+                                }`}
+                        >
+                            <div className="flex items-center">
+                                {loading ? <FaSpinner className="animate-spin mr-2" /> : null}
+                                {loading ? "Starting Trade..." : "Start Trade"}
+                            </div>
+                        </button>
+
+
                         <button className="border border-gray-300 text-gray-600 hover:bg-gray-300 hover:text-white py-2 px-4 rounded ">
                             Cancel
                         </button>
@@ -110,7 +176,7 @@ const PurchasePage = () => {
                         <div className="text-xs font-semibold flex items-center space-x-1">
                             <HiOutlineChevronDown className="text-green-500" />
                             <span>Min:</span>
-                            <span>100 points</span>
+                            <span>10 points</span>
                         </div>
                         <div className="text-xs font-semibold flex items-center space-x-1">
                             <HiOutlineChevronUp className="text-red-500" />
@@ -141,18 +207,18 @@ const PurchasePage = () => {
                                     </div>
                                     <span className="flex items-center text-gray-500 text-xs">
                                         <FaRegClock className="mr-1" />
-                                        Seen 2 minutes ago
+                                        online
                                     </span>
                                 </div>
                             </div>
 
                         </div>
                         <div className="flex items-center justify-between mt-2">
-                            <div className="flex items-center">
+                            <div className="flex items-center text-green-800 text-xs font-semibold mr-2 bg-green-50 border border-green-200 rounded-md py-1 px-2">
                                 <FaThumbsUp className="text-green-500" />
                                 <span className="ml-1">787</span>
                             </div>
-                            <div className="flex items-center">
+                            <div className="flex items-center text-red-800 text-xs font-semibold bg-red-100 border border-red-200 rounded-md py-1 px-2">
                                 <FaThumbsDown className="text-red-500" />
                                 <span className="ml-1">0</span>
                             </div>

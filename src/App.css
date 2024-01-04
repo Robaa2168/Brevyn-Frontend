@@ -13,29 +13,7 @@
     scrollbar-width: none;  /* for Firefox */
 }
 
-/* Base styles for message bubbles */
-.message-bubble {
-    padding: 10px 20px;
-    border-radius: 18px;
-    margin: 5px;
-    max-width: fit-content;
-    word-break: break-word;
-    display: block; /* ensures it doesn't line up side by side */
-}
 
-/* Outgoing message bubbles */
-.outgoing-message {
-    background-color: #DCF8C6; /* Light green background for outgoing messages */
-    margin-left: auto; /* Align to right */
-    text-align: right;
-}
-
-/* Incoming message bubbles */
-.incoming-message {
-    background-color: #ECECEC; /* Light grey background for incoming messages */
-    margin-right: auto; /* Align to left */
-    text-align: left;
-}
 
 
 /* styles.css (or your stylesheet) */

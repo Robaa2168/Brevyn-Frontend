@@ -46,7 +46,7 @@ const AppLayout = () => {
         <Route path="/dashboard"  element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/wallet"  element={<ProtectedRoute><WalletDashboard /></ProtectedRoute>} />
         <Route path="/purchase"  element={<ProtectedRoute><PurchasePage /></ProtectedRoute>} />
-        <Route path="/chat"  element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+        <Route path="/chat/:tradeId"  element={<ProtectedRoute><Chat /></ProtectedRoute>} />
         <Route path="/donate/:uniqueIdentifier" element={<Donations />} />
         <Route path="/donation-link/:id"  element={<ProtectedRoute><DonationsPreviewPage /></ProtectedRoute>} />
         <Route path="/link/edit/:id"  element={<ProtectedRoute><EditDonationLink /></ProtectedRoute>} />
