@@ -194,7 +194,7 @@ const Chat = () => {
 
 
     return (
-        <div className="flex flex-col md:flex-row justify-center items-start my-5 mx-2 md:space-x-3 pb-20">
+        <div className="flex flex-col w-full justify-center items-start my-5 mx-2 pb-20 md:flex-row md:space-x-3">
             <ToastContainer position="top-center" />
             {/* Transaction Container */}
             <div className="mx-3 my-5 p-4 bg-white rounded-lg border border-emerald-200 flex-1 md:max-w-2xl mb-4 md:mb-0">
@@ -356,9 +356,11 @@ const Chat = () => {
 
             </div>
 
-   <div className="mx-2 p-2 bg-white rounded-lg border border-emerald-200 max-w-full sm:max-w-md md:max-w-lg lg:max-w-xl">
+            <div className="mx-2 mt-5 p-2 bg-white rounded-lg border border-emerald-200 w-full sm:w-full sm:max-w-md md:max-w-md lg:max-w-md">
     <ChatWindow />
 </div>
+
+
 
 
         </div>

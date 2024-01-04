@@ -53,29 +53,29 @@ const ChatWindow = () => {
         <>
             <div className="flex justify-between items-center border-b border-emerald-200 mb-4 p-2">
 
-                <div className="flex flex-wrap items-center justify-between">
-                    <div className="flex items-center mb-2 md:mb-0">
-                        <img src={sellerProfile?.image} alt={sellerProfile?.name} className="w-12 h-12 rounded-full mr-2" />
-                        <div>
-                            <p className="text-lg font-semibold text-emerald-600">{sellerProfile?.name}</p>
-                            <p className="text-xs text-gray-500 flex items-center">
-                                <FaRegClock className="mr-1" />
-                                {sellerProfile?.lastSeen}
-                            </p>
-                        </div>
-                    </div>
-                    <div className="flex items-center ml-auto text-right"> {/* Add ml-auto and text-right */}
-    <span className="flex items-center text-green-800 text-xs font-semibold mr-2 bg-green-50 border border-green-200 rounded-md py-1 px-2">
-        <FaThumbsUp className="mr-1" />
-        {sellerProfile?.positiveFeedback}
-    </span>
-    <span className="flex items-center text-red-800 text-xs font-semibold bg-red-100 border border-red-200 rounded-md py-1 px-2">
-        <FaThumbsDown className="mr-1" />
-        {sellerProfile?.negativeFeedback}
-    </span>
+            <div className="flex flex-wrap items-center justify-between w-full">
+    <div className="flex items-center mb-2 md:mb-0 shrink-0">
+        <img src={sellerProfile?.image} alt={sellerProfile?.name} className="w-12 h-12 rounded-full mr-2" />
+        <div>
+            <p className="text-lg font-semibold text-emerald-600">{sellerProfile?.name}</p>
+            <p className="text-xs text-gray-500 flex items-center">
+                <FaRegClock className="mr-1" />
+                {sellerProfile?.lastSeen}
+            </p>
+        </div>
+    </div>
+    <div className="flex items-center">
+        <span className="flex items-center text-green-800 text-xs font-semibold mr-2 bg-green-50 border border-green-200 rounded-md py-1 px-2">
+            <FaThumbsUp className="mr-1" />
+            {sellerProfile?.positiveFeedback}
+        </span>
+        <span className="flex items-center text-red-800 text-xs font-semibold bg-red-100 border border-red-200 rounded-md py-1 px-2">
+            <FaThumbsDown className="mr-1" />
+            {sellerProfile?.negativeFeedback}
+        </span>
+    </div>
 </div>
 
-                </div>
 
 
             </div>
@@ -107,23 +107,23 @@ const ChatWindow = () => {
 
 
 
-           {/* Message input area */}
-<form onSubmit={handleSendMessage} className="flex gap-2 items-center sm:w-3/4 md:w-full">
-    <FaPaperclip className="text-gray-500 cursor-pointer" />
-    <input
-        type="text"
-        value={newMessage}
-        onChange={(e) => setNewMessage(e.target.value)}
-        placeholder="Type a message..."
-        className="flex-1 text-xs p-2 border border-emerald-300 rounded-lg focus:outline-none focus:border-emerald-500 " // Adjust the width based on screen size
-    />
-    <button
-        type="submit"
-        className="text-xs bg-emerald-500 text-white p-2 rounded-lg focus:outline-none hover:bg-emerald-600"
-    >
-        <FaPaperPlane />
-    </button>
-</form>
+            {/* Message input area */}
+            <form onSubmit={handleSendMessage} className="flex gap-2 items-center sm:w-3/4 md:w-full">
+                <FaPaperclip className="text-gray-500 cursor-pointer" />
+                <input
+                    type="text"
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    placeholder="Type a message..."
+                    className="flex-1 text-xs p-2 border border-emerald-300 rounded-lg focus:outline-none focus:border-emerald-500 " // Adjust the width based on screen size
+                />
+                <button
+                    type="submit"
+                    className="text-xs bg-emerald-500 text-white p-2 rounded-lg focus:outline-none hover:bg-emerald-600"
+                >
+                    <FaPaperPlane />
+                </button>
+            </form>
 
         </>
     );
