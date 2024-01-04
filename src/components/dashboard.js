@@ -1,5 +1,7 @@
 //dashboard.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useUser } from "./context";
+import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import ChangePassword  from './ChangePassword';
 import DonationsSummary from './DonationsSummary';
@@ -11,9 +13,20 @@ import Wallet from './wallet/Wallet';
 import Kyc from './Kyc';
 
 
+
+
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const { user } = useUser();
   // State to manage which component is displayed
   const [activeComponent, setActiveComponent] = useState('donationsSummary');
+
+  useEffect(() => {
+    if (!user || !user.token) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
 
   // Object to map component keys to component render functions
   const componentMap = {

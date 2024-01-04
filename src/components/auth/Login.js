@@ -36,21 +36,30 @@ const Login = () => {
         try {
             const response = await api.post('/api/auth/login', loginData);
     
+            // Check if the response status code is 200 (OK)
             if (response.status === 200) {
-                const user = response.data; 
-                // Update state or context as needed
+                const user = response.data;
                 login(user);
-    
                 navigate('/dashboard');
             } else {
-                throw new Error('Login failed');
+                // Handle unexpected status codes
+                setError('Login failed due to unexpected response. Please try again later.');
             }
         } catch (error) {
-            setError(error.response?.data?.message || 'Login failed. Please try again later.');
+            // Check if the error is due to a 403 status code
+            if (error.response && error.response.status === 403) {
+                // Navigate to the verification page and pass the email to it
+                navigate('/verify', { state: { email: loginData.email } });
+            } else {
+                // For all other errors, update the error state
+                setError(error.response?.data?.message || 'Login failed. Please try again later.');
+            }
         } finally {
             setLoading(false);
         }
     };
+    
+    
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-emerald-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -121,7 +130,7 @@ const Login = () => {
                         </div>
 
                         <div className="text-sm">
-                            <a href="#" className="font-medium text-emerald-600 hover:text-emerald-500 text-xs sm:text-sm">Forgot your password?</a>
+                            <Link to="/forgot-password" className="font-medium text-emerald-600 hover:text-emerald-500 text-xs sm:text-sm">Forgot your password?</Link>
                         </div>
                     </div>
 

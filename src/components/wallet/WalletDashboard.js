@@ -1,7 +1,8 @@
 // WalletDashboard.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useUser } from "../context";
+import { useNavigate } from 'react-router-dom';
 import WalletSidebar from './WalletSidebar';
-// Import your wallet specific components
 import Wallet from './Wallet';
 import Withdraw from './Withdraw';
 import Deposit from './Deposit';
@@ -10,7 +11,15 @@ import History from './History';
 import MarketPlace from './MarketPlace';
 
 const WalletDashboard = () => {
-  const [activeComponent, setActiveComponent] = useState('wallet'); // default component
+  const { user } = useUser();
+  const navigate = useNavigate();
+  const [activeComponent, setActiveComponent] = useState('wallet');
+  
+  useEffect(() => {
+    if (!user || !user.token) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
 
   const componentMap = {
     wallet: <Wallet />,

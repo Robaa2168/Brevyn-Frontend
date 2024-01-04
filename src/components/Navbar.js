@@ -9,7 +9,7 @@ const Navbar = () => {
     <nav className="bg-emerald-600 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-lg font-bold">
-          <Link to="/">UnityBridge </Link>
+          <Link to="/">Verdant </Link>
         </div>
         {/* Links for larger screens */}
         <div className={`hidden md:flex space-x-4`}>

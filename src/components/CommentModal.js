@@ -27,7 +27,7 @@ const CommentModal = ({ onClose, comments, impactId, impactTitle, isLoading }) =
 
     const handleCommentSubmit = async () => {
         if (!user || !user.token) {
-            navigate('/login'); // Redirect to login if user isn't authenticated
+            navigate('/login');
             return;
         }
 
