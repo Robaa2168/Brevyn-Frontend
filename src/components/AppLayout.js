@@ -19,6 +19,7 @@ import Donations from './Donations';
 import DonationsPreviewPage from './DonationsPreviewPage';
 import EditDonationLink from './EditDonationLink';
 import CreateImpact from './CreateImpact';
+import ImpactDetail from './ImpactDetail';
 
 const AppLayout = () => {
   const location = useLocation();
@@ -51,6 +52,7 @@ const AppLayout = () => {
         <Route path="/donation-link/:id"  element={<ProtectedRoute><DonationsPreviewPage /></ProtectedRoute>} />
         <Route path="/link/edit/:id"  element={<ProtectedRoute><EditDonationLink /></ProtectedRoute>} />
         <Route path="/CreateImpact"  element={<ProtectedRoute><CreateImpact /></ProtectedRoute>} />
+        <Route path="/impact/:id"  element={<ProtectedRoute><ImpactDetail /></ProtectedRoute>} />
       </Routes>
       {!isExcludedRoute && <Footer />}
     </>

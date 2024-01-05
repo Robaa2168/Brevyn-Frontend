@@ -66,7 +66,7 @@ const NotificationsPanel = ({ setShowNotifications }) => {
                     </div>
                 ) : notifications.length > 0 ? (
                     notifications.map(notification => (
-                        <li key={notification.id} className="border-b border-emerald-300 py-2">
+                        <li key={notification._id} className="border-b border-emerald-300 py-2">
                             <div className="flex flex-col justify-between">
                                 <span className="text-white">{notification.text}</span>
                                 {!notification.isRead && (

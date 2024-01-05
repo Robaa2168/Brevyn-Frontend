@@ -20,6 +20,11 @@ function Impact({ _id, imageUrl, title, description, impressions, likes, comment
     const [isLoadingComments, setIsLoadingComments] = useState(false);
 
 
+    const goToImpactDetail = () => {
+        navigate(`/impact/${_id}`); // assuming /impact/:id is the route for individual impacts
+    };
+
+
     // Function to open modal
     const handleOpenComments = () => {
         setShowComments(true);
@@ -95,10 +100,11 @@ function Impact({ _id, imageUrl, title, description, impressions, likes, comment
                     src={imageUrl}
                     alt={`${title}`}
                     className="object-cover w-full h-64"
+                    onClick={goToImpactDetail}
                 />
             )}
             <div className="p-4 flex flex-col justify-between h-full">
-                <h3 className="font-semibold text-lg mb-4 truncate">{title}</h3>
+                <h3 className="font-semibold text-lg mb-4 truncate" onClick={goToImpactDetail}>{title}</h3>
                 <p className="text-gray-600 mb-2 truncate border-b border-dotted border-emerald-200 pb-2">{description}</p>
 
                 <div className="flex space-x-4 justify-end">
