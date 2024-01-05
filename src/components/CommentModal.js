@@ -1,6 +1,8 @@
 // components/CommentModal.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom'; 
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FaSpinner, FaHeart } from 'react-icons/fa';
 import api from '../api'; // Ensure API is set up to handle requests
 import { useUser } from "./context";
@@ -16,6 +18,16 @@ const CommentModal = ({ onClose, comments, impactId, impactTitle, isLoading }) =
     const [newComment, setNewComment] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    useEffect(() => {
+        // When the modal is open, add no-scroll class to body
+        document.body.classList.add('no-scroll');
+
+        // Cleanup function to remove the no-scroll class when the modal is closed
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, []); 
+
 
     useEffect(() => {
         setCommentsData(comments);
@@ -30,10 +42,14 @@ const CommentModal = ({ onClose, comments, impactId, impactTitle, isLoading }) =
             navigate('/login');
             return;
         }
-
-        if (!newComment.trim()) return; // Prevent empty comments
+    
+        if (!newComment.trim()) {
+            toast.error("Comment text cannot be empty"); // Notify user about the empty comment
+            return; // Prevent empty comments
+        }
+        
         setIsSubmitting(true); // Start submission process
-
+    
         try {
             const response = await api.post(`/api/impacts/${impactId}/comments`, { text: newComment }, {
                 headers: { Authorization: `Bearer ${user.token}` },
@@ -41,13 +57,16 @@ const CommentModal = ({ onClose, comments, impactId, impactTitle, isLoading }) =
             // Append the new comment to the local state
             setCommentsData([...commentsData, response.data]); // Append new comment
             setNewComment(""); // Clear the comment input field
+            toast.success("Comment added successfully"); // Notify user about the success
         } catch (error) {
-            console.error("Error submitting comment:", error);
-            // Optionally handle the error (e.g., set an error state, show a message, etc.)
+            console.error("Error submitting comment:", error.response?.data?.message);
+            toast.error("Error submitting comment: " + error.response?.data?.message ); // Notify user about the error
         } finally {
             setIsSubmitting(false); // End submission process
         }
     };
+    
+
     const handleReaction = async (commentId) => {
         if (!user || !user.token) {
             navigate('/login');
@@ -97,9 +116,10 @@ const CommentModal = ({ onClose, comments, impactId, impactTitle, isLoading }) =
 
 
     return (
-        <div className="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center ">
-
+        <div className="fixed z-10 inset-0 overflow-y-auto bg-gray-600 bg-opacity-50" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <ToastContainer position="top-center" />
+            <div
+                className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0" >
 
                 {/* Modal panel, might add transition effects */}
                 <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full h-3/4">
@@ -130,7 +150,8 @@ const CommentModal = ({ onClose, comments, impactId, impactTitle, isLoading }) =
 
 
                     {/* Comments List */}
-                    <div className="px-4 py-3 overflow-y-auto ">
+                    <div className="px-4 py-3 overflow-y-auto custom-scrollbar " style={{ maxHeight: '40vh' }}>
+
 
 
                         {/* Loading Spinner */}
