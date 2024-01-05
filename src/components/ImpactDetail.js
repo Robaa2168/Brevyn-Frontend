@@ -215,7 +215,7 @@ const ImpactDetail = () => {
 
     return (
         <>
-            <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 bg-white rounded-md">
+            <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 bg-white rounded-md pb-20">
                 {/* Impact Image Gallery */}
                 <div className="flex flex-col md:flex-row -mx-4">
                     <div className="md:flex-1 px-4">
