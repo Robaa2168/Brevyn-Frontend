@@ -3,12 +3,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaTimesCircle, } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { FaSpinner } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../api';
 import { useUser } from "../context";
 import Modal from './Modal';
 import { useNavigate } from 'react-router-dom';
-import { FaSpinner } from 'react-icons/fa';
 import ChatWindow from './ChatWindow';
 
 const Chat = () => {
