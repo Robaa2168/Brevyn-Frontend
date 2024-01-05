@@ -60,18 +60,18 @@ function Impact({ _id, imageUrl, title, description, impressions, likes, comment
             navigate('/login');
             return;
         }
-    
+
         // Optimistically update the UI
         const newLikeStatus = !hasLiked;
         setHasLiked(newLikeStatus);
         setLikesCount((prev) => (newLikeStatus ? prev + 1 : prev - 1));
-    
+
         try {
             // Make API call to toggle the like status
             const response = await api.patch(`/api/impacts/${_id}/likes`, {}, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
-    
+
             // Update state based on the server's response
             setLikesCount(response.data.likes);
             setHasLiked(response.data.userHasLiked);
@@ -82,7 +82,7 @@ function Impact({ _id, imageUrl, title, description, impressions, likes, comment
             setLikesCount((prev) => (!newLikeStatus ? prev + 1 : prev - 1));
         }
     };
-    
+
 
     const handleimpressionCount = () => {
         // Implement comment functionality here
@@ -99,13 +99,13 @@ function Impact({ _id, imageUrl, title, description, impressions, likes, comment
             )}
             <div className="p-4 flex flex-col justify-between h-full">
                 <h3 className="font-semibold text-lg mb-4 truncate">{title}</h3>
-                <p className="text-gray-600 mb-4 truncate">{description}</p>
+                <p className="text-gray-600 mb-2 truncate border-b border-dotted border-emerald-200 pb-2">{description}</p>
 
                 <div className="flex space-x-4 justify-end">
-                <button className="flex items-center space-x-1" onClick={handleLike} aria-label="Like">
-    {hasLiked ? <FiHeart className="text-red-500" /> : <IoHeartOutline className="text-gray-500" />}
-    <span>{likesCount}</span>
-</button>
+                    <button className="flex items-center space-x-1" onClick={handleLike} aria-label="Like">
+                        {hasLiked ? <FiHeart className="text-red-500" /> : <IoHeartOutline className="text-gray-500" />}
+                        <span>{likesCount}</span>
+                    </button>
 
                     <button className="flex items-center space-x-1" onClick={handleOpenComments} aria-label="Comments">
                         <FiMessageCircle className="text-gray-500" />

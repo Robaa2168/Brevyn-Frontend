@@ -58,7 +58,7 @@ const Hero = () => {
             className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full flex items-center justify-center"
           >
             <FiHeart className="mr-2" />
-            Donate Now
+            Get donation Now
           </button>
         </motion.div>
       </div>
