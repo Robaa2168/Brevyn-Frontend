@@ -32,7 +32,7 @@ const Footer = () => {
         if (user?.token) {
             fetchNotificationCount();
         }
-    }, [user?.token]);
+    }, [user]);
 
     return (
         <div className="footer-container bg-white shadow-md p-4 fixed bottom-0 inset-x-0 mt-10 md:hidden">

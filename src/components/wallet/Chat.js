@@ -21,13 +21,15 @@ const Chat = () => {
     const [showCancelConfirmModal, setShowCancelConfirmModal] = useState(false);
     const [isRestarting, setIsRestarting] = useState(false);
     const [timeLeft, setTimeLeft] = useState(null);
+    const [isPaying, setIsPaying] = useState(false);
+    const [isCancelling, setIsCancelling] = useState(false);
 
 
     useEffect(() => {
         if (!user || !user.token) {
-          navigate('/login');
+            navigate('/login');
         }
-      }, [user, navigate]);
+    }, [user, navigate]);
 
     useEffect(() => {
         // Calculate time left based on current time and expiration time
@@ -121,6 +123,7 @@ const Chat = () => {
     };
 
     const handlePaidConfirm = async () => {
+        setIsPaying(true);
         try {
             const response = await api.patch(`/api/trade/${tradeId}/confirm-payment`, {
                 tradeId,
@@ -139,11 +142,13 @@ const Chat = () => {
         } catch (error) {
             toast.error('Error confirming payment: ' + (error.response?.data?.message || error.message));
         } finally {
-            setShowPaidConfirmModal(false); // Close the modal
+            setShowPaidConfirmModal(false);
+            setIsPaying(false);
         }
     };
 
     const handleCancelConfirm = async () => {
+        setIsCancelling(true);
         try {
             const response = await api.patch(`/api/trade/${tradeId}/cancel`, {
                 tradeId,
@@ -162,7 +167,8 @@ const Chat = () => {
         } catch (error) {
             toast.error('Error cancelling trade: ' + (error.response?.data?.message || error.message));
         } finally {
-            setShowCancelConfirmModal(false); // Close the modal
+            setShowCancelConfirmModal(false);
+            setIsCancelling(false);
         }
     };
 
@@ -332,7 +338,7 @@ const Chat = () => {
                             <p>Are you sure you have completed the payment? False claims can lead to account ban.</p>
                         </div>
                         <div className="mt-4 flex justify-center space-x-4">
-                            <button onClick={handlePaidConfirm} className="bg-emerald-500 text-white px-4 py-2 rounded mr-4">
+                            <button onClick={handlePaidConfirm} className="bg-emerald-500 text-white px-4 py-2 rounded mr-4" disabled={isPaying}>
                                 Yes, I've Paid
                             </button>
                             <button onClick={() => setShowPaidConfirmModal(false)} className="bg-gray-500 text-white px-4 py-2 rounded">
@@ -353,9 +359,14 @@ const Chat = () => {
                             <p>Are you sure you want to cancel? If you've already paid, please do not cancel.</p>
                         </div>
                         <div className="mt-4 flex justify-center space-x-4">
-                            <button onClick={handleCancelConfirm} className="bg-red-500 text-white px-4 py-2 rounded mr-4">
-                                Yes, Cancel
+                            <button
+                                onClick={handleCancelConfirm}
+                                className="bg-red-500 text-white px-4 py-2 rounded mr-4"
+                                disabled={isCancelling}
+                            >
+                                {isCancelling ? 'Cancelling...' : 'Yes, Cancel'}
                             </button>
+
                             <button onClick={() => setShowCancelConfirmModal(false)} className="bg-gray-500 text-white px-4 py-2 rounded">
                                 No
                             </button>

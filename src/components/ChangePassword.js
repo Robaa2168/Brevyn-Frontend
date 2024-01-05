@@ -34,38 +34,38 @@ const ChangePassword = () => {
     const userToken = user?.token;
 
     if (passwords.newPassword !== passwords.confirmPassword) {
-        setError("New passwords do not match!");
-        setIsSubmitting(false);
-        return;
+      setError("New passwords do not match!");
+      setIsSubmitting(false);
+      return;
     }
 
     try {
-        // Call the API to change the password
-        const response = await api.post('/api/auth/change-password', {
-            currentPassword: passwords.currentPassword,
-            newPassword: passwords.newPassword,
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${userToken}`
-            }
-        });
-
-        if (response.status === 200) {
-            // Handle success
-            setSuccess(true);
-            setPasswords({ currentPassword: '', newPassword: '', confirmPassword: '' });
-        } else {
-            // Handle any errors that aren't thrown
-            setError(response.data.message || "An error occurred while changing the password.");
+      // Call the API to change the password
+      const response = await api.post('/api/auth/change-password', {
+        currentPassword: passwords.currentPassword,
+        newPassword: passwords.newPassword,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userToken}`
         }
+      });
+
+      if (response.status === 200) {
+        // Handle success
+        setSuccess(true);
+        setPasswords({ currentPassword: '', newPassword: '', confirmPassword: '' });
+      } else {
+        // Handle any errors that aren't thrown
+        setError(response.data.message || "An error occurred while changing the password.");
+      }
     } catch (err) {
-        // This will catch any error response from the server
-        setError(err.response?.data?.message || "Failed to change password");
+      // This will catch any error response from the server
+      setError(err.response?.data?.message || "Failed to change password");
     } finally {
-        setIsSubmitting(false);
+      setIsSubmitting(false);
     }
-};
+  };
 
 
   return (
