@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiHeart } from 'react-icons/fi';
 import { useInView } from 'react-intersection-observer';
 
 const Hero = () => {
+  const navigate = useNavigate(); 
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -54,12 +56,13 @@ const Hero = () => {
           animate={inView ? "visible" : "hidden"}
           className="mt-6"
         >
-          <button
-            className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full flex items-center justify-center"
-          >
-            <FiHeart className="mr-2" />
-            Get donation Now
-          </button>
+     <button
+        onClick={() => navigate('/dashboard')} // Step 3
+        className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full flex items-center justify-center"
+      >
+        <FiHeart className="mr-2" />
+        Get donation Now
+    </button>
         </motion.div>
       </div>
     </section>

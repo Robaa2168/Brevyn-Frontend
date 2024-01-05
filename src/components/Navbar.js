@@ -9,14 +9,14 @@ const Navbar = () => {
     <nav className="bg-emerald-600 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-lg font-bold">
-          <Link to="/">Verdant </Link>
+          <Link to="/home">Verdant </Link>
         </div>
         {/* Links for larger screens */}
         <div className={`hidden md:flex space-x-4`}>
-          <Link to="/" className="hover:text-emerald-200">Home</Link>
-          <Link to="/about" className="hover:text-emerald-200">About</Link>
-          <Link to="/donate" className="hover:text-emerald-200">Donate</Link>
-          <Link to="/volunteer" className="hover:text-emerald-200">Volunteer</Link>
+          <Link to="/home" className="hover:text-emerald-200">Home</Link>
+          <Link to="/" className="hover:text-emerald-200">About</Link>
+          <Link to="/dashboard" className="hover:text-emerald-200">Donate</Link>
+          <Link to="/dashboard" className="hover:text-emerald-200">Volunteer</Link>
           <Link to="/contact" className="hover:text-emerald-200">Contact</Link>
         </div>
         {/* Hamburger menu for smaller screens */}
