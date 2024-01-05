@@ -1,6 +1,6 @@
 // MarketPlace.js
 import React, { useState } from 'react';
-import { FaRegClock, FaRegStar, FaRegBuilding } from 'react-icons/fa';
+import { FaRegClock,FaMobileAlt, FaRegStar, FaRegBuilding } from 'react-icons/fa';
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ const MarketPlace = () => {
             username: 'SassyZingel394',
             paymentMethod: 'Bank Transfer',
             seenTime: 'online',
-            transactionTime: '5 min',
+            transactionTime: '30 min',
             rate: '1 USD = 1 point',
             rateChange: '-2%',
             minPurchase: '10 points',
@@ -43,16 +43,30 @@ const MarketPlace = () => {
                 <FaRegStar /> {/* Seller's rating icon */}
             </div>
             <div>
-                <p className="font-semibold text-base sm:text-sm">{offer.username}</p>
-                <p className="text-sm text-gray-500">
-                    <FaRegBuilding className="inline mr-1" /> {/* Bank icon */}
-                    {offer.paymentMethod}
-                </p>
-                <p className="text-sm text-gray-500">
-                    <span className="inline-block h-2 w-2 bg-green-600 rounded-full mr-2"></span>
-                     {offer.seenTime} 
-                </p>
-            </div>
+            <p className="font-semibold text-base sm:text-sm flex flex-col sm:flex-row items-start">
+   <span className="mb-1 sm:mb-0">{offer.username}</span>
+   <span className="flex">
+       <img src="https://www.state.gov/wp-content/uploads/2018/07/ke-lgflag-300x200.gif" alt="Kenya" className="rounded-sm inline h-3 w-3 mx-1" />
+       <img src="https://cdn.britannica.com/31/4231-004-F1DBFAE7/Flag-Zambia.jpg" alt="Zambia" className="rounded-sm inline h-3 w-3 mr-1" />
+       <img src="https://cdn.britannica.com/27/4227-004-32423B42/Flag-South-Africa.jpg" alt="South Africa" className="rounded-sm inline h-3 w-3 mr-1" />
+   </span>
+</p>
+
+<p className="text-sm text-gray-500">
+    <FaRegBuilding className="inline mr-1" />
+    {offer.paymentMethod}
+</p>
+<p className="text-sm text-gray-500">
+    <FaMobileAlt className="inline mr-1" />
+    Mobile Money
+</p>
+<p className="text-sm text-gray-500">
+    <span className="inline-block h-2 w-2 bg-green-600 rounded-full mr-2"></span>
+     {offer.seenTime} 
+</p>
+
+</div>
+
         </div>
         <div className="flex-grow mb-3 sm:mb-0">
             <div className="flex items-center space-x-1 text-sm">

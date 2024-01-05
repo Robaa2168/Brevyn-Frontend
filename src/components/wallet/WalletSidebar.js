@@ -1,6 +1,7 @@
 // WalletSidebar.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from '../context';
 import {
     AiOutlineSwap,
     AiOutlineHistory,
@@ -11,10 +12,17 @@ import {
 } from 'react-icons/ai';
 
 const WalletSidebar = ({ changeComponent }) => {
+    const { logout } = useUser();
+    const navigate = useNavigate();
     const [activeComponent, setActiveComponent] = useState('donationsSummary'); // Initialize the active component state
 
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
+
     const handleClick = (componentName) => {
-        setActiveComponent(componentName); // Update the active component state
+        setActiveComponent(componentName);
         changeComponent(componentName);
     };
 
@@ -25,12 +33,11 @@ const WalletSidebar = ({ changeComponent }) => {
                 <Link
                     to="/dashboard"
                     onClick={() => handleClick('donationsSummary')}
-                    className={`flex items-center space-x-3 cursor-pointer ${
-                        activeComponent === 'donationsSummary'
-                          ? 'p-2 rounded-md text-emerald-700 bg-emerald-100'
-                          : 'text-gray-700'
-                      }`}
-                    >
+                    className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'donationsSummary'
+                            ? 'p-2 rounded-md text-emerald-700 bg-emerald-100'
+                            : 'text-gray-700'
+                        }`}
+                >
                     <AiOutlineHome className="text-xl sm:text-2xl" />
                     <span className="text-xs sm:text-sm">Home</span>
                 </Link>
@@ -62,7 +69,7 @@ const WalletSidebar = ({ changeComponent }) => {
                         }`}
                 >
                     <AiOutlineHistory className="text-xl sm:text-2xl" />
-                    <span className="text-xs sm:text-sm">History</span>
+                    <span className="text-xs sm:text-sm">Trade History</span>
                 </div>
 
                 {/* Deposit */}
@@ -75,26 +82,20 @@ const WalletSidebar = ({ changeComponent }) => {
                     <span className="text-xs sm:text-sm">Deposit</span>
                 </div>
 
-               {/* Market Place */}
-<div
-  onClick={() => handleClick('marketPlace')}
-  className={`flex items-center space-x-3 cursor-pointer ${
-    activeComponent === 'marketPlace' ? 'text-emerald-500' : 'text-gray-700'
-  }`}
->
-  <div className="">
-    <AiOutlineShoppingCart className="text-xl sm:text-2xl" />
-  </div>
-  <span className="text-xs sm:text-sm pulse-dot">Market Place</span>
-</div>
-
-
-                {/* Logout */}
+                {/* Market Place */}
                 <div
-                    onClick={() => handleClick('logout')}
-                    className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'logout' ? 'text-emerald-500' : 'text-gray-700'
+                    onClick={() => handleClick('marketPlace')}
+                    className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'marketPlace' ? 'text-emerald-500' : 'text-gray-700'
                         }`}
                 >
+                    <div className="">
+                        <AiOutlineShoppingCart className="text-xl sm:text-2xl" />
+                    </div>
+                    <span className="text-xs sm:text-sm pulse-dot">Market Place</span>
+                </div>
+
+                {/* Logout */}
+                <div onClick={handleLogout} className="flex items-center space-x-3 cursor-pointer">
                     <AiOutlineLogout className="text-xl sm:text-2xl" />
                     <span className="text-xs sm:text-sm">Logout</span>
                 </div>

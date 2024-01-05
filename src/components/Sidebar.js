@@ -11,7 +11,7 @@ import {
   AiOutlineLock,
   AiOutlineLogout,
 } from 'react-icons/ai';
-import { useUser } from './context'; // Adjust the path as necessary
+import { useUser } from './context'; 
 
 const Sidebar = ({ changeComponent }) => {
   const { logout } = useUser();

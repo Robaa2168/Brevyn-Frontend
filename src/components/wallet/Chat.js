@@ -1,16 +1,18 @@
 // Chat.js
 import React, { useState, useEffect, useRef } from 'react';
-import { FaTimesCircle} from 'react-icons/fa';
+import { FaTimesCircle, } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../api';
 import { useUser } from "../context";
 import Modal from './Modal';
+import { useNavigate } from 'react-router-dom';
 import { FaSpinner } from 'react-icons/fa';
 import ChatWindow from './ChatWindow';
 
 const Chat = () => {
+    const navigate = useNavigate();
     const { user } = useUser();
 
     const { tradeId } = useParams();
@@ -19,6 +21,13 @@ const Chat = () => {
     const [showCancelConfirmModal, setShowCancelConfirmModal] = useState(false);
     const [isRestarting, setIsRestarting] = useState(false);
     const [timeLeft, setTimeLeft] = useState(null);
+
+
+    useEffect(() => {
+        if (!user || !user.token) {
+          navigate('/login');
+        }
+      }, [user, navigate]);
 
     useEffect(() => {
         // Calculate time left based on current time and expiration time
@@ -99,7 +108,7 @@ const Chat = () => {
     }, [timeLeft]);
 
 
- 
+
 
 
     const handlePaidClick = () => {
@@ -356,10 +365,9 @@ const Chat = () => {
 
             </div>
 
-            <div className="mx-2 p-2 bg-white rounded-lg border border-emerald-200 w-full sm:w-full sm:max-w-md md:max-w-lg lg:max-w-xl">
-    <ChatWindow />
-</div>
-
+            <div className="mx-2 mt-5 p-2 bg-white rounded-lg border border-emerald-200 max-w-full sm:max-w-md md:max-w-lg lg:max-w-xl">
+                <ChatWindow />
+            </div>
 
 
         </div>

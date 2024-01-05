@@ -36,7 +36,7 @@ const WalletDashboard = () => {
         {/* Sidebar for the Wallet */}
         <WalletSidebar changeComponent={setActiveComponent} />
         {/* Main content area */}
-        <div className="mx-4 mt-8 p-4 rounded-lg border border-gray-200 flex-grow flex flex-col">
+        <div className="mx-4 mt-8  rounded-lg  flex-grow flex flex-col">
           {/* Render the active component */}
           {componentMap[activeComponent] || <p>Component not found</p>}
         </div>

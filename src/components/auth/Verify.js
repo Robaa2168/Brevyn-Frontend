@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Confetti from 'react-confetti';
 import Lottie from 'lottie-react';
 import successAnimation from '../lottie/success-animation.json';
 import successConfetti from '../lottie/success-confetti.json';
@@ -10,6 +11,7 @@ const Verify = () => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
+    const [showConfetti, setShowConfetti] = useState(false); 
     const [loading, setLoading] = useState(false);
     const [timeLeft, setTimeLeft] = useState(null);
     const navigate = useNavigate();
@@ -38,6 +40,8 @@ const Verify = () => {
             const response = await api.post('/api/auth/verify-first-time-user', { email, verificationCode: code });
             if (response.status === 200) {
                 setSuccess(true);
+                setShowConfetti(true); 
+                setTimeout(() => setShowConfetti(false), 10000);
             } else {
                 setError('Verification failed. Please try again or resend the code.');
             }
@@ -80,6 +84,7 @@ const Verify = () => {
     if (success) {
         return (
             <div className="flex flex-col items-center justify-center w-full p-4">
+                {showConfetti && <Confetti />}
                 <div className="relative w-full h-64 md:h-96">
                     <Lottie animationData={successConfetti} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
                     <Lottie animationData={successAnimation} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />

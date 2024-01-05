@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import api from '../../api';
 import { FaRegClock, FaShieldAlt, FaRegStar, FaCheck, FaCheckCircle, FaThumbsUp, FaThumbsDown, FaInfoCircle } from 'react-icons/fa';
 import { HiOutlineExclamationCircle, HiOutlineChevronDown, HiOutlineChevronUp } from 'react-icons/hi';
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../context";
 
 const PurchasePage = () => {
@@ -27,7 +27,7 @@ const PurchasePage = () => {
             toast.error("Please enter a valid amount of points to buy.");
             return; // Exit the function early
         }
-    
+
         setLoading(true);
         try {
             const amount = points; // Assuming 1 point = 1 USD
@@ -39,19 +39,19 @@ const PurchasePage = () => {
                     Authorization: `Bearer ${user.token}`,
                 }
             });
-    
+
             // Check response status and navigate with tradeId
             if (response.status === 200 || response.status === 201) {
                 toast.success('Trade started successfully! Redirecting...');
-                
+
                 // Extract tradeId from the response
                 const tradeId = response.data.tradeId;
-    
+
                 // Delay navigation to allow the user to read the toast message
                 setTimeout(() => {
                     navigate(`/chat/${tradeId}`); // Navigate to chat with the tradeId
                 }, 5000); // Adjust time as needed
-    
+
             } else {
                 throw new Error('Failed to initiate trade. Please try again.');
             }
@@ -61,7 +61,7 @@ const PurchasePage = () => {
             setLoading(false);
         }
     };
-    
+
 
 
 
@@ -126,28 +126,31 @@ const PurchasePage = () => {
                             id="tradePartnerBank"
                             className="p-2 border rounded text-xs sm:text-xs md:text-sm  focus:outline-none focus:ring-emerald-500 focus:border-emerald-500r"
                         >
-                            <option value="equity">Equity</option>
+                            <option value="None">Not specified</option>
                             {/* Add more options here */}
                         </select>
                     </div>
                 </div>
                 <div className="flex flex-col p-4 gap-4">
                     <div className="flex flex-col md:flex-row w-full gap-2 md:gap-4 mb-4">
-                    <button
-    onClick={handleBuyNowClick}
-    disabled={loading}
-    className={`w-full sm:w-auto border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white py-2 px-4 rounded transition duration-300 ${loading ? "bg-emerald-500 text-white" : ""
-    }`}
->
-    <div className="flex items-center justify-center"> 
-        {loading ? <FaSpinner className="animate-spin mr-2" /> : null}
-        {loading ? "Starting Trade..." : "Start Trade"}
-    </div>
-</button>
+                        <button
+                            onClick={handleBuyNowClick}
+                            disabled={loading}
+                            className={`w-full sm:w-auto border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white py-2 px-4 rounded transition duration-300 ${loading ? "bg-emerald-500 text-white" : ""
+                                }`}
+                        >
+                            <div className="flex items-center justify-center">
+                                {loading ? <FaSpinner className="animate-spin mr-2" /> : null}
+                                {loading ? "Starting Trade..." : "Start Trade"}
+                            </div>
+                        </button>
 
 
 
-                        <button className="border border-gray-300 text-gray-600 hover:bg-gray-300 hover:text-white py-2 px-4 rounded ">
+                        <button
+                            className="border border-gray-300 text-gray-600 hover:bg-gray-300 hover:text-white py-2 px-4 rounded"
+                            onClick={() => navigate(-1)}
+                        >
                             Cancel
                         </button>
                     </div>
