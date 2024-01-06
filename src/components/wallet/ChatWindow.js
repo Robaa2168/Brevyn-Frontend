@@ -20,25 +20,9 @@ const ChatWindow = (tradeId) => {
     const [messages, setMessages] = useState([
         {
             id: 1,
-            text: "Hello, I'm interested in this item.",
-            sender: 'buyer', // Assuming 'buyer' and 'seller' are the identifiers you use
-            timestamp: new Date(), // Directly using Date object
-            isSending: false,
-            sendFailed: false,
-        },
-        {
-            id: 2,
-            text: "Great! What would you like to know?",
+            text: "When I am not available online, please feel free to reach out to me via WhatsApp at +254769100152.",
             sender: 'seller',
-            timestamp: new Date(new Date().getTime() - 2 * 60000), // 2 minutes ago
-            isSending: false,
-            sendFailed: false,
-        },
-        {
-            id: 3,
-            text: "Can you tell me more about its condition and history?",
-            sender: 'buyer',
-            timestamp: new Date(new Date().getTime() - 1 * 60000), // 1 minute ago
+            timestamp: new Date(),
             isSending: false,
             sendFailed: false,
         }
