@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
-import Sidebar from './Sidebar';
+import SidebarCommon from './SidebarCommon';
 import Lottie from "lottie-react";
 import successAnimation from "./lottie/success-animation.json";
 import successConfetti from './lottie/success-confetti.json';

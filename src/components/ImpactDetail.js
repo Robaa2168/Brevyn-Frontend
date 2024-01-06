@@ -143,7 +143,7 @@ const ImpactDetail = () => {
 
 
     const handleShareClick = async () => {
-        const url = `https://brevyn.vercel.app/impact/${id}`; // Construct the URL to be shared
+        const url = `https://verdantcharity.org/impact/${id}`;
 
         if (navigator.share) {
             // Use the Web Share API

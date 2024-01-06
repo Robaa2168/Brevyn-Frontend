@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // useHistory for navigation
+import { useParams, useNavigate } from 'react-router-dom'; 
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useUser } from './context';
 import api from '../api';
-import Sidebar from './Sidebar';
-import { FaCopy, FaEdit, FaTrashAlt, FaToggleOn, FaToggleOff } from 'react-icons/fa';
+import SidebarCommon from './SidebarCommon';
+import { FaCopy, FaShareAlt, FaEdit, FaTrashAlt, FaToggleOn, FaToggleOff } from 'react-icons/fa';
 import { FaSpinner } from 'react-icons/fa';
 import Lottie from 'lottie-react';
 import loadingAnimation from './lottie/loading.json';
@@ -38,8 +40,36 @@ const DonationsPreviewPage = () => {
     const [error, setError] = useState('');
     const [action, setAction] = useState('');
     const [copySuccess, setCopySuccess] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false); // For controlling modal display
-    const [modalType, setModalType] = useState(''); // To distinguish between delete and deactivate
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalType, setModalType] = useState('');
+    const donationUrl = `https://verdantcharity.org/donate/${linkData?.uniqueIdentifier}`;
+
+    const handleCopyClick = async () => {
+        try {
+            await navigator.clipboard.writeText(donationUrl);
+            setCopySuccess('Copied!');
+            setTimeout(() => setCopySuccess(''), 2000);
+        } catch (err) {
+            setCopySuccess('Failed to copy!');
+        }
+    };
+
+    const handleShareClick = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: "Support our cause!",
+                    text: "Check out this donation link and help support a great cause!",
+                    url: donationUrl,
+                });
+            } catch (error) {
+                toast.error("Error sharing: " + error);
+            }
+        } else {
+            // Fallback if Web Share API is not supported
+            handleCopyClick();
+        }
+    };
 
 
 
@@ -127,18 +157,6 @@ const DonationsPreviewPage = () => {
     };
 
 
-
-
-    const handleCopyClick = async () => {
-        try {
-            await navigator.clipboard.writeText(`https://brevyn.vercel.app/donate/${linkData.uniqueIdentifier}`);
-            setCopySuccess('Copied!');
-            setTimeout(() => setCopySuccess(''), 2000);
-        } catch (err) {
-            setCopySuccess('Failed to copy!');
-        }
-    };
-
     const openModal = (type) => {
         setModalType(type);
         setIsModalOpen(true);
@@ -162,8 +180,9 @@ const DonationsPreviewPage = () => {
 
     return (
         <div className="bg-emerald-50 min-h-screen pb-20 flex flex-col">
+             <ToastContainer position="top-center" />
             <div className="container mx-auto px-2 sm:px-4 lg:flex lg:flex-row rounded-lg border border-gray-200">
-                <Sidebar />
+                <SidebarCommon />
                 <div className="flex-grow mx-2 sm:mx-4 my-4 sm:my-8 p-2 sm:p-4 py-4 sm:py-8 bg-white rounded-lg border border-gray-200 flex flex-col shadow-sm">
                     <div className="w-full max-w-3xl mx-auto">
                         {isLoading ? (
@@ -213,10 +232,13 @@ const DonationsPreviewPage = () => {
                                     <div className="flex bg-gray-100 p-2 rounded items-center">
                                         {/* Content fitting div */}
                                         <span className="text-xs block overflow-hidden text-ellipsis whitespace-nowrap sm:text-sm">
-                                            {truncateURL(`https://brevyn.vercel.app/donation/${linkData.uniqueIdentifier}`, 22)}
+                                            {truncateURL(`https://verdantcharity.org/donation/${linkData.uniqueIdentifier}`, 22)}
                                         </span>
                                         <button onClick={handleCopyClick} className="ml-2 text-blue-500 hover:text-blue-700 transition duration-200">
                                             <FaCopy />
+                                        </button>
+                                        <button onClick={handleShareClick} className="ml-2 text-blue-500 hover:text-blue-700 transition duration-200">
+                                            <FaShareAlt />
                                         </button>
                                     </div>
                                     {copySuccess && <span className="text-green-500 text-xs">{copySuccess}</span>}

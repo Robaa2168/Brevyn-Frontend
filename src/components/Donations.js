@@ -93,7 +93,7 @@ const DonationPage = () => {
 
 
   const shareLink = async () => {
-    const url = `https://brevyn.vercel.app/donation/${linkData.uniqueIdentifier}`;
+    const url = `https://verdantcharity.org/donation/${linkData.uniqueIdentifier}`;
     if (navigator.share) {
       try {
         await navigator.share({
@@ -164,7 +164,7 @@ const DonationPage = () => {
         <meta name="description" content={`Help support ${linkData?.title} by donating. Every bit helps!`} />
         
         {/* Standard meta tags */}
-        <meta property="og:url" content={`https://brevyn.vercel.app/donation/${linkData?.uniqueIdentifier}`} />
+        <meta property="og:url" content={`https://verdantcharity.org/donation/${linkData?.uniqueIdentifier}`} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={`Donate to ${linkData?.title}`} />
         <meta property="og:description" content={`Help support ${linkData?.title} by donating. Every bit helps!`} />
@@ -325,7 +325,7 @@ const DonationPage = () => {
                 <span className="text-xs font-medium shrink-0">Donation Link:</span>
                 <div className="flex bg-gray-100 p-2 rounded items-center justify-between flex-1">
                   <span className="text-xs block overflow-hidden text-ellipsis whitespace-nowrap sm:text-sm">
-                    {truncateURL(`https://brevyn.vercel.app/donation/${linkData.uniqueIdentifier}`, 22)}
+                    {truncateURL(`https://verdantcharity.org/donation/${linkData.uniqueIdentifier}`, 22)}
                   </span>
                   <button onClick={shareLink} className="ml-2 text-blue-500 hover:text-blue-700 transition duration-200">
                     <FaShareAlt />

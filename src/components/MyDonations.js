@@ -163,7 +163,7 @@ const MyDonations = () => {
                                     </span>
                                     <button
                                         onClick={() => viewDonationLink(link._id)}
-                                        className="mt-2 sm:mt-0 sm:ml-3 text-xs md:text-sm border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white transition-colors duration-300 py-2 px-4 rounded w-full md:w-auto"
+                                        className="mt-2 sm:mt-0 sm:ml-3 text-xs md:text-sm border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white transition-colors duration-300 py-1 px-3 rounded w-full md:w-auto"
                                     >
                                         View
                                     </button>
