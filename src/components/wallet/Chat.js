@@ -376,8 +376,8 @@ const Chat = () => {
 
             </div>
 
-            <div className="mx-2 mt-5 p-2 bg-white rounded-lg border border-emerald-200 max-w-full sm:max-w-md md:max-w-lg lg:max-w-xl">
-                <ChatWindow />
+            <div className="mx-2 mt-5 p-2 bg-gray-100 rounded-lg border border-emerald-200 max-w-full sm:max-w-md md:max-w-lg lg:max-w-xl">
+            <ChatWindow tradeId={tradeId} />
             </div>
 
 
