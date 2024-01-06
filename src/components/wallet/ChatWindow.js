@@ -48,8 +48,8 @@ const ChatWindow = (tradeId) => {
 
     const sellerProfile = {
         _id: '658db0c10bfefbb749a5c308',
-        name: 'Mc_Gold',
-        image: 'https://via.placeholder.com/150',
+        name: 'Moses Brian',
+        image: 'https://www.cnet.com/a/img/resize/4b3bde578e41360ad45f304c9b9dcf7ec34f2fe0/hub/2022/01/20/da5044c6-4761-4ce4-b525-ee5da320a262/dsc01530.jpg?auto=webp&width=1200',
         lastSeen: 'online',
         positiveFeedback: 787,
         negativeFeedback: 0,
