@@ -157,7 +157,7 @@ const PurchasePage = () => {
                     <div className="border-t border-gray-300 pt-4">
                         <p className="flex items-center justify-center text-gray-500 text-xs">
                             <FaShieldAlt className="mr-1" />
-                            Secure escrow + Automated trade with SassyZingel394
+                            Secure escrow + Automated trade with Moses
                         </p>
                     </div>
                 </div>
