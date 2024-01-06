@@ -84,7 +84,7 @@ function setTawkAttributes() {
       {!isExcludedRoute && <Navbar />}
       
       <Routes>
-        <Route path="*" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      <Route path="*" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -101,7 +101,7 @@ function setTawkAttributes() {
         <Route path="/donation-link/:id"  element={<ProtectedRoute><DonationsPreviewPage /></ProtectedRoute>} />
         <Route path="/link/edit/:id"  element={<ProtectedRoute><EditDonationLink /></ProtectedRoute>} />
         <Route path="/CreateImpact"  element={<ProtectedRoute><CreateImpact /></ProtectedRoute>} />
-        <Route path="/impact/:id"  element={<ProtectedRoute><ImpactDetail /></ProtectedRoute>} />
+        <Route path="/impact/:id"  element={<ImpactDetail />} />
       </Routes>
       {!isExcludedRoute && <Footer />}
     </>
