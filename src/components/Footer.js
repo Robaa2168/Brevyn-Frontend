@@ -48,7 +48,7 @@ const Footer = () => {
                 </div>
 
                 {/* Hand Holding Heart Icon */}
-                <div className="icon volunteer-icon text-emerald-500" onClick={() => navigate('/donations')}>
+                <div className="icon volunteer-icon text-emerald-500" onClick={() => navigate('/dashboard')}>
                     <FaHandHoldingHeart size={20} />
                 </div>
 
