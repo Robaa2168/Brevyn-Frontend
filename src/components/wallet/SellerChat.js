@@ -7,14 +7,13 @@ import unavailableAnimation from '../lottie/noChats.json';
 import { FaSpinner } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../api';
-import { useSocket } from '../../SocketContext'; 
+import Pusher from 'pusher-js';
 import { useUser } from "../context";
 import { FaRegClock, FaExclamationCircle, FaThumbsUp, FaThumbsDown, FaPaperclip, FaPaperPlane } from 'react-icons/fa';
 
 
 
 const SellerChat = (tradeId) => {
-    const socket = useSocket();
     const [newMessage, setNewMessage] = useState('');
     const messagesContainerRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -187,27 +186,33 @@ const SellerChat = (tradeId) => {
 
 
     useEffect(() => {
-        if (socket) { 
-            console.log('Setting up socket listeners');
-    
-            socket.on('newMessage', (data) => {
-                console.log('New message received:', data);
-                const incomingMessage = transformMessage(data.message);
-    
-                // Check if the incoming message's sender ID matches the current user's ID
-                if(data.senderId !== user._id) {
-                    setMessages((currentMessages) => [...currentMessages, incomingMessage]);
-                }
-            });
-    
-            return () => {
-                console.log('Removing socket listeners');
-                socket.off('newMessage');
-            };
-        } else {
-            console.log('Socket not initialized');
-        }
-    }, [socket, user._id]);
+        // Initialize Pusher
+        const pusher = new Pusher('8230d8927179fce2bde6', {
+            cluster: 'ap2'
+        });
+
+        // Subscribe to the channel
+        const channel = pusher.subscribe(`chat-${tradeId.tradeId}`);
+
+        // Bind to the 'newMessage' event
+        channel.bind('newMessage', function(data) {
+            console.log('New message received:', data);
+            const incomingMessage = transformMessage(data.message);
+
+            // Check if the incoming message's sender ID matches the current user's ID
+            if(data.senderId !== user._id) {
+                setMessages((currentMessages) => [...currentMessages, incomingMessage]);
+            }
+        });
+
+        return () => {
+            // Unbind event and unsubscribe channel when component unmounts
+            channel.unbind('newMessage');
+            channel.unsubscribe();
+            pusher.disconnect();
+            console.log('Pusher disconnected');
+        };
+    }, [tradeId, user._id]); // Depend on tradeId and user._id to reconnect if they change
     
 
 
