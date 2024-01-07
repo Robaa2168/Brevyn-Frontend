@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useUser } from "./context";
 import { useNavigate } from 'react-router-dom';
+import api from '../api';
 import Sidebar from './Sidebar';
 import ChangePassword  from './ChangePassword';
 import DonationsSummary from './DonationsSummary';
@@ -17,15 +18,39 @@ import Kyc from './Kyc';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user, login } = useUser();
   // State to manage which component is displayed
   const [activeComponent, setActiveComponent] = useState('donationsSummary');
 
   useEffect(() => {
+    // Redirect to login if no user token exists
     if (!user || !user.token) {
       navigate('/login');
+    } else {
+      // Fetch updated user data when dashboard is visited
+      const fetchUserData = async () => {
+        try {
+          const config = {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${user.token}`
+            }
+          };
+          const response = await api.get('/api/auth/info', config);
+          if (response.status === 200) {
+            // Update context by spreading the existing user and overriding with new data
+            login({ ...user, ...response.data }); // Spread and update
+          } else {
+            console.error('Failed to fetch user data, status code:', response.status);
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+      fetchUserData();
     }
-  }, [user, navigate]);
+  }, []);
+  
 
 
   // Object to map component keys to component render functions
