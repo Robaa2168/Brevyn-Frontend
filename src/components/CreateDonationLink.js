@@ -5,8 +5,10 @@ import axios from 'axios'; // For image upload
 import Lottie from "lottie-react";
 import successAnimation from "./lottie/success-animation.json";
 import successConfetti from './lottie/success-confetti.json';
-import { FaSpinner } from 'react-icons/fa';
+import { FaCopy } from 'react-icons/fa';
 import { useUser } from "./context";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateDonationLink = ({ setShowCreateLink }) => {
     const { user } = useUser();
@@ -23,6 +25,7 @@ const CreateDonationLink = ({ setShowCreateLink }) => {
     const [descriptionError, setDescriptionError] = useState('');
     const [titleError, setTitleError] = useState('');
     const [amountError, setAmountError] = useState('');
+    const [uniqueIdentifier, setUniqueIdentifier] = useState('');
 
     const validateTitle = (title) => {
         if (title.length < 5) {
@@ -133,6 +136,7 @@ const CreateDonationLink = ({ setShowCreateLink }) => {
             });
 
             if (response.status === 201) {
+                setUniqueIdentifier(response.data.link.uniqueIdentifier);
                 setIsSuccessful(true);
             } else {
                 setError('Failed to generate donation link. Please try again.');
@@ -142,6 +146,17 @@ const CreateDonationLink = ({ setShowCreateLink }) => {
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    const handleCopyClick = () => {
+        const donationUrl = `https://verdantcharity.org/donate/${uniqueIdentifier}`;
+        navigator.clipboard.writeText(donationUrl)
+            .then(() => {
+                toast.success("Copied to clipboard successfully!");
+            })
+            .catch(() => {
+                toast.error("Failed to copy!");
+            });
     };
 
     return (
@@ -250,6 +265,7 @@ const CreateDonationLink = ({ setShowCreateLink }) => {
                 </>
             ) : (
                 <div className="flex  flex-col items-center justify-center w-full p-2">
+                    <ToastContainer />
                     {/* Success Animations */}
                     <div className="relative  w-full h-64">
                         <Lottie animationData={successConfetti} style={{ position: 'absolute', width: '100%', height: '100%' }} />
@@ -259,11 +275,11 @@ const CreateDonationLink = ({ setShowCreateLink }) => {
                     <p className="text-lg font-semibold text-emerald-700 mt-4 text-center">Donation Link Created Successfully!</p>
 
                     <button
-                        onClick={() => setShowCreateLink(false)}
-                        className="mt-4 text-emerald-500 border border-emerald-500 hover:bg-emerald-500 hover:text-white transition duration-300 py-2 px-4 rounded text-sm bg-emerald-500 bg-opacity-10"
-                    >
-                        Done
-                    </button>
+                onClick={handleCopyClick}
+                className="mt-4 text-emerald-500 border border-emerald-500 hover:bg-emerald-500 hover:text-white transition duration-300 py-2 px-4 rounded text-sm bg-emerald-500 bg-opacity-10 flex items-center justify-center"
+            >
+                <FaCopy className="mr-2" /> Copy Link
+            </button>
                 </div>
             )}
         </div>
