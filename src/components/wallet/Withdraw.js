@@ -92,7 +92,7 @@ const Withdraw = () => {
                         borderRadius: '4px',
                         fontSize: '14px',
                         color: '#424242' // adjust as needed
-                    }}>For international transactions, please allow 1-3 days for the funds to reflect in your account</p>
+                    }}>For international transactions, please allow 1-2 hours for the funds to reflect in your account</p>
                     {error && (
                         <div className="mb-4 p-4 text-xs sm:text-xs  bg-red-100 border-l-4 border-red-500 text-red-700">
                             <p>{error}</p>
