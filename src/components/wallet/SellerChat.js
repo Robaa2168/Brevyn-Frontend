@@ -1,4 +1,4 @@
-// ChatWindow.js
+// SellerChat.js
 import React, { useState, useEffect, useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import Lottie from "lottie-react";
@@ -11,7 +11,9 @@ import { useSocket } from '../../SocketContext';
 import { useUser } from "../context";
 import { FaRegClock, FaExclamationCircle, FaThumbsUp, FaThumbsDown, FaPaperclip, FaPaperPlane } from 'react-icons/fa';
 
-const ChatWindow = (tradeId) => {
+
+
+const SellerChat = (tradeId) => {
     const socket = useSocket();
     const [newMessage, setNewMessage] = useState('');
     const messagesContainerRef = useRef(null);
@@ -84,21 +86,22 @@ const ChatWindow = (tradeId) => {
             current.scrollTop = current.scrollHeight;
         }
     }, [messages]);
+    
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
         if (newMessage.trim() === '') return;
 
-        const tempId = `temp-${Date.now()}`;  // Assigning a temporary ID to the new message
+        const tempId = `temp-${Date.now()}`;
 
         const tempMessage = {
             id: tempId,
             text: newMessage,
-            sender: 'buyer',  // Assuming 'buyer' is the current user
+            sender: 'seller', 
             timestamp: new Date(),
             isSending: true,
         };
-        setMessages(messages => [...messages, tempMessage]); // Updating the messages state
+        setMessages(messages => [...messages, tempMessage]);
         setNewMessage('');
 
         try {
@@ -181,6 +184,7 @@ const ChatWindow = (tradeId) => {
             toast.error("Failed to resend message.");
         }
     };
+
 
     useEffect(() => {
         if (socket) { 
@@ -329,4 +333,4 @@ const ChatWindow = (tradeId) => {
     );
 };
 
-export default ChatWindow;
+export default SellerChat;

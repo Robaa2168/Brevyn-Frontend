@@ -1,4 +1,4 @@
-// Chat.js
+// SellerPortal.js
 import React, { useState, useEffect, useRef } from 'react';
 import { FaTimesCircle, } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
@@ -9,10 +9,10 @@ import api from '../../api';
 import { useUser } from "../context";
 import Modal from './Modal';
 import { useNavigate } from 'react-router-dom';
-import ChatWindow from './ChatWindow';
+import SellerChat from './SellerChat';
 
 
-const Chat = () => {
+const SellerPortal = () => {
     const navigate = useNavigate();
     const { user } = useUser();
 
@@ -378,7 +378,7 @@ const Chat = () => {
             </div>
 
             <div className="mx-2 mt-5 p-2 bg-gray-100 rounded-lg border border-emerald-200 max-w-full sm:max-w-md md:max-w-lg lg:max-w-xl">
-            <ChatWindow tradeId={tradeId} />
+            <SellerChat tradeId={tradeId} />
             </div>
 
 
@@ -386,4 +386,4 @@ const Chat = () => {
     );
 };
 
-export default Chat;
+export default SellerPortal;

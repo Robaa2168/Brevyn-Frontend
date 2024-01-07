@@ -16,6 +16,8 @@ import ProtectedRoute from './ProtectedRoute';
 import WalletDashboard from './wallet/WalletDashboard';
 import PurchasePage from './wallet/PurchasePage';
 import Chat from './wallet/Chat';
+import SellerPortal from './wallet/SellerPortal';
+import SellerHistory from './wallet/SellerHistory';
 import Donations from './Donations';
 import DonationsPreviewPage from './DonationsPreviewPage';
 import EditDonationLink from './EditDonationLink';
@@ -96,7 +98,9 @@ function setTawkAttributes() {
         <Route path="/dashboard"  element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/wallet"  element={<ProtectedRoute><WalletDashboard /></ProtectedRoute>} />
         <Route path="/purchase"  element={<ProtectedRoute><PurchasePage /></ProtectedRoute>} />
+        <Route path="/sellerTrades"  element={<ProtectedRoute><SellerHistory /></ProtectedRoute>} />
         <Route path="/chat/:tradeId"  element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+        <Route path="/portal/:tradeId"  element={<ProtectedRoute><SellerPortal /></ProtectedRoute>} />
         <Route path="/donate/:uniqueIdentifier" element={<Donations />} />
         <Route path="/donation-link/:id"  element={<ProtectedRoute><DonationsPreviewPage /></ProtectedRoute>} />
         <Route path="/link/edit/:id"  element={<ProtectedRoute><EditDonationLink /></ProtectedRoute>} />
