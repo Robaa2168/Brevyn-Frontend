@@ -8,12 +8,10 @@ import { FaSpinner } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../api';
 import Pusher from 'pusher-js';
-import { useSocket } from '../../SocketContext'; 
 import { useUser } from "../context";
 import { FaRegClock, FaExclamationCircle, FaThumbsUp, FaThumbsDown, FaPaperclip, FaPaperPlane } from 'react-icons/fa';
 
 const ChatWindow = (tradeId) => {
-    const socket = useSocket();
     const [newMessage, setNewMessage] = useState('');
     const messagesContainerRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
