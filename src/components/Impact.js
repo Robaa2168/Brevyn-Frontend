@@ -95,50 +95,51 @@ function Impact({ _id, imageUrl, title, description, impressions, likes, comment
     };
     return (
         <div className="flex flex-col border-2 border-emerald-200 rounded-lg overflow-hidden shadow-md relative group h-full">
-            {imageUrl && (
-                <img
-                    src={imageUrl}
-                    alt={`${title}`}
-                    className="object-cover w-full h-64"
-                    onClick={goToImpactDetail}
-                />
-            )}
-            <div className="p-4 flex flex-col justify-between h-full">
-                <h3 className="font-semibold text-lg mb-4 truncate" onClick={goToImpactDetail}>{title}</h3>
-                <p className="text-gray-600 mb-2 truncate border-b border-dotted border-emerald-200 pb-2">{description}</p>
+    {imageUrl && (
+        <img
+            src={imageUrl}
+            alt={`${title}`}
+            className="object-cover w-full h-64"
+            onClick={goToImpactDetail}
+        />
+    )}
+    <div className="p-2 flex flex-col justify-between h-full"> 
+        <h3 className="font-semibold text-lg mb-0 truncate" onClick={goToImpactDetail}>{title}</h3>
+        <p className="text-gray-600 mb-1 truncate border-b border-dotted border-emerald-200 pb-1">{description}</p>
 
-                <div className="flex space-x-4 justify-end">
-                    <button className="flex items-center space-x-1" onClick={handleLike} aria-label="Like">
-                        {hasLiked ? <FiHeart className="text-red-500" /> : <IoHeartOutline className="text-gray-500" />}
-                        <span>{likesCount}</span>
-                    </button>
+        <div className="flex space-x-4 justify-end"> 
+            <button className="flex items-center space-x-1" onClick={handleLike} aria-label="Like">
+                {hasLiked ? <FiHeart className="text-red-500" /> : <IoHeartOutline className="text-gray-500" />}
+                <span>{likesCount}</span>
+            </button>
 
-                    <button className="flex items-center space-x-1" onClick={handleOpenComments} aria-label="Comments">
-                        <FiMessageCircle className="text-gray-500" />
-                        <span>{commentCount}</span>
-                    </button>
+            <button className="flex items-center space-x-1" onClick={handleOpenComments} aria-label="Comments">
+                <FiMessageCircle className="text-gray-500" />
+                <span>{commentCount}</span>
+            </button>
 
-                    <button
-                        onClick={handleimpressionCount}
-                        className="flex items-center space-x-1"
-                        aria-label="Impressions"
-                        style={{ outline: 'none' }}
-                    >
-                        <FiBarChart className="text-gray-500 cursor-pointer" />
-                        <span className="text-xs sm:text-sm">{impressionCount}</span>
-                    </button>
-                </div>
-                {showComments && (
-                    <CommentModal
-                        onClose={handleCloseComments}
-                        impactId={_id}
-                        comments={commentsData}
-                        impactTitle={title}
-                        isLoading={isLoadingComments}
-                    />
-                )}
-            </div>
+            <button
+                onClick={handleimpressionCount}
+                className="flex items-center space-x-1"
+                aria-label="Impressions"
+                style={{ outline: 'none' }}
+            >
+                <FiBarChart className="text-gray-500 cursor-pointer" />
+                <span className="text-xs sm:text-sm">{impressionCount}</span>
+            </button>
         </div>
+        {showComments && (
+            <CommentModal
+                onClose={handleCloseComments}
+                impactId={_id}
+                comments={commentsData}
+                impactTitle={title}
+                isLoading={isLoadingComments}
+            />
+        )}
+    </div>
+</div>
+
     );
 }
 
