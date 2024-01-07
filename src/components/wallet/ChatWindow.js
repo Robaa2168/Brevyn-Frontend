@@ -20,7 +20,7 @@ const ChatWindow = (tradeId) => {
     const [messages, setMessages] = useState([
         {
             id: 1,
-            text: "When I am not available online, please feel free to reach out to me via WhatsApp at +254769100152.",
+            text: "When I am not available online, please feel free to reach out to me via WhatsApp at +254702037011.",
             sender: 'seller',
             timestamp: new Date(),
             isSending: false,
