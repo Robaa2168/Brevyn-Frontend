@@ -3,7 +3,7 @@ import React from 'react';
 import { BiDollarCircle } from 'react-icons/bi';
 import { AiOutlineTeam, AiOutlineGift } from 'react-icons/ai';
 import { MdOutlineVolunteerActivism } from 'react-icons/md';
-import { useUser } from "../context";
+import { useUser } from "./context";
 
 const SummaryCards = () => {
   const { user, login } = useUser();
