@@ -132,6 +132,7 @@ useEffect(() => {
     
 
     const handleSendMessage = async (e) => {
+        setIsActive(true);
         e.preventDefault();
         if (newMessage.trim() === '') return;
 
