@@ -18,6 +18,8 @@ const ChatWindow = (tradeId) => {
     const [isError, setIsError] = useState(false);
     const sendAudio = new Audio('/send.mpeg');
     const { user } = useUser();
+    const [isActive, setIsActive] = useState(false);
+    const activityTimeoutRef = useRef(null);
     const [messages, setMessages] = useState([
         {
             id: 1,
@@ -40,40 +42,82 @@ const ChatWindow = (tradeId) => {
         negativeFeedback: 0,
     };
 
-    // Fetch messages when the component mounts or tradeId changes
-    useEffect(() => {
-        const fetchMessages = async () => {
-            setIsLoading(true);
-            try {
-                const response = await api.get(`/api/chat/get-messages?tradeId=${tradeId.tradeId}`, {
-                    headers: { Authorization: `Bearer ${user.token}` },
-                });
+ // Function to fetch messages
+// Function to fetch messages
+const fetchMessages = async (isPolling = false) => {
+    console.log(`Fetching messages. Polling: ${isPolling}`);  // Log when fetching messages
+    
+    // Only show loader on initial load, not during polling
+    if (!isPolling) {
+        setIsLoading(true);
+    }
 
-                // Transform the fetched messages
-                const fetchedMessages = response.data.map((message, index) => ({
-                    id: message._id,  // Ensuring each message has a unique id
-                    text: message.message,
-                    sender: message.sender === user._id ? 'buyer' : 'seller',
-                    timestamp: new Date(message.createdAt), // Ensuring timestamp is a Date object
-                    isSending: false,
-                    sendFailed: false,
-                }));
+    try {
+        const response = await api.get(`/api/chat/get-messages?tradeId=${tradeId.tradeId}`, {
+            headers: { Authorization: `Bearer ${user.token}` },
+        });
 
-                // Append the fetched messages to the existing ones
-                setMessages(existingMessages => [...existingMessages, ...fetchedMessages]);
-                setIsError(false);
-            } catch (error) {
-                console.error("Error fetching messages:", error);
-                setIsError(true);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+        const fetchedMessages = response.data.map(message => ({
+            id: message._id,
+            text: message.message,
+            sender: message.sender === user._id ? 'buyer' : 'seller',
+            timestamp: new Date(message.createdAt),
+            isSending: false,
+            sendFailed: false,
+        }));
 
-        if (tradeId.tradeId) {
-            fetchMessages();
+        console.log(`Fetched ${fetchedMessages.length} messages`);
+
+        // Append all messages on initial fetch, and replace with new messages during polling
+        setMessages(existingMessages => !isPolling ? [...existingMessages, ...fetchedMessages] : fetchedMessages);
+        console.log(!isPolling ? 'Appended all fetched messages' : 'Polling: Replaced messages');
+
+        setIsError(false);
+    } catch (error) {
+        console.error("Error fetching messages:", error);
+        setIsError(true);
+    } finally {
+        // Set loading to false only if it was set to true initially
+        if (!isPolling) {
+            setIsLoading(false);
         }
-    }, [tradeId.tradeId, user?.token]);
+    }
+};
+
+
+// Effect for initial messages fetch
+useEffect(() => {
+    if (tradeId.tradeId) {
+        console.log('Component mounted or tradeId/token changed. Fetching initial messages.');
+        fetchMessages(); 
+    }
+}, [tradeId.tradeId, user?.token]);
+
+// Effect for setting up polling
+useEffect(() => {
+    if (isActive && tradeId.tradeId) {
+        console.log('Setting up polling for new messages');
+        const intervalId = setInterval(() => fetchMessages(true), 30000);
+        return () => {
+            console.log('Clearing polling interval');
+            clearInterval(intervalId);
+        };
+    }
+}, [isActive, tradeId.tradeId, user?.token]);
+
+// Effect for managing user activity and inactivity timeout
+useEffect(() => {
+    const handleInactivityTimeout = () => {
+        console.log('User inactive for 5 minutes. Setting isActive to false');
+        setIsActive(false);
+    };
+    if (isActive) {
+        clearTimeout(activityTimeoutRef.current);
+        activityTimeoutRef.current = setTimeout(handleInactivityTimeout, 5 * 60 * 1000); // 5 minutes
+        console.log('User active. Resetting inactivity timeout');
+    }
+    return () => clearTimeout(activityTimeoutRef.current);
+}, [isActive]);
 
 
     // Ensure the chat window scrolls to the latest message
@@ -85,6 +129,7 @@ const ChatWindow = (tradeId) => {
     }, [messages]);
 
     const handleSendMessage = async (e) => {
+        setIsActive(true);
         e.preventDefault();
         if (newMessage.trim() === '') return;
 
@@ -208,7 +253,7 @@ const ChatWindow = (tradeId) => {
             pusher.disconnect();
             console.log('Pusher disconnected');
         };
-    }, [tradeId, user._id]); // Depend on tradeId and user._id to reconnect if they change
+    }, [tradeId, user._id]);
 
 
 
