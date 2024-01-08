@@ -61,7 +61,7 @@ const fetchMessages = async (isPolling = false) => {
         const fetchedMessages = response.data.map(message => ({
             id: message._id,
             text: message.message,
-            sender: message.sender === user._id ? 'buyer' : 'seller',
+            sender: message.sender === user._id ? 'seller' : 'buyer',
             timestamp: new Date(message.createdAt),
             isSending: false,
             sendFailed: false,
