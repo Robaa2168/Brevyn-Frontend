@@ -84,7 +84,8 @@ const PurchasePage = () => {
                                 type="text"
                                 id="points"
                                 placeholder="points"
-                                className="p-2 pl-2 pr-10 border rounded text-xs sm:text-xs md:text-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 w-full"
+                                className={`p-2 pl-2 pr-10 border rounded text-xs sm:text-xs md:text-sm focus:outline-none 
+                ${parseInt(points, 10) < 50 && points !== '' ? 'border-red-500' : 'focus:ring-emerald-500 focus:border-emerald-500'} w-full`}
                                 value={points}
                                 onChange={handlePointsChange}
                             />
@@ -92,7 +93,11 @@ const PurchasePage = () => {
                                 points
                             </span>
                         </div>
-                        <p className="text-gray-500 text-xs mt-2">Enter points to get started</p>
+                        {parseInt(points, 10) < 50 && points !== '' ? (
+                            <p className="text-red-500 text-xs mt-2">You must enter at least 50 points.</p>
+                        ) : (
+                            <p className="text-gray-500 text-xs mt-2">Enter points to get started</p>
+                        )}
                     </div>
 
                     <div className="flex flex-col w-full md:w-1/2">
@@ -272,7 +277,7 @@ const PurchasePage = () => {
                 </div>
 
             </div>
-        </div>
+        </div >
     );
 };
 
