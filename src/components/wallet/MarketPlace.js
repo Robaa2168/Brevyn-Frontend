@@ -15,7 +15,7 @@ const MarketPlace = () => {
             transactionTime: '30 min',
             rate: '1 USD = 1 point',
             rateChange: '-2%',
-            minPurchase: '10 points',
+            minPurchase: '50 points',
             maxPurchase: '1000 points',
             currency: 'USD'
         },

@@ -180,7 +180,7 @@ const PurchasePage = () => {
                         <div className="text-xs font-semibold flex items-center space-x-1">
                             <HiOutlineChevronDown className="text-green-500" />
                             <span>Min:</span>
-                            <span>10 points</span>
+                            <span>50 points</span>
                         </div>
                         <div className="text-xs font-semibold flex items-center space-x-1">
                             <HiOutlineChevronUp className="text-red-500" />
