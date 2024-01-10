@@ -7,19 +7,16 @@ import unavailableAnimation from '../lottie/noChats.json';
 import { FaSpinner } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../api';
-import Pusher from 'pusher-js';
+import { useSocket } from '../../SocketContext'; 
 import { useUser } from "../context";
 import { FaRegClock, FaExclamationCircle, FaThumbsUp, FaThumbsDown, FaPaperclip, FaPaperPlane } from 'react-icons/fa';
 
-
-
 const SellerChat = (tradeId) => {
+    const socket = useSocket();
     const [newMessage, setNewMessage] = useState('');
     const messagesContainerRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
-    const [isActive, setIsActive] = useState(false);
-    const activityTimeoutRef = useRef(null);
     const sendAudio = new Audio('/send.mpeg');
     const { user } = useUser();
     const [messages, setMessages] = useState([
@@ -44,82 +41,40 @@ const SellerChat = (tradeId) => {
         negativeFeedback: 0,
     };
 
- // Function to fetch messages
-const fetchMessages = async (isPolling = false) => {
-    console.log(`Fetching messages. Polling: ${isPolling}`);  // Log when fetching messages
-    
-    // Only show loader on initial load, not during polling
-    if (!isPolling) {
-        setIsLoading(true);
-    }
+    // Fetch messages when the component mounts or tradeId changes
+    useEffect(() => {
+        const fetchMessages = async () => {
+            setIsLoading(true);
+            try {
+                const response = await api.get(`/api/chat/get-messages?tradeId=${tradeId.tradeId}`, {
+                    headers: { Authorization: `Bearer ${user.token}` },
+                });
 
-    try {
-        const response = await api.get(`/api/chat/get-messages?tradeId=${tradeId.tradeId}`, {
-            headers: { Authorization: `Bearer ${user.token}` },
-        });
+                // Transform the fetched messages
+                const fetchedMessages = response.data.map((message, index) => ({
+                    id: message._id,  // Ensuring each message has a unique id
+                    text: message.message,
+                    sender: message.sender === user._id ? 'buyer' : 'seller',
+                    timestamp: new Date(message.createdAt), // Ensuring timestamp is a Date object
+                    isSending: false,
+                    sendFailed: false,
+                }));
 
-        const fetchedMessages = response.data.map(message => ({
-            id: message._id,
-            text: message.message,
-            sender: message.sender === user._id ? 'seller' : 'buyer',
-            timestamp: new Date(message.createdAt),
-            isSending: false,
-            sendFailed: false,
-        }));
-
-        console.log(`Fetched ${fetchedMessages.length} messages`);
-
-        // Append all messages on initial fetch, and replace with new messages during polling
-        setMessages(existingMessages => !isPolling ? [...existingMessages, ...fetchedMessages] : fetchedMessages);
-        console.log(!isPolling ? 'Appended all fetched messages' : 'Polling: Replaced messages');
-
-        setIsError(false);
-    } catch (error) {
-        console.error("Error fetching messages:", error);
-        setIsError(true);
-    } finally {
-        // Set loading to false only if it was set to true initially
-        if (!isPolling) {
-            setIsLoading(false);
-        }
-    }
-};
-
-
-// Effect for initial messages fetch
-useEffect(() => {
-    if (tradeId.tradeId) {
-        console.log('Component mounted or tradeId/token changed. Fetching initial messages.');
-        fetchMessages(); 
-    }
-}, [tradeId.tradeId, user?.token]);
-
-// Effect for setting up polling
-useEffect(() => {
-    if (isActive && tradeId.tradeId) {
-        console.log('Setting up polling for new messages');
-        const intervalId = setInterval(() => fetchMessages(true), 30000);
-        return () => {
-            console.log('Clearing polling interval');
-            clearInterval(intervalId);
+                // Append the fetched messages to the existing ones
+                setMessages(existingMessages => [...existingMessages, ...fetchedMessages]);
+                setIsError(false);
+            } catch (error) {
+                console.error("Error fetching messages:", error);
+                setIsError(true);
+            } finally {
+                setIsLoading(false);
+            }
         };
-    }
-}, [isActive, tradeId.tradeId, user?.token]);
 
-// Effect for managing user activity and inactivity timeout
-useEffect(() => {
-    const handleInactivityTimeout = () => {
-        console.log('User inactive for 5 minutes. Setting isActive to false');
-        setIsActive(false);
-    };
-    if (isActive) {
-        clearTimeout(activityTimeoutRef.current);
-        activityTimeoutRef.current = setTimeout(handleInactivityTimeout, 5 * 60 * 1000); // 5 minutes
-        console.log('User active. Resetting inactivity timeout');
-    }
-    return () => clearTimeout(activityTimeoutRef.current);
-}, [isActive]);
-
+        if (tradeId.tradeId) {
+            fetchMessages();
+        }
+    }, [tradeId.tradeId, user?.token]);
 
 
     // Ensure the chat window scrolls to the latest message
@@ -129,23 +84,21 @@ useEffect(() => {
             current.scrollTop = current.scrollHeight;
         }
     }, [messages]);
-    
 
     const handleSendMessage = async (e) => {
-        setIsActive(true);
         e.preventDefault();
         if (newMessage.trim() === '') return;
 
-        const tempId = `temp-${Date.now()}`;
+        const tempId = `temp-${Date.now()}`;  // Assigning a temporary ID to the new message
 
         const tempMessage = {
             id: tempId,
             text: newMessage,
-            sender: 'seller', 
+            sender: 'buyer',  // Assuming 'buyer' is the current user
             timestamp: new Date(),
             isSending: true,
         };
-        setMessages(messages => [...messages, tempMessage]);
+        setMessages(messages => [...messages, tempMessage]); // Updating the messages state
         setNewMessage('');
 
         try {
@@ -230,37 +183,6 @@ useEffect(() => {
     };
 
 
-    useEffect(() => {
-        // Initialize Pusher
-        const pusher = new Pusher('8230d8927179fce2bde6', {
-            cluster: 'ap2'
-        });
-
-        // Subscribe to the channel
-        const channel = pusher.subscribe(`chat-${tradeId.tradeId}`);
-
-        // Bind to the 'newMessage' event
-        channel.bind('newMessage', function(data) {
-            console.log('New message received:', data);
-            const incomingMessage = transformMessage(data.message);
-
-            // Check if the incoming message's sender ID matches the current user's ID
-            if(data.senderId !== user._id) {
-                setMessages((currentMessages) => [...currentMessages, incomingMessage]);
-            }
-        });
-
-        return () => {
-            // Unbind event and unsubscribe channel when component unmounts
-            channel.unbind('newMessage');
-            channel.unsubscribe();
-            pusher.disconnect();
-            console.log('Pusher disconnected');
-        };
-    }, [tradeId, user._id]); // Depend on tradeId and user._id to reconnect if they change
-    
-
-
     const transformMessage = (message) => {
         return {
             id: message._id,
@@ -271,6 +193,29 @@ useEffect(() => {
             sendFailed: false,
         };
     };
+
+    useEffect(() => {
+        if (socket) { 
+            console.log('Setting up socket listeners');
+    
+            socket.on('newMessage', (data) => {
+                console.log('New message received:', data);
+                const incomingMessage = transformMessage(data);
+                  // Check if the incoming message's sender ID matches the current user's ID
+                  if(data.sender!== user._id) {
+                    setMessages((currentMessages) => [...currentMessages, incomingMessage]);
+                }
+            });
+    
+            return () => {
+                console.log('Removing socket listeners');
+                socket.off('newMessage');
+            };
+        } else {
+            console.log('Socket not initialized');
+        }
+    }, [socket, user._id]);
+
 
 
     // Scroll to the bottom of the chat whenever the messages update

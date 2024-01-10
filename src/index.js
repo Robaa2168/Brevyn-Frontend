@@ -1,8 +1,10 @@
+// index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { SocketProvider } from './SocketContext'; // Import the SocketProvider
 
 // Unregister service workers before your application is rendered
 if ('serviceWorker' in navigator) {
@@ -16,7 +18,9 @@ if ('serviceWorker' in navigator) {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <SocketProvider> {/* Wrap App with SocketProvider */}
+      <App />
+    </SocketProvider>
   </React.StrictMode>
 );
 
