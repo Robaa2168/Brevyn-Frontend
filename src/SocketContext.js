@@ -12,8 +12,6 @@ export const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState();
 
     useEffect(() => {
-        // Connect to your Socket.IO server
-        // Replace 'http://localhost:5000' with your server's URL
         const newSocket = io('http://verdantke.us-east-1.elasticbeanstalk.com/', { transports : ['websocket'] });
         setSocket(newSocket);
 
