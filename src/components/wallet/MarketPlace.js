@@ -9,7 +9,7 @@ const MarketPlace = () => {
     const [offers, setOffers] = useState([
         {
             id: 1,
-            username: 'Moses Brian',
+            username: 'Alice Mugo',
             paymentMethod: 'Bank Transfer',
             seenTime: 'online',
             transactionTime: '30 min',

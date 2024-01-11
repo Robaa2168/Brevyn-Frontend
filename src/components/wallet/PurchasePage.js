@@ -162,7 +162,7 @@ const PurchasePage = () => {
                     <div className="border-t border-gray-300 pt-4">
                         <p className="flex items-center justify-center text-gray-500 text-xs">
                             <FaShieldAlt className="mr-1" />
-                            Secure escrow + Automated trade with Moses
+                            Secure escrow + Automated trade with Alice
                         </p>
                     </div>
                 </div>
@@ -209,7 +209,7 @@ const PurchasePage = () => {
                             <div className="flex items-center space-x-2">
                                 <img src="https://www.cnet.com/a/img/resize/4b3bde578e41360ad45f304c9b9dcf7ec34f2fe0/hub/2022/01/20/da5044c6-4761-4ce4-b525-ee5da320a262/dsc01530.jpg?auto=webp&width=1200" alt="Buyer" className="w-12 h-12 rounded-full" /> {/* Adjusted image size */}
                                 <div className="flex flex-col justify-between">
-                                    <span className=" font-semibold">Moses Brian</span>
+                                    <span className=" font-semibold">Alice Mugo</span>
                                     <div className="flex items-center text-sm text-gray-400">
                                         <FaCheckCircle className="text-green-500 mr-1" size="0.75em" />
                                         Verified
@@ -225,11 +225,11 @@ const PurchasePage = () => {
                         <div className="flex items-center justify-between mt-2">
                             <div className="flex items-center text-green-800 text-xs font-semibold mr-2 bg-green-50 border border-green-200 rounded-md py-1 px-2">
                                 <FaThumbsUp className="text-green-500" />
-                                <span className="ml-1">787</span>
+                                <span className="ml-1">1216</span>
                             </div>
                             <div className="flex items-center text-red-800 text-xs font-semibold bg-red-100 border border-red-200 rounded-md py-1 px-2">
                                 <FaThumbsDown className="text-red-500" />
-                                <span className="ml-1">0</span>
+                                <span className="ml-1">3</span>
                             </div>
                         </div>
                         <div className="flex flex-col mt-2 space-y-1 lg:grid lg:grid-cols-2 lg:gap-4">
