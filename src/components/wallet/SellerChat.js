@@ -38,7 +38,7 @@ const SellerChat = (tradeId) => {
     const sellerProfile = {
         _id: '658db0c10bfefbb749a5c308',
         name: 'Alice Mugo',
-        image: 'https://instagram.fmba5-1.fna.fbcdn.net/v/t51.2885-15/278286616_350640327037380_3096655739453616131_n.webp?stp=dst-jpg_e35&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMjAweDEyMDAuc2RyIn0&_nc_ht=instagram.fmba5-1.fna.fbcdn.net&_nc_cat=100&_nc_ohc=SKCXJ_p9Z1MAX-DIV6n&edm=ACWDqb8BAAAA&ccb=7-5&ig_cache_key=MjgxNjAxMDM0NzU5NDgxMTYzMg%3D%3D.2-ccb7-5&oh=00_AfCBKwvoTBh1CL00-vW0q0dv81Xlgwgh3u6mGgUC6uMlCw&oe=65A63E36&_nc_sid=ee9879',
+        image: 'https://thescoop.co.ke/wp-content/uploads/2023/08/33D897BE-CBD3-420E-A4C3-000D7DF8FFB6.jpeg',
         lastSeen: 'online',
         positiveFeedback: 1216,
         negativeFeedback: 3,

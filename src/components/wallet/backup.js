@@ -36,7 +36,7 @@ const ChatWindow = (tradeId) => {
     const sellerProfile = {
         _id: '658db0c10bfefbb749a5c308',
         name: 'Alice Mugo',
-        image: 'https://thescoop.co.ke/wp-content/uploads/2023/08/33D897BE-CBD3-420E-A4C3-000D7DF8FFB6.jpeg',
+        image: '/Seller.jpeg',
         lastSeen: 'online',
         positiveFeedback: 1216,
         negativeFeedback: 3,
