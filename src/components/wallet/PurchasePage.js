@@ -207,7 +207,7 @@ const PurchasePage = () => {
                         <h3 className=" font-semibold text-emerald-600 mb-2">About this seller</h3>
                         <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 sm:space-x-4">
                             <div className="flex items-center space-x-2">
-                                <img src="https://www.cnet.com/a/img/resize/4b3bde578e41360ad45f304c9b9dcf7ec34f2fe0/hub/2022/01/20/da5044c6-4761-4ce4-b525-ee5da320a262/dsc01530.jpg?auto=webp&width=1200" alt="Buyer" className="w-12 h-12 rounded-full" /> {/* Adjusted image size */}
+                                <img src="https://thescoop.co.ke/wp-content/uploads/2023/08/33D897BE-CBD3-420E-A4C3-000D7DF8FFB6.jpeg" alt="Seller" className="w-12 h-12 rounded-full" /> 
                                 <div className="flex flex-col justify-between">
                                     <span className=" font-semibold">Alice Mugo</span>
                                     <div className="flex items-center text-sm text-gray-400">
