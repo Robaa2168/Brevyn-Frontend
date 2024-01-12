@@ -61,7 +61,7 @@ const EditProfile = ({ initialData, onCancel }) => {
     } finally {
       setIsSubmitting(false);
     }
-};
+  };
 
 
   const handleDone = () => {
@@ -201,11 +201,13 @@ const EditProfile = ({ initialData, onCancel }) => {
           <div className="md:col-span-2 flex flex-col md:flex-row justify-end mt-4 space-y-2 md:space-y-0 md:space-x-2">
             <button
               type="submit"
-              disabled={!isDataChanged || isSubmitting}
+              // disabled={!isDataChanged || isSubmitting}
+              disabled
               className="text-xs sm:text-sm px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 w-full md:w-auto"
             >
               {isSubmitting ? "Saving..." : "Save Changes"}
             </button>
+
             <button
               type="button"
               onClick={onCancel}

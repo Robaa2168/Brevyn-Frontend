@@ -4,7 +4,7 @@ import Kyc from './Kyc';
 import { FaSpinner } from 'react-icons/fa';
 import { useUser } from "./context";
 import EditProfile from './EditProfile';
-import { AiFillPhone, AiOutlineMail, AiFillCalendar, AiFillIdcard, AiFillHome, AiFillFlag, AiFillEdit } from 'react-icons/ai';
+import { AiOutlineCheck, AiFillPhone, AiOutlineMail, AiFillCalendar, AiFillIdcard, AiFillHome, AiFillFlag, AiFillEdit } from 'react-icons/ai';
 
 
 const Profile = () => {
@@ -64,33 +64,35 @@ const Profile = () => {
                                 <img src={user?.profileImage} alt="Profile" className="h-20 w-20 rounded-full" />
                                 <div className="mt-3 w-full">
                                     <h3 className="text-sm leading-6 font-medium text-gray-900 truncate">{user?.primaryInfo?.firstName + " " + user?.primaryInfo?.lastName}</h3>
-                                    <span className={`text-xs rounded-full px-2 py-1 mt-1 inline-block ${user?.isBanned ? 'text-white bg-red-600' :
+                                    <span className={`text-xs rounded-full px-2 py-1 mt-1 inline-flex items-center ${user?.isBanned ? 'text-white bg-red-600' :
                                         user?.isVerified ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'}`}>
-                                        {user?.isBanned ? "Banned" : user?.isVerified ? "Verified" : "Unverified"}
+                                        {user?.isBanned ? "Banned" :
+                                            user?.isVerified ? <><AiOutlineCheck className="mr-1" /> Verified</> :
+                                                "Unverified"}
                                     </span>
+
 
 
                                     <div className="text-xs text-gray-500 mt-1">{`Joined: ${new Date(user?.primaryInfo?.createdAt).toLocaleDateString()}`}</div>
                                 </div>
                             </div>
                             <div className="md:grid md:grid-cols-2">
-  {information.map((item, index) => (
-    <div
-      key={index}
-      className={`flex items-center px-2 py-3 ${
-        index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
-      }`}
-    >
-      <div className="text-xs font-medium text-gray-500 flex items-center">
-        {item.icon}
-      </div>
-      <div className="ml-2 flex-1">
-        <dt className="text-xs font-medium text-gray-500">{item.label}</dt>
-        <dd className="text-xs text-gray-900">{item.value}</dd>
-      </div>
-    </div>
-  ))}
-</div>
+                                {information.map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className={`flex items-center px-2 py-3 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                                            }`}
+                                    >
+                                        <div className="text-xs font-medium text-gray-500 flex items-center">
+                                            {item.icon}
+                                        </div>
+                                        <div className="ml-2 flex-1">
+                                            <dt className="text-xs font-medium text-gray-500">{item.label}</dt>
+                                            <dd className="text-xs text-gray-900">{item.value}</dd>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
 
                         </div>
                     </div>

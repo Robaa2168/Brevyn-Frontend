@@ -86,7 +86,7 @@ const MyDonations = () => {
     };
 
     return (
-        <div className="container mx-auto p-4 bg-white rounded-lg shadow">
+        <div className="container mx-auto p-4 bg-white rounded-lg shadow flex flex-col flex-grow"> {/* Added flex-grow and flex flex-col */}
             {/* Tabs for switching between history and links */}
             <div className="flex mb-4">
                 <button
@@ -107,29 +107,29 @@ const MyDonations = () => {
             {activeTab === 'history' && (
                 <div>
                     {donations.length > 0 ? (
-    donations.map((donation, index) => (
-        <div key={index} className="flex items-center justify-between p-2 mt-3 border rounded">
-            <div className="flex items-center space-x-3">
-                {/* Replace image with a div containing the first letter of the donor's name */}
-                <div className="flex-shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-full bg-emerald-200 text-white shadow-lg">
-                        <span className="text-xl font-bold">{donation.firstName.charAt(0)}</span>
-                    </div>
+                        donations.map((donation, index) => (
+                            <div key={index} className="flex items-center justify-between p-2 mt-3 border rounded">
+                                <div className="flex items-center space-x-3">
+                                    {/* Replace image with a div containing the first letter of the donor's name */}
+                                    <div className="flex-shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-full bg-emerald-200 text-white shadow-lg">
+                                        <span className="text-xl font-bold">{donation.firstName.charAt(0)}</span>
+                                    </div>
 
 
-                <div>
-                    <p className="font-semibold text-xs">{donation.firstName}</p>
-                    <p className="text-xs text-gray-500">{`${formatDate(donation.date)} · ${donation.paymentStatus}`}</p>
-                </div>
-            </div>
-            <span className={`font-bold text-xs text-green-500`}>+${donation.amount}</span>
-        </div>
-    ))
-) : (
-    <div className="flex justify-center items-center flex-col">
-        <Lottie animationData={cryingEmoji} style={{ width: 200, height: 200 }} />
-        <p className='text-gray-500 font-semibold mt-4'>No donations yet</p>
-    </div>
-)}
+                                    <div>
+                                        <p className="font-semibold text-xs">{donation.firstName}</p>
+                                        <p className="text-xs text-gray-500">{`${formatDate(donation.date)} · ${donation.paymentStatus}`}</p>
+                                    </div>
+                                </div>
+                                <span className={`font-bold text-xs text-green-500`}>+${donation.amount}</span>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="flex justify-center items-center flex-col">
+                            <Lottie animationData={cryingEmoji} style={{ width: 200, height: 200 }} />
+                            <p className='text-gray-500 font-semibold mt-4'>No donations yet</p>
+                        </div>
+                    )}
 
                 </div>
             )}

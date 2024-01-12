@@ -23,7 +23,6 @@ const Dashboard = () => {
   const [activeComponent, setActiveComponent] = useState('donationsSummary');
 
   useEffect(() => {
-    // Redirect to login if no user token exists
     if (!user || !user.token) {
       navigate('/login');
     } else {

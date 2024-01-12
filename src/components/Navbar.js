@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-emerald-600 text-white p-4">
+    <nav className="bg-emerald-600 text-white p-4 ">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-lg font-bold">
           <Link to="/home">Verdant </Link>

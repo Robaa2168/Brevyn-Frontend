@@ -1,6 +1,7 @@
 // Membership.js
 import React, { useState, useEffect, useRef } from 'react';
 import Confetti from 'react-confetti';
+import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { FaSpinner } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,9 +9,19 @@ import api from '../api';
 import { useUser } from "./context";
 
 const Membership = () => {
+    
     const { user, login } = useUser();
     const [isUpgrading, setIsUpgrading] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false); 
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if (!user || !user.token) {
+          navigate('/login');
+        }
+      }, [user]);
+      
 
     const handleUpgrade = async () => {
         setIsUpgrading(true);
