@@ -16,7 +16,7 @@ import { useUser } from './context';
 const Sidebar = ({ changeComponent }) => {
   const { logout } = useUser();
   const navigate = useNavigate();
-  const [activeComponent, setActiveComponent] = useState('donationsSummary'); // Initialize the active component state
+  const [activeComponent, setActiveComponent] = useState('donationsSummary');
 
   const handleLogout = () => {
     logout();
@@ -24,7 +24,7 @@ const Sidebar = ({ changeComponent }) => {
   };
 
   const handleClick = (componentName) => {
-    setActiveComponent(componentName); // Update the active component state
+    setActiveComponent(componentName);
     changeComponent(componentName);
   };
 

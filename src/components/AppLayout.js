@@ -23,6 +23,9 @@ import DonationsPreviewPage from './DonationsPreviewPage';
 import EditDonationLink from './EditDonationLink';
 import CreateImpact from './CreateImpact';
 import ImpactDetail from './ImpactDetail';
+import ReviewList from './Admin/ReviewList';
+import EditReview from './Admin/EditReview';
+import PostReview from './Admin/PostReview';
 
 const AppLayout = () => {
   const { user } = useUser();
@@ -106,6 +109,9 @@ function setTawkAttributes() {
         <Route path="/link/edit/:id"  element={<ProtectedRoute><EditDonationLink /></ProtectedRoute>} />
         <Route path="/CreateImpact"  element={<ProtectedRoute><CreateImpact /></ProtectedRoute>} />
         <Route path="/impact/:id"  element={<ImpactDetail />} />
+        <Route path="/ReviewList"  element={<ProtectedRoute><ReviewList /></ProtectedRoute>} />
+        <Route path="/edit-review/:reviewId"  element={<ProtectedRoute><EditReview /></ProtectedRoute>} />
+        <Route path="/post-review"  element={<ProtectedRoute><PostReview /></ProtectedRoute>} />
       </Routes>
       {!isExcludedRoute && <Footer />}
     </>
