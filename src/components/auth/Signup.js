@@ -88,16 +88,10 @@ const Signup = () => {
 
         try {
             // Upload images first and get URLs
-            let profileImageUrl = '';
-            if (signupData.imageUrl) {
-                profileImageUrl = await uploadImages(signupData.imageUrl);
-            }
-
             const userData = {
                 email: signupData.email,
                 password: signupData.password,
                 phoneNumber: signupData.phoneNumber,
-                profileImage: profileImageUrl,
             };
 
             // Making API request to the /api/auth/signup route using Axios instance
@@ -149,40 +143,7 @@ const Signup = () => {
                     )}
                     <div className="rounded-md shadow-sm -space-y-px">
 
-                        <label htmlFor="image" className="block text-emerald-700 text-xs sm:text-sm  font-bold mb-2 w-full">
-                            <label htmlFor="image-upload" className="block text-emerald-700 text-xs sm:text-sm  font-bold mb-2 w-full">
-                                <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-emerald-500 transition-colors">
-                                    <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H8m36-12h-4m4 0H20" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                    <span className="mt-2 block text-xs sm:text-sm  font-medium text-gray-900">
-                                        upload profile picture
-                                    </span>
-                                    <input
-                                        ref={fileInputRef} // Attach the ref here
-                                        id="image-upload"
-                                        type="file"
-                                        name="image"
-                                        onChange={handleFileChange}
-                                        className="hidden"
-                                    />
-                                </div>
-                            </label>
-                        </label>
-
-
-                        <div className="mt-4 flex flex-wrap justify-start items-center w-full">
-                            {signupData.imageUrl instanceof File && (
-                                <div className="flex flex-col items-center mr-4 mb-4">
-                                    <img src={URL.createObjectURL(signupData.imageUrl)} alt="User Profile" className="w-16 h-16 object-cover rounded-md" />
-                                    <button onClick={(e) => removeImage(e)} className="mt-2 text-red-500">
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            )}
-                        </div>
+                       
 
 {/* Email Address Input Field */}
 <div className="mb-3 relative">

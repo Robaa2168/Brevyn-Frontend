@@ -9,6 +9,7 @@ import {
   AiOutlineIdcard,
   AiOutlineUser,
   AiOutlineLock,
+  AiOutlineInfoCircle ,
   AiOutlineLogout,
 } from 'react-icons/ai';
 import { useUser } from './context'; 
@@ -104,6 +105,15 @@ const Sidebar = ({ changeComponent }) => {
           <AiOutlineLock className="text-xl sm:text-2xl" />
           <span className="text-xs sm:text-sm">Change Password</span>
         </div>
+        <a
+          href="https://donations.verdantcharity.org/learn-more"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center space-x-3 cursor-pointer text-gray-700"
+        >
+          <AiOutlineInfoCircle className="text-xl sm:text-2xl" />
+          <span className="text-xs sm:text-sm pulse-dot">About Us</span>
+        </a>
         {/* Logout */}
         <div onClick={handleLogout} className="flex items-center space-x-3 cursor-pointer">
           <AiOutlineLogout className="text-xl sm:text-2xl" />

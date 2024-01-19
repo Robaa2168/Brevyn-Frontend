@@ -9,7 +9,7 @@ const Wallet = () => {
     const { user, login } = useUser();
 
     const transactions = [
-        { id: 1, type: 'credit', amount: 0, date: '2024', name: "Donation Received" },
+        { id: 1, type: 'credit', amount: `${user?.balance}`, date: '2024', name: "Donation Received" },
         { id: 2, type: 'debit', amount: 0, date: '2024', name: "Funds Withdrawn" },
         // ... more transactions
     ];

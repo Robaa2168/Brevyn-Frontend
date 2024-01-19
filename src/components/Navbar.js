@@ -5,19 +5,31 @@ const Navbar = () => {
   // State to manage whether mobile menu is shown
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const externalLink = 'https://donations.verdantcharity.org';
+
   return (
-    <nav className="bg-emerald-600 text-white p-4 ">
+    <nav className="bg-emerald-600 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-lg font-bold">
-          <Link to="/home">Verdant </Link>
+          <a href={externalLink} className="hover:text-emerald-200">
+            Verdant Charity
+          </a>
         </div>
         {/* Links for larger screens */}
         <div className={`hidden md:flex space-x-4`}>
-          <Link to="/home" className="hover:text-emerald-200">Home</Link>
-          <Link to="/" className="hover:text-emerald-200">About</Link>
-          <Link to="/dashboard" className="hover:text-emerald-200">Donate</Link>
-          <Link to="/dashboard" className="hover:text-emerald-200">Volunteer</Link>
-          <Link to="/contact" className="hover:text-emerald-200">Contact</Link>
+        <Link to="/" className="hover:text-emerald-200 block px-3 py-2 rounded-md">Dashboard</Link>
+          <a href={`${externalLink}/learn-more`} className="hover:text-emerald-200 block px-3 py-2 rounded-md">
+            About
+          </a>
+          <a href={`${externalLink}/make-a-difference/donate`} className="hover:text-emerald-200 block px-3 py-2 rounded-md">
+            Donate
+          </a>
+          <a href={`${externalLink}/make-a-difference/ways-to-donate`} className="hover:text-emerald-200 block px-3 py-2 rounded-md">
+            Volunteer
+          </a>
+          <a href={`${externalLink}/learn-more/contact-us`} className="hover:text-emerald-200 block px-3 py-2 rounded-md">
+            Contact-Us
+          </a>
         </div>
         {/* Hamburger menu for smaller screens */}
         <div className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -41,11 +53,19 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <Link to="/" className="hover:text-emerald-200 block px-3 py-2 rounded-md">Home</Link>
-          <Link to="/about" className="hover:text-emerald-200 block px-3 py-2 rounded-md">About</Link>
-          <Link to="/donate" className="hover:text-emerald-200 block px-3 py-2 rounded-md">Donate</Link>
-          <Link to="/volunteer" className="hover:text-emerald-200 block px-3 py-2 rounded-md">Volunteer</Link>
-          <Link to="/contact" className="hover:text-emerald-200 block px-3 py-2 rounded-md">Contact</Link>
+        <Link to="/" className="hover:text-emerald-200 block px-3 py-2 rounded-md">Dashboard</Link>
+          <a href={`${externalLink}/learn-more`} className="hover:text-emerald-200 block px-3 py-2 rounded-md">
+            About
+          </a>
+          <a href={`${externalLink}/make-a-difference/donate`} className="hover:text-emerald-200 block px-3 py-2 rounded-md">
+            Donate
+          </a>
+          <a href={`${externalLink}/make-a-difference/ways-to-donate`} className="hover:text-emerald-200 block px-3 py-2 rounded-md">
+            Volunteer
+          </a>
+          <a href={`${externalLink}/learn-more/contact-us`} className="hover:text-emerald-200 block px-3 py-2 rounded-md">
+            Contact-US
+          </a>
         </div>
       </div>
     </nav>
