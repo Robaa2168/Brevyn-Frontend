@@ -107,8 +107,6 @@ const Sidebar = ({ changeComponent }) => {
         </div>
         <a
           href="https://donations.verdantcharity.org/learn-more"
-          target="_blank"
-          rel="noopener noreferrer"
           className="flex items-center space-x-3 cursor-pointer text-gray-700"
         >
           <AiOutlineInfoCircle className="text-xl sm:text-2xl" />

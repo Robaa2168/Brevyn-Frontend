@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../../api';
 import { useUser } from '../context';
 import { useNavigate, Link } from "react-router-dom";
-import { AiOutlineMail, AiOutlineEye, AiOutlineEyeInvisible, AiOutlineLock } from 'react-icons/ai'; // Importing icons
+import { AiOutlineInfoCircle, AiOutlineMail, AiOutlineEye, AiOutlineEyeInvisible, AiOutlineLock } from 'react-icons/ai'; // Importing icons
 import { FaSpinner } from 'react-icons/fa';
 
 const Login = () => {
@@ -64,6 +64,12 @@ const Login = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-emerald-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
+                  {/* Message about viewing sub-portal */}
+                  <div className="bg-gray-200 border border-gray-400 text-gray-700 px-4 py-3 rounded relative mb-4 text-center">
+                    <AiOutlineInfoCircle className="inline-block text-emerald-500 mr-2" size="1.25em" />
+                    <span className="text-xs sm:text-sm">You are now viewing a sub-portal of Verdant Charity. To learn more about us, </span>
+                    <a href="https://donations.verdantcharity.org/learn-more" className="font-medium text-emerald-600 hover:text-emerald-500 underline ml-1 text-xs sm:text-sm">click here</a>.
+                </div>
                 <div className="text-center">
                     <h2 className="text-xs sm:text-2xl md:text-3xl font-extrabold text-gray-900 mb-2">Sign in to your account</h2>
                 </div>
