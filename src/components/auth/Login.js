@@ -67,7 +67,7 @@ const Login = () => {
                   {/* Message about viewing sub-portal */}
                   <div className="bg-gray-200 border border-gray-400 text-gray-700 px-4 py-3 rounded relative mb-4 text-center">
                     <AiOutlineInfoCircle className="inline-block text-emerald-500 mr-2" size="1.25em" />
-                    <span className="text-xs sm:text-sm">You are now viewing a sub-portal of Verdant Charity. To learn more about us, </span>
+                    <span className="text-xs sm:text-sm">You are now viewing a wallet-portal of Verdant Charity. To learn more about us, </span>
                     <a href="https://donations.verdantcharity.org/learn-more" className="font-medium text-emerald-600 hover:text-emerald-500 underline ml-1 text-xs sm:text-sm">click here</a>.
                 </div>
                 <div className="text-center">
