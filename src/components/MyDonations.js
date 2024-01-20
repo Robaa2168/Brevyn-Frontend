@@ -117,7 +117,7 @@ const MyDonations = () => {
 
 
                                     <div>
-                                        <p className="font-semibold text-xs">{donation.firstName}</p>
+                                        <p className="font-semibold text-xs">{donation.firstName} {donation.lastName}</p>
                                         <p className="text-xs text-gray-500">{`${formatDate(donation.date)} · ${donation.paymentStatus}`}</p>
                                     </div>
                                 </div>
