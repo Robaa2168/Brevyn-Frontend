@@ -29,7 +29,7 @@ const Withdraw = () => {
             <div className="flex flex-wrap mb-4 border-b">
                 <button onClick={() => setActiveTab('bank')} className={tabButtonClass('bank')}>Bank</button>
                 <button onClick={() => setActiveTab('paypal')} className={tabButtonClass('paypal')}>PayPal</button>
-                <button onClick={() => setActiveTab('mobile')} className={tabButtonClass('mobile')}>Mobile</button>
+                <button onClick={() => setActiveTab('mobile')} className={tabButtonClass('mobile')}>Mobile Money</button>
             </div>
 
             {/* Render the active component */}
