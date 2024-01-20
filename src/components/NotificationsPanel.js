@@ -46,7 +46,6 @@ const NotificationsPanel = ({ setShowNotifications }) => {
             });
         } catch (error) {
             console.error('Error marking notification as read:', error);
-            // Optionally handle errors, such as rolling back the optimistic update or showing an error message
         }
     };
     

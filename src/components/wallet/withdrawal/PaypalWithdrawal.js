@@ -89,7 +89,7 @@ const PaypalWithdrawal = () => {
                         <div className="mb-2">
                             <label htmlFor="amount" className="block mb-1 text-sm font-medium text-gray-700">Amount</label>
                             <input
-                                type="text"
+                                type="tel"
                                 name="amount"
                                 value={withdrawDetails.amount}
                                 onChange={handleChange}

@@ -79,7 +79,7 @@ const MobileWithdrawal = () => {
                         <div className="mb-2">
                             <label htmlFor="phoneNumber" className="block mb-1 text-sm font-medium text-gray-700">Phone Number</label>
                             <input
-                                type="text"
+                                type="tel"
                                 name="phoneNumber"
                                 value={withdrawDetails.phoneNumber}
                                 onChange={handleChange}
@@ -101,7 +101,7 @@ const MobileWithdrawal = () => {
                         <div className="mb-2">
                             <label htmlFor="amount" className="block mb-1 text-sm font-medium text-gray-700">Amount</label>
                             <input
-                                type="text"
+                                type="tel"
                                 name="amount"
                                 value={withdrawDetails.amount}
                                 onChange={handleChange}

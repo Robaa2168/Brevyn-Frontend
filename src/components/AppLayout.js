@@ -27,6 +27,9 @@ import ReviewList from './Admin/ReviewList';
 import EditReview from './Admin/EditReview';
 import PostReview from './Admin/PostReview';
 import HelpPage from './Help/Help';
+import AdminHelpPage from './Help/AdminHelpPage';
+import EditFaq from './Help/EditFaq';
+import PostFaq from './Help/PostFaq';
 import AboutUsPage from './Help/AboutUs';
 
 const AppLayout = () => {
@@ -114,7 +117,10 @@ function setTawkAttributes() {
         <Route path="/ReviewList"  element={<ProtectedRoute><ReviewList /></ProtectedRoute>} />
         <Route path="/edit-review/:reviewId"  element={<ProtectedRoute><EditReview /></ProtectedRoute>} />
         <Route path="/post-review"  element={<ProtectedRoute><PostReview /></ProtectedRoute>} />
-        <Route path="/help"  element={<HelpPage />} />
+        <Route path="/help"  element={<ProtectedRoute><HelpPage /></ProtectedRoute>} />
+        <Route path="/Adminhelp"  element={<ProtectedRoute><AdminHelpPage  /></ProtectedRoute>} />
+        <Route path="/edit-faq/:faqId"  element={<ProtectedRoute><EditFaq /></ProtectedRoute>} />
+        <Route path="/post-faq"  element={<ProtectedRoute><PostFaq /></ProtectedRoute>} />
         <Route path="/about"  element={<AboutUsPage />} />
       </Routes>
       {!isExcludedRoute && <Footer />}
