@@ -11,7 +11,7 @@ import {
     AiOutlineHistory,
     AiOutlineDollarCircle,
     AiOutlineShoppingCart,
-    AiOutlineLogout,
+    AiOutlineQuestionCircle,
     AiOutlineHome,
     AiOutlineStar
 } from 'react-icons/ai';
@@ -140,7 +140,7 @@ const WalletSidebar = ({ changeComponent }) => {
                     <div className="">
                         <AiOutlineShoppingCart className="text-xl sm:text-2xl" />
                     </div>
-                    <span className="text-xs sm:text-sm pulse-dot">Market Place</span>
+                    <span className="text-xs sm:text-sm ">Market Place</span>
                 </div>
                 <div
                     onClick={handleReviewsClick}
@@ -151,10 +151,10 @@ const WalletSidebar = ({ changeComponent }) => {
                     <span className="text-xs sm:text-sm">Reviews</span>
                 </div>
 
-                {/* Logout */}
-                <div onClick={handleLogout} className="flex items-center space-x-3 cursor-pointer">
-                    <AiOutlineLogout className="text-xl sm:text-2xl" />
-                    <span className="text-xs sm:text-sm">Logout</span>
+    {/* Help */}
+    <div onClick={() => navigate('/help')} className="flex items-center space-x-3 cursor-pointer">
+                    <AiOutlineQuestionCircle className="text-xl sm:text-2xl" />
+                    <span className="text-xs sm:text-sm pulse-dot-green">Help</span>
                 </div>
             </nav>
               {/* Render the Review Modal */}
