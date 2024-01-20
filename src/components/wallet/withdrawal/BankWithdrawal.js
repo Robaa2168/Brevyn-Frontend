@@ -1,15 +1,14 @@
-// Withdraw.js
 import React, { useState } from 'react';
 import Confetti from 'react-confetti';
 import Lottie from 'lottie-react';
-import successAnimation from "../lottie/success-animation.json";
-import successConfetti from '../lottie/success-confetti.json';
+import successAnimation from "../../lottie/success-animation.json";
+import successConfetti from '../../lottie/success-confetti.json';
 import { FaSpinner } from 'react-icons/fa';
-import api from '../../api'; // Ensure the API path is correct
-import { useUser } from "../context";
+import api from '../../../api';
+import { useUser } from "../../context";
 import { useNavigate } from 'react-router-dom';
 
-const Withdraw = () => {
+const BankWithdrawal = () => {
     const { user } = useUser();
     const navigate = useNavigate();
     const [withdrawDetails, setWithdrawDetails] = useState({
@@ -33,7 +32,7 @@ const Withdraw = () => {
         setIsSubmitting(true);
         setError('');
         try {
-            const response = await api.post('/api/transactions/withdraw', withdrawDetails, {
+            const response = await api.post('/api/transactions/withdraw/bank', withdrawDetails, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -54,7 +53,7 @@ const Withdraw = () => {
     };
 
     return (
-        <div className="container mx-auto p-4 bg-white rounded-lg shadow-md">
+        <div className="container mx-auto p-4 bg-white rounded-lg ">
               {showConfetti && <Confetti />}
             <h2 className="text-lg font-bold mb-2">Withdraw Funds</h2>
 
@@ -182,4 +181,4 @@ const Withdraw = () => {
     );
 };
 
-export default Withdraw;
+export default BankWithdrawal;

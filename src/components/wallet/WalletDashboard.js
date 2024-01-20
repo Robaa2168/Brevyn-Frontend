@@ -4,7 +4,7 @@ import { useUser } from "../context";
 import { useNavigate } from 'react-router-dom';
 import WalletSidebar from './WalletSidebar';
 import Wallet from './Wallet';
-import Withdraw from './Withdraw';
+import Withdraw from './withdrawal/Withdraw';
 import Deposit from './Deposit';
 import Convert from './Convert';
 import History from './History';
