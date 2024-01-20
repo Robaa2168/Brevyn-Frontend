@@ -1,5 +1,6 @@
 // Membership.js
 import React, { useState, useEffect, useRef } from 'react';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import Confetti from 'react-confetti';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
@@ -13,7 +14,60 @@ const Membership = () => {
     const { user, login } = useUser();
     const [isUpgrading, setIsUpgrading] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false); 
+    const [visibleBenefit, setVisibleBenefit] = useState(null);
     const navigate = useNavigate();
+
+    const premiumBenefits = [
+        { 
+            title: "Unlimited Donation Links", 
+            description: "Create as many donation links as you need to support various causes and initiatives." 
+        },
+        { 
+            title: "Instant Withdrawals", 
+            description: "Get immediate access to your funds with our expedited withdrawal process." 
+        },
+        { 
+            title: "Unlimited Volunteer Programs", 
+            description: "Join or organize an unlimited number of volunteer programs to expand your social impact." 
+        },
+        { 
+            title: "Exclusive Grant Applications", 
+            description: "Gain eligibility to apply for special grants exclusively available to premium members." 
+        },
+        { 
+            title: "Advanced Analytics", 
+            description: "Access detailed reports and analytics to track and optimize your fundraising efforts." 
+        },
+        { 
+            title: "Priority Support", 
+            description: "Receive priority customer service with faster response times and dedicated support." 
+        },
+        { 
+            title: "Networking Opportunities", 
+            description: "Connect with a network of like-minded individuals and organizations for collaboration and support." 
+        },
+        { 
+            title: "Customizable Fundraising Pages", 
+            description: "Personalize your fundraising pages with advanced customization options for greater impact." 
+        },
+        { 
+            title: "Promotional Features", 
+            description: "Get your campaigns and programs featured in our promotional channels for increased visibility." 
+        },
+        { 
+            title: "Educational Resources", 
+            description: "Access exclusive webinars, tutorials, and guides to enhance your fundraising skills." 
+        },
+        { 
+            title: "Event Invitations", 
+            description: "Receive invitations to exclusive events and conferences for networking and learning." 
+        },
+        { 
+            title: "Recognition and Awards", 
+            description: "Become eligible for member recognition awards and certificates to showcase your achievements." 
+        }
+    ];
+    
 
 
     useEffect(() => {
@@ -21,6 +75,12 @@ const Membership = () => {
           navigate('/login');
         }
       }, [user]);
+
+  
+      // Function to toggle benefit visibility
+      const toggleBenefit = (benefit) => {
+          setVisibleBenefit(visibleBenefit === benefit ? null : benefit);
+      };
       
 
     const handleUpgrade = async () => {
@@ -77,11 +137,21 @@ const Membership = () => {
                         <h3 className="text-md font-extrabold mb-4 text-center">Premium Tier</h3>
                         <p className="text-green-500 text-xl font-bold mb-4 text-center">50 Points/year</p>
                         <ul className="text-xs mb-6 text-center">
-                            <li>Create unlimited donation links</li>
-                            <li>Withdraw donations</li>
-                            <li>Join unlimited volunteer programs</li>
-                            <li>Eligibility to apply for grants</li>
-                        </ul>
+    {premiumBenefits.map((benefit, index) => (
+        <li 
+            key={index} 
+            className="cursor-pointer mb-3 last:mb-0" 
+            onClick={() => toggleBenefit(benefit.title)}
+        >
+            <strong>{benefit.title}</strong>
+            <span className="inline-block ml-2">
+                {visibleBenefit === benefit.title ? <FaChevronUp /> : <FaChevronDown />}
+            </span>
+            {visibleBenefit === benefit.title && <p className="mt-2">{benefit.description}</p>}
+        </li>
+    ))}
+</ul>
+
                     </div>
                     <button
                         onClick={handleUpgrade}
