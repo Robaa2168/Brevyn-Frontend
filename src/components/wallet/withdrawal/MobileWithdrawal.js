@@ -88,7 +88,7 @@ const MobileWithdrawal = () => {
                             />
                         </div>
                         <div className="mb-2">
-                            <label htmlFor="provider" className="block mb-1 text-sm font-medium text-gray-700">Provider</label>
+                            <label htmlFor="provider" className="block mb-1 text-sm font-medium text-gray-700">Provider (e.g Vodafone, MTN etc)</label>
                             <input
                                 type="text"
                                 name="provider"

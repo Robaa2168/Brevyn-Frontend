@@ -61,7 +61,7 @@ const Profile = () => {
                     <div className="bg-white overflow-hidden sm:rounded-lg">
                         <div className="px-2 py-3 sm:px-4 grid grid-cols-1 md:grid-cols-3">
                             <div className="flex flex-col items-center py-4 text-center">
-                                <img src={user?.profileImage} alt="Profile" className="h-20 w-20 rounded-full" />
+                                <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRkq5kkpQ3rL0fQy182fLw3qpZ199C7cHY4nvl59iOyt24q0hDc" alt="Profile" className="h-20 w-20 rounded-full" />
                                 <div className="mt-3 w-full">
                                     <h3 className="text-sm leading-6 font-medium text-gray-900 truncate">{user?.primaryInfo?.firstName + " " + user?.primaryInfo?.lastName}</h3>
                                     <span className={`text-xs rounded-full px-2 py-1 mt-1 inline-flex items-center ${user?.isBanned ? 'text-white bg-red-600' :

@@ -306,23 +306,24 @@ const Chat = () => {
                                     </button>
                                 )}
 
-                                {/* If the trade is active or pending, show the standard Paid and Cancel buttons */}
-                                {(['active', 'pending'].includes(tradeDetails.status)) && (
-                                    <>
-                                        <button
-                                            onClick={handlePaidClick} // Show paid confirmation modal
-                                            className="w-full p-2 text-emerald-600 border border-emerald-600 rounded hover:bg-emerald-600 hover:text-white transition-colors duration-300"
-                                        >
-                                            Paid, Notify Seller
-                                        </button>
-                                        <button
-                                            className="w-full p-2 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white transition-colors duration-300 mt-2 flex items-center justify-center"
-                                            onClick={handleCancelClick}
-                                        >
-                                            <FaTimesCircle className="mr-2" /> Cancel
-                                        </button>
-                                    </>
-                                )}
+                               {/* If the trade is active or pending, show the standard Paid and Cancel buttons */}
+{(['active', 'pending'].includes(tradeDetails.status)) && (
+    <>
+        {/* <button
+            onClick={handlePaidClick} 
+            className="w-full p-2 text-emerald-600 border border-emerald-600 rounded hover:bg-emerald-600 hover:text-white transition-colors duration-300"
+        >
+            Paid, Notify Seller
+        </button> */}
+        <button
+            className="w-full p-2 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white transition-colors duration-300 mt-2 flex items-center justify-center"
+            onClick={handleCancelClick}
+        >
+            <FaTimesCircle className="mr-2" /> Cancel
+        </button>
+    </>
+)}
+
                             </>
                         )
                     }
