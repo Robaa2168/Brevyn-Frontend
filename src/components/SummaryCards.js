@@ -26,7 +26,7 @@ const SummaryCards = () => {
       <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center justify-between">
         <div>
           <h5 className="text-xs md:text-lg">Volunteer Events</h5>
-          <p className="text-xs mt-2 md:text-2xl">0</p>
+          <p className="text-xs mt-2 md:text-2xl">3</p>
         </div>
         <div className="rounded-full bg-emerald-500 bg-opacity-20 p-2">
           <AiOutlineTeam className="text-emerald-500 text-xl md:text-3xl" />

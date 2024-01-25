@@ -41,8 +41,8 @@ const CreateDonationLink = ({ setShowCreateLink }) => {
         const numAmount = parseInt(amount);
         if (numAmount < 1000) {
             setAmountError("Amount is too low. The minimum is $1000.");
-        } else if (numAmount > 10000) {
-            setAmountError("Amount is too high. The maximum is $10000.");
+        } else if (numAmount > 3000) {
+            setAmountError("Amount is too high. The maximum is $3000.");
         } else {
             setAmountError(""); // No error
         }
