@@ -6,7 +6,7 @@ import WalletSidebar from './WalletSidebar';
 import Wallet from './Wallet';
 import Withdraw from './withdrawal/Withdraw';
 import Deposit from './Deposit';
-import Convert from './Convert';
+import WithdrawalHistory from './WithdrawalHistory';
 import History from './History';
 import MarketPlace from './MarketPlace';
 
@@ -25,7 +25,7 @@ const WalletDashboard = () => {
     wallet: <Wallet />,
     withdraw: <Withdraw />,
     deposit: <Deposit />,
-    convert: <Convert />,
+    WithdrawalHistory: <WithdrawalHistory />,
     history: <History />,
     marketPlace: <MarketPlace />,
   };

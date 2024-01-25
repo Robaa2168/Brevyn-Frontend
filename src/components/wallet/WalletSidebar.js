@@ -103,12 +103,12 @@ const WalletSidebar = ({ changeComponent }) => {
 
                 {/* Convert */}
                 <div
-                    onClick={() => handleClick('convert')}
+                    onClick={() => handleClick('WithdrawalHistory')}
                     className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'convert' ? 'text-emerald-500' : 'text-gray-700'
                         }`}
                 >
                     <AiOutlineSwap className="text-xl sm:text-2xl" />
-                    <span className="text-xs sm:text-sm">Convert</span>
+                    <span className="text-xs sm:text-sm">Withdrawal History</span>
                 </div>
 
                 {/* History */}

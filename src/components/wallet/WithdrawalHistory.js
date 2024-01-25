@@ -1,4 +1,4 @@
-// History.js
+// WithdrawalHistory.js
 
 import React, { useEffect, useState } from 'react';
 import api from '../../api';
@@ -8,77 +8,78 @@ import loadingAnimation from '../lottie/loading.json';
 import { useUser } from "../context";
 import { useNavigate } from 'react-router-dom';
 
-
-
-const History = () => {
+const WithdrawalHistory = () => {
     const navigate = useNavigate();
     const { user } = useUser();
-    const [trades, setTrades] = useState([]);
+    const [withdrawals, setWithdrawals] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
 
     useEffect(() => {
         if (!user || !user.token) {
-          navigate('/login');
+            navigate('/login');
         }
-      }, [user, navigate]);
+    }, [user, navigate]);
 
     useEffect(() => {
-        const fetchTrades = async () => {
+        const fetchWithdrawals = async () => {
             setIsLoading(true);
             try {
-                // Assuming you have a bearer token for authorization
-                const response = await api.get('/api/trade/user-trades', {
+                const response = await api.get('/api/transactions/withdraw/user-withdrawals', {
                     headers: {
                         Authorization: `Bearer ${user.token}`,
                     }
                 });
-                setTrades(response.data);
+                setWithdrawals(response.data);
             } catch (error) {
-                console.error("Error fetching trades: ", error);
+                console.error("Error fetching withdrawals: ", error);
             }
             setIsLoading(false);
         };
 
-        fetchTrades();
+        fetchWithdrawals();
     }, []);
 
     return (
         <div className="flex flex-col flex-grow container mx-auto p-4 bg-white rounded-lg shadow-md text-center ">
-            <h2 className="text-lg font-bold mb-4">Trade History</h2>
+            <h2 className="text-lg font-bold mb-4">Withdrawal History</h2>
             {isLoading ? (
                 <div className="flex justify-center items-center py-4">
                     <Lottie animationData={loadingAnimation} style={{ width: 100, height: 100 }} />
                 </div>
-            ) : trades.length > 0 ? (
-                trades.map((trade, index) => (
+            ) : withdrawals.length > 0 ? (
+                withdrawals.map((withdrawal, index) => (
                     <div key={index} className="flex items-center justify-between p-2 mt-3 border rounded">
                         <div className="text-left">
-                            <p className="font-semibold text-xs"> {trade.tradeId}</p>
-                            <p className="text-xs text-gray-500">${trade.amount} - Points: {trade.points}</p>
-                            <p className={`font-semibold text-xs ${trade.status === 'cancelled' ? 'text-red-500' : 'text-green-500'}`}>
-                                {trade.status}
-                            </p>
+                            <p className="font-semibold text-xs">{withdrawal.withdrawalId}</p>
+                            <p className="text-xs text-gray-500">${withdrawal.amount}</p>
+                            <p className={`font-semibold text-xs ${
+    withdrawal.status === 'pending' ? 'text-yellow-500' :
+    withdrawal.status === 'processing' ? 'text-blue-500' :
+    withdrawal.status === 'completed' ? 'text-green-500' :
+    withdrawal.status === 'failed' ? 'text-red-500' :
+    withdrawal.status === 'cancelled' ? 'text-red-500' : 'text-black'
+}`}>
+    {withdrawal.status}
+</p>
 
                         </div>
                         <button
-                            onClick={() => window.location.href = `/chat/${trade.tradeId}`}
+                            onClick={() => window.location.href = `/withdrawal-details/${withdrawal.withdrawalId}`}
                             className="px-4 py-1 text-xs border border-emerald-500 text-emerald-500 rounded hover:bg-emerald-100 hover:text-emerald-600">
-                            View
+                            View Details
                         </button>
-
                     </div>
                 ))
             ) : (
-                // Show a message when there are no trades
                 <div className="flex flex-col items-center justify-center">
                     <Lottie animationData={unavailableAnimation} style={{ width: 200, height: 200 }} />
                     <p className="text-gray-500 font-semibold mt-4">
-                        No Records Found
+                        No Withdrawal Records Found
                     </p>
                 </div>
             )}
         </div>
     );
 };
-export default History;
+
+export default WithdrawalHistory;
