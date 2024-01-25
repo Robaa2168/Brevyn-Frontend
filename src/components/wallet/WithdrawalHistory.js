@@ -59,7 +59,7 @@ const WithdrawalHistory = () => {
     withdrawal.status === 'failed' ? 'text-red-500' :
     withdrawal.status === 'cancelled' ? 'text-red-500' : 'text-black'
 }`}>
-    {withdrawal.status}
+   {withdrawal.status.charAt(0).toUpperCase() + withdrawal.status.slice(1)}
 </p>
 
                         </div>

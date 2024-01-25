@@ -132,7 +132,7 @@ const WalletSidebar = ({ changeComponent }) => {
                 </div>
 
                 {/* Market Place */}
-               
+               {/* 
                 <div
                     onClick={() => handleClick('marketPlace')}
                     className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'marketPlace' ? 'text-emerald-500' : 'text-gray-700'
@@ -144,6 +144,7 @@ const WalletSidebar = ({ changeComponent }) => {
                     </div>
                     <span className="text-xs sm:text-sm ">Market Place</span>
                 </div>
+                */}
                    
                 <div
                     onClick={handleReviewsClick}
