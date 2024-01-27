@@ -1,7 +1,7 @@
-// WalletDashboard.js
 import React, { useState, useEffect } from 'react';
 import { useUser } from "../context";
 import { useNavigate } from 'react-router-dom';
+import { FaExclamationTriangle } from 'react-icons/fa';
 import WalletSidebar from './WalletSidebar';
 import Wallet from './Wallet';
 import Withdraw from './withdrawal/Withdraw';
@@ -14,7 +14,7 @@ const WalletDashboard = () => {
   const { user } = useUser();
   const navigate = useNavigate();
   const [activeComponent, setActiveComponent] = useState('wallet');
-  
+
   useEffect(() => {
     if (!user || !user.token) {
       navigate('/login');
@@ -32,7 +32,20 @@ const WalletDashboard = () => {
 
   return (
     <div className="bg-emerald-50 min-h-screen pb-20">
-    <div className="lg:flex lg:flex-row p-4 rounded-lg border border-gray-200">
+{user?.isBanned && (
+    <div className="bg-red-200 text-red-700 p-3 flex flex-row items-center justify-start sm:justify-center">
+      {/* Increase icon size on small screens and use default size on larger screens */}
+      <FaExclamationTriangle className="mr-2 text-4xl sm:text-xl" />
+      <span className="text-xs sm:text-sm">
+        Your account is temporarily banned. Please check your email for instructions on how to provide the required documents.
+      </span>
+    </div>
+)}
+
+
+
+
+      <div className="lg:flex lg:flex-row p-4 rounded-lg border border-gray-200">
         {/* Sidebar for the Wallet */}
         <WalletSidebar changeComponent={setActiveComponent} />
         {/* Main content area */}
