@@ -9,6 +9,20 @@ import { FaCopy } from 'react-icons/fa';
 import { useUser } from "./context";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
+
+const getFingerprint = async () => {
+    try {
+      const fp = await FingerprintJS.load();
+      const result = await fp.get();
+      return result.visitorId;
+    } catch (error) {
+      console.error("Error obtaining fingerprint:", error);
+      // Handle the error as per your application's needs
+      // For example, you can return a default value or null
+      return null;
+    }
+  };
 
 const CreateDonationLink = ({ setShowCreateLink }) => {
     const { user } = useUser();
@@ -118,7 +132,7 @@ const CreateDonationLink = ({ setShowCreateLink }) => {
         setError('');
 
         try {
-            // Handle image upload
+            const fingerprintId = await getFingerprint();
             let imageUrl = '';
             if (formData.image) { // corrected from setFormData.image to formData.image
                 imageUrl = await uploadImages(formData.image); // ensure you pass the image file correctly
@@ -127,6 +141,7 @@ const CreateDonationLink = ({ setShowCreateLink }) => {
             // Combine form data and imageUrl
             const completeFormData = {
                 ...formData,
+                fingerprintId,
                 image: imageUrl,
             };
 

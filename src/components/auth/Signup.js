@@ -6,6 +6,7 @@ import axios from 'axios';
 import { AiOutlineMail, AiOutlineEye, AiOutlinePhone, AiOutlineEyeInvisible, AiOutlineLock } from 'react-icons/ai';
 import { FaSpinner } from 'react-icons/fa';
 
+
 const Signup = () => {
     const navigate = useNavigate();
     const [error, setError] = useState('');
@@ -91,7 +92,7 @@ const Signup = () => {
             const userData = {
                 email: signupData.email,
                 password: signupData.password,
-                phoneNumber: signupData.phoneNumber,
+                phoneNumber: signupData.phoneNumber
             };
 
             // Making API request to the /api/auth/signup route using Axios instance

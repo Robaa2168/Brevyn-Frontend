@@ -4,6 +4,20 @@ import { useUser } from '../context';
 import { useNavigate, Link } from "react-router-dom";
 import { AiOutlineInfoCircle, AiOutlineMail, AiOutlineEye, AiOutlineEyeInvisible, AiOutlineLock } from 'react-icons/ai'; // Importing icons
 import { FaSpinner } from 'react-icons/fa';
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
+
+const getFingerprint = async () => {
+    try {
+      const fp = await FingerprintJS.load();
+      const result = await fp.get();
+      return result.visitorId;
+    } catch (error) {
+      console.error("Error obtaining fingerprint:", error);
+      // Handle the error as per your application's needs
+      // For example, you can return a default value or null
+      return null;
+    }
+  };
 
 const Login = () => {
     const { login, logout } = useUser();
@@ -34,7 +48,12 @@ const Login = () => {
         setError('');
     
         try {
-            const response = await api.post('/api/auth/login', loginData);
+            const fingerprintId = await getFingerprint();
+            
+            // Spread the loginData object and add the fingerprintId to it
+            const loginDataWithFingerprint = { ...loginData, fingerprintId };
+    
+            const response = await api.post('/api/auth/login', loginDataWithFingerprint);
     
             // Check if the response status code is 200 (OK)
             if (response.status === 200) {

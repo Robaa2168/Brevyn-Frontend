@@ -34,7 +34,6 @@ const WalletDashboard = () => {
     <div className="bg-emerald-50 min-h-screen pb-20">
 {user?.isBanned && (
     <div className="bg-red-200 text-red-700 p-3 flex flex-row items-center justify-start sm:justify-center">
-      {/* Increase icon size on small screens and use default size on larger screens */}
       <FaExclamationTriangle className="mr-2 text-4xl sm:text-xl" />
       <span className="text-xs sm:text-sm">
         Your account is temporarily banned. Please check your email for instructions on how to provide the required documents.
