@@ -64,18 +64,26 @@ const VerificationPage = () => {
         setLoading(true);
         setError('');
         setMessage('Sending a new code...');
-
+      
         try {
-            // Implement API call to resend the verification code
-            const response = await api.post('/api/auth/resend-verification-code', { email });
+          const response = await api.post('/api/auth/resend-verification-code', { email });
+      
+          if (response.status === 200) {
+            // Successful response
             setMessage(`A new verification code has been sent to ${email}. Please check your inbox and spam folder.`);
             setTimeLeft(60); // Start the countdown again
-        } catch (error) {
+          } else {
+            // Handle other response statuses if needed
             setError('Failed to resend code. Please try again later.');
+          }
+        } catch (error) {
+          // Handle any network or request error
+          setError('Failed to resend code. Please try again later.');
         } finally {
-            setLoading(false);
+          setLoading(false);
         }
-    };
+      };
+      
 
     return (
         <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
