@@ -11,24 +11,67 @@ import { useNavigate } from 'react-router-dom';
 const MobileWithdrawal = () => {
     const { user } = useUser();
     const navigate = useNavigate();
+    // Adjusting the initial state to include currency
     const [withdrawDetails, setWithdrawDetails] = useState({
         amount: '',
         phoneNumber: '',
-        provider: ''
+        provider: '',
+        currency: '' // Added currency to align with the PayPal logic
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
+    // Assume currencies are available for mobile withdrawal as well, or fetch them similarly
+    const currencies = user?.accounts?.map(account => ({ currency: account.currency, balance: account.balance })) || [];
+    const [inputError, setInputError] = useState('');
 
     const handleChange = (e) => {
-        setWithdrawDetails({ ...withdrawDetails, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+
+        // Adapted logic for currency validation
+        if (name === 'amount' && !withdrawDetails.currency) {
+            setInputError('Please select a currency first');
+            return;
+        } else {
+            setInputError('');
+        }
+
+        const updatedDetails = { ...withdrawDetails, [name]: value };
+        setWithdrawDetails(updatedDetails);
+
+        setError('');
+
+        if (name === 'currency') {
+            setWithdrawDetails({ ...updatedDetails, amount: '' }); // Reset amount upon currency change
+
+            if (updatedDetails.amount) {
+                const selectedCurrencyBalance = currencies.find(c => c.currency === value)?.balance || 0;
+                if (parseFloat(updatedDetails.amount) > selectedCurrencyBalance) {
+                    setInputError(`The balance of ${value} is insufficient.`);
+                } else {
+                    setInputError('');
+                }
+            }
+        } else if (name === 'amount') {
+            const selectedCurrencyBalance = currencies.find(c => c.currency === updatedDetails.currency)?.balance || 0;
+            if (parseFloat(value) > selectedCurrencyBalance) {
+                setInputError(`The balance of ${updatedDetails.currency} is insufficient.`);
+            } else {
+                setInputError('');
+            }
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (inputError || !withdrawDetails.amount || !withdrawDetails.phoneNumber || !withdrawDetails.provider || !withdrawDetails.currency) {
+            setError('Please fill in all fields correctly.');
+            return;
+        }
         setIsSubmitting(true);
         setError('');
+
         try {
             const response = await api.post('/api/transactions/withdraw/mobile', withdrawDetails, {
                 headers: {
@@ -52,7 +95,7 @@ const MobileWithdrawal = () => {
 
     return (
         <div className="container mx-auto p-4 bg-white rounded-lg ">
-              {showConfetti && <Confetti />}
+            {showConfetti && <Confetti />}
             <h2 className="text-lg font-bold mb-2">Withdraw Funds via Mobile Money</h2>
 
             {success ? (
@@ -99,25 +142,52 @@ const MobileWithdrawal = () => {
                             />
                         </div>
                         <div className="mb-2">
+                            <label htmlFor="currency" className="block mb-1 text-sm font-medium text-gray-700">Currency</label>
+                            <select
+                                name="currency"
+                                value={withdrawDetails.currency}
+                                onChange={handleChange}
+                                className="w-full text-sm p-2 border rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                                required>
+                                <option value="">Select Currency</option>
+                                {currencies.map((account, index) => (
+                                    <option key={index} value={account.currency}>{account.currency}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="mb-2">
                             <label htmlFor="amount" className="block mb-1 text-sm font-medium text-gray-700">Amount</label>
                             <input
                                 type="tel"
                                 name="amount"
                                 value={withdrawDetails.amount}
                                 onChange={handleChange}
-                                className="w-full text-xs sm:text-xs md:text-sm p-2 border rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                                className={`w-full text-xs sm:text-xs md:text-sm p-2 border rounded focus:outline-none ${inputError ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'focus:ring-emerald-500 focus:border-emerald-500'}`}
                                 placeholder="Enter amount"
                             />
+                            {inputError && <p className="text-xs text-red-500">{inputError}</p>}
                         </div>
+
                         <div className="col-span-1">
-                            <button
-                                type="submit"
-                                disabled={isSubmitting}
-                                className={`flex justify-center items-center w-full text-white py-2 px-4 rounded transition duration-300 ${isSubmitting ? 'bg-gray-400' : 'bg-emerald-500 hover:bg-emerald-600'}`}
-                            >
-                                {isSubmitting && <FaSpinner className="animate-spin mr-2" />}
-                                Withdraw
-                            </button>
+                            <div className="col-span-1">
+                                <button
+                                    type="submit"
+                                    disabled={
+                                        isSubmitting ||
+                                        inputError ||
+                                        !withdrawDetails.amount ||
+                                        !withdrawDetails.phoneNumber ||
+                                        !withdrawDetails.provider ||
+                                        !withdrawDetails.currency
+                                    }
+                                    className={`flex justify-center items-center w-full text-white py-2 px-4 rounded transition duration-300 ${isSubmitting || inputError || !withdrawDetails.amount || !withdrawDetails.phoneNumber || !withdrawDetails.provider || !withdrawDetails.currency ? 'bg-gray-400' : 'bg-emerald-500 hover:bg-emerald-600'
+                                        }`}
+                                >
+                                    {isSubmitting && <FaSpinner className="animate-spin mr-2" />}
+                                    Withdraw
+                                </button>
+                            </div>
+
                         </div>
                     </form>
                 </>

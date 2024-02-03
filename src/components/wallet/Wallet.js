@@ -1,26 +1,43 @@
 // Wallet.js
 import React from 'react';
 import { BiDollarCircle } from 'react-icons/bi';
-import { AiOutlineTeam, AiOutlineCalendar } from 'react-icons/ai';
+import { AiOutlineCalendar } from 'react-icons/ai';
 import { MdOutlineVolunteerActivism } from 'react-icons/md';
 import { useUser } from "../context";
 
 const Wallet = () => {
-    const { user, login } = useUser();
+    const { user } = useUser();
 
     const transactions = [
-        { id: 1, type: 'credit', amount: `${user?.balance}`, date: '2024', name: "Donation Received" },
+        { id: 1, type: 'credit', amount: `${user?.balance}`, date: '2024', name: "Funds Received" },
         { id: 2, type: 'debit', amount: 0, date: '2024', name: "Funds Withdrawn" },
-        // ... more transactions
     ];
+
+    // Assuming user.accounts is an array of account objects
+    const highestBalanceAccount = user?.accounts?.reduce((acc, account) => {
+        return (acc.balance || 0) < account.balance ? account : acc;
+    }, {});
+
+    // Mapping currency codes to symbols for display
+    const currencySymbols = {
+        USD: '$',
+        KES: 'Ksh',
+        GBP: '£',
+        AUD: 'A$',
+        EUR: '€',
+    };
+
+    const highestBalanceSymbol = currencySymbols[highestBalanceAccount?.currency] || '';
+    const highestBalance = highestBalanceAccount ? highestBalanceAccount.balance : 0;
+    const highestCurrency = highestBalanceAccount ? highestBalanceAccount.currency : '';
 
     return (
         <div className="bg-white p-4 space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
-            {/* Balance Card */}
+            {/* Highest Balance Card */}
             <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center justify-between">
                 <div>
-                    <h5 className="text-sm">Balance</h5>
-                    <p className="text-xs md:text-sm font-bold">${user?.balance}</p>
+                    <h5 className="text-sm">{highestCurrency} Balance</h5>
+                    <p className="text-xs md:text-sm font-bold">{highestBalanceSymbol} {highestBalance}</p>
                 </div>
                 <div className="rounded-full bg-emerald-500 bg-opacity-20 p-2">
                     <BiDollarCircle className="text-emerald-500 text-xl" />
@@ -30,8 +47,8 @@ const Wallet = () => {
             {/* Impact Points Card */}
             <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center justify-between">
                 <div>
-                    <h5 className="text-sm">Impact Points</h5>
-                    <p className="text-xs md:text-sm font-bold">{user?.points} pts</p>
+                    <h5 className="text-sm">Bonus</h5>
+                    <p className="text-xs md:text-sm font-bold">Ksh {user?.balance}</p>
                 </div>
                 <div className="rounded-full bg-emerald-500 bg-opacity-20 p-2">
                     <MdOutlineVolunteerActivism className="text-emerald-500 text-xl" />
@@ -51,7 +68,7 @@ const Wallet = () => {
                         </div>
                     </div>
                     <span className={`font-bold text-xs ${transaction.type === 'credit' ? 'text-green-500' : 'text-red-500'}`}>
-                        $ {transaction.amount}
+                        + $ {transaction.amount}
                     </span>
                 </div>
             ))}

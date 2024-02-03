@@ -13,16 +13,59 @@ const PaypalWithdrawal = () => {
     const navigate = useNavigate();
     const [withdrawDetails, setWithdrawDetails] = useState({
         amount: '',
-        email: ''
+        email: '',
+        currency: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
+    const currencies = user?.accounts?.map(account => ({ currency: account.currency, balance: account.balance })) || [];
+    const [inputError, setInputError] = useState('');
 
     const handleChange = (e) => {
-        setWithdrawDetails({ ...withdrawDetails, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+
+        // Block amount input if currency is not selected yet
+        if (name === 'amount' && !withdrawDetails.currency) {
+            setInputError('Please select a currency first');
+            return; // Prevents the amount from being set if currency hasn't been chosen
+        } else {
+            setInputError(''); // Clears any previous error when conditions are met
+        }
+
+        // Proceed with state update after passing checks
+        const updatedDetails = { ...withdrawDetails, [name]: value };
+        setWithdrawDetails(updatedDetails);
+
+        // Clear global error when any input changes
+        setError('');
+
+        if (name === 'currency') {
+            // Clear amount field to force user re-entry and validation against new currency
+            setWithdrawDetails({ ...updatedDetails, amount: '' });
+
+            // If there's already an amount entered, validate it against the new currency's balance
+            if (updatedDetails.amount) {
+                const selectedCurrencyBalance = currencies.find(c => c.currency === value)?.balance || 0;
+                if (parseFloat(updatedDetails.amount) > selectedCurrencyBalance) {
+                    setInputError(`The balance of ${value} is insufficient.`);
+                } else {
+                    setInputError('');
+                }
+            }
+        } else if (name === 'amount') {
+            // This block now only runs if there's a currency selected due to the early return above
+            const selectedCurrencyBalance = currencies.find(c => c.currency === updatedDetails.currency)?.balance || 0;
+            if (parseFloat(value) > selectedCurrencyBalance) {
+                setInputError(`The balance of ${updatedDetails.currency} is insufficient.`);
+            } else {
+                setInputError('');
+            }
+        }
     };
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,7 +94,7 @@ const PaypalWithdrawal = () => {
 
     return (
         <div className="container mx-auto p-4 bg-white rounded-lg ">
-              {showConfetti && <Confetti />}
+            {showConfetti && <Confetti />}
             <h2 className="text-lg font-bold mb-2">Withdraw Funds via PayPal</h2>
 
             {success ? (
@@ -75,6 +118,23 @@ const PaypalWithdrawal = () => {
                         </div>
                     )}
                     <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
+                        {/* Currency Dropdown */}
+                        <div className="mb-2">
+                            <label htmlFor="currency" className="block mb-1 text-sm font-medium text-gray-700">Currency</label>
+                            <select
+                                name="currency"
+                                value={withdrawDetails.currency}
+                                onChange={handleChange}
+                                className="w-full text-sm p-2 border rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                                required>
+                                <option value="">Select Currency</option>
+                                {currencies.map((account, index) => (
+                                    // Assuming each 'account' object contains 'currency' and 'balance'
+                                    <option key={index} value={account.currency}>{account.currency}</option>
+                                ))}
+                            </select>
+                        </div>
+
                         <div className="mb-2">
                             <label htmlFor="email" className="block mb-1 text-sm font-medium text-gray-700">PayPal Email</label>
                             <input
@@ -93,19 +153,28 @@ const PaypalWithdrawal = () => {
                                 name="amount"
                                 value={withdrawDetails.amount}
                                 onChange={handleChange}
-                                className="w-full text-xs sm:text-xs md:text-sm p-2 border rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                                className={`w-full text-xs sm:text-xs md:text-sm p-2 border rounded focus:outline-none ${inputError ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'focus:ring-emerald-500 focus:border-emerald-500'}`}
                                 placeholder="Enter amount"
                             />
+                            {inputError && <p className="text-xs text-red-500">{inputError}</p>}
                         </div>
                         <div className="col-span-1">
                             <button
                                 type="submit"
-                                disabled={isSubmitting}
-                                className={`flex justify-center items-center w-full text-white py-2 px-4 rounded transition duration-300 ${isSubmitting ? 'bg-gray-400' : 'bg-emerald-500 hover:bg-emerald-600'}`}
+                                disabled={
+                                    isSubmitting ||
+                                    inputError ||
+                                    !withdrawDetails.amount ||
+                                    !withdrawDetails.email ||
+                                    !withdrawDetails.currency
+                                }
+                                className={`flex justify-center items-center w-full text-white py-2 px-4 rounded transition duration-300 ${isSubmitting || inputError || !withdrawDetails.amount || !withdrawDetails.email || !withdrawDetails.currency ? 'bg-gray-400' : 'bg-emerald-500 hover:bg-emerald-600'
+                                    }`}
                             >
                                 {isSubmitting && <FaSpinner className="animate-spin mr-2" />}
                                 Withdraw
                             </button>
+
                         </div>
                     </form>
                 </>
