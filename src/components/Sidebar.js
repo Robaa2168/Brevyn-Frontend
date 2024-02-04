@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
+  AiOutlineCopy,
   AiOutlineDashboard,
   AiOutlineWallet,
   AiOutlineGift,
@@ -18,6 +19,16 @@ const Sidebar = ({ changeComponent }) => {
   const { logout } = useUser();
   const navigate = useNavigate();
   const [activeComponent, setActiveComponent] = useState('donationsSummary');
+  const [copied, setCopied] = useState(false);
+
+  const payId = "345872"; // This could also be passed as a prop
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(payId).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // Reset copied state after 2 seconds
+    });
+  };
 
   const handleLogout = () => {
     logout();
@@ -31,7 +42,22 @@ const Sidebar = ({ changeComponent }) => {
 
   return (
     <div className="bg-white p-4 rounded-lg shadow mx-4 lg:mx-8 lg:rounded-none lg:h-full lg:w-64 mt-4 md:mt-8 lg:mt-16">
-      <nav className="flex flex-col space-y-3">
+   {/* Pay ID Display */}
+<div className="mb-6 p-4 bg-green-50 rounded-lg shadow-sm border border-green-200 text-green-700 flex justify-between items-center">
+  <div className="flex-grow">
+    <div className="text-xs font-semibold uppercase tracking-wide">
+      Pay ID: <span className="ml-2 font-normal">{payId}</span>
+    </div>
+    {copied && <div className="text-xs text-blue-800">Copied!</div>}
+  </div>
+  <button onClick={copyToClipboard} className="ml-4 flex-shrink-0 flex items-center justify-center text-green-600 hover:text-green-800 transition-colors duration-150">
+    <AiOutlineCopy className="text-lg" />
+  </button>
+</div>
+
+
+      
+       <nav className="flex flex-col space-y-3">
         {/* Dashboard */}
         <div
           onClick={() => handleClick('donationsSummary')}
