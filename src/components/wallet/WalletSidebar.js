@@ -103,22 +103,22 @@ const WalletSidebar = ({ changeComponent }) => {
 
                 {/* Convert */}
                 <div
-                    onClick={() => handleClick('WithdrawalHistory')}
+                    onClick={() => handleClick('ConversionContainer')}
                     className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'convert' ? 'text-emerald-500' : 'text-gray-700'
                         }`}
                 >
                     <AiOutlineSwap className="text-xl sm:text-2xl" />
-                    <span className="text-xs sm:text-sm">Withdrawal History</span>
+                    <span className="text-xs sm:text-sm">Convert</span>
                 </div>
 
                 {/* History */}
                 <div
-                    onClick={() => handleClick('history')}
+                    onClick={() => handleClick('WithdrawalHistory')}
                     className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'history' ? 'text-emerald-500' : 'text-gray-700'
                         }`}
                 >
                     <AiOutlineHistory className="text-xl sm:text-2xl" />
-                    <span className="text-xs sm:text-sm">Trade History</span>
+                    <span className="text-xs sm:text-sm">Withdrawal History</span>
                 </div>
 
                 {/* Deposit */}

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaExclamationTriangle } from 'react-icons/fa';
 import WalletSidebar from './WalletSidebar';
 import Wallet from './Wallet';
+import ConversionContainer from './conversion/ConversionContainer';
 import Withdraw from './withdrawal/Withdraw';
 import Deposit from './Deposit';
 import WithdrawalHistory from './WithdrawalHistory';
@@ -23,6 +24,7 @@ const WalletDashboard = () => {
 
   const componentMap = {
     wallet: <Wallet />,
+    ConversionContainer: <ConversionContainer />,
     withdraw: <Withdraw />,
     deposit: <Deposit />,
     WithdrawalHistory: <WithdrawalHistory />,

@@ -52,15 +52,14 @@ const WithdrawalHistory = () => {
                         <div className="text-left">
                             <p className="font-semibold text-xs">{withdrawal.withdrawalId}</p>
                             <p className="text-xs text-gray-500">${withdrawal.amount}</p>
-                            <p className={`font-semibold text-xs ${
-    withdrawal.status === 'pending' ? 'text-yellow-500' :
-    withdrawal.status === 'processing' ? 'text-blue-500' :
-    withdrawal.status === 'completed' ? 'text-green-500' :
-    withdrawal.status === 'failed' ? 'text-red-500' :
-    withdrawal.status === 'cancelled' ? 'text-red-500' : 'text-black'
-}`}>
-   {withdrawal.status.charAt(0).toUpperCase() + withdrawal.status.slice(1)}
-</p>
+                            <p className={`font-semibold text-xs ${withdrawal.status === 'pending' ? 'text-yellow-500' :
+                                    withdrawal.status === 'processing' ? 'text-blue-500' :
+                                        withdrawal.status === 'completed' ? 'text-green-500' :
+                                            withdrawal.status === 'failed' ? 'text-red-500' :
+                                                withdrawal.status === 'cancelled' ? 'text-red-500' : 'text-black'
+                                }`}>
+                                {withdrawal.status.charAt(0).toUpperCase() + withdrawal.status.slice(1)}
+                            </p>
 
                         </div>
                         <button
