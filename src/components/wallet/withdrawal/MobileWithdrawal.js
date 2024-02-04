@@ -22,41 +22,42 @@ const MobileWithdrawal = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
-    // Assume currencies are available for mobile withdrawal as well, or fetch them similarly
+    const [selectedCurrencyBalance, setSelectedCurrencyBalance] = useState(0);
     const currencies = user?.accounts?.map(account => ({ currency: account.currency, balance: account.balance })) || [];
     const [inputError, setInputError] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
-        // Adapted logic for currency validation
-        if (name === 'amount' && !withdrawDetails.currency) {
-            setInputError('Please select a currency first');
-            return;
-        } else {
-            setInputError('');
-        }
-
+    
+        // Proceed with state update after passing checks
         const updatedDetails = { ...withdrawDetails, [name]: value };
         setWithdrawDetails(updatedDetails);
-
+    
+        // Clear global error when any input changes
         setError('');
-
+    
         if (name === 'currency') {
-            setWithdrawDetails({ ...updatedDetails, amount: '' }); // Reset amount upon currency change
-
-            if (updatedDetails.amount) {
-                const selectedCurrencyBalance = currencies.find(c => c.currency === value)?.balance || 0;
-                if (parseFloat(updatedDetails.amount) > selectedCurrencyBalance) {
-                    setInputError(`The balance of ${value} is insufficient.`);
-                } else {
-                    setInputError('');
-                }
-            }
+            // Immediately find and set the selected currency's balance when currency changes
+            const account = currencies.find(c => c.currency === value);
+            setSelectedCurrencyBalance(account ? account.balance : 0); // Update the balance for the selected currency
+    
+            // Clear amount field to force user re-entry and validation against new currency
+            setWithdrawDetails({ ...updatedDetails, amount: '' });
+    
+            // Reset input error if the currency is changed
+            setInputError('');
         } else if (name === 'amount') {
-            const selectedCurrencyBalance = currencies.find(c => c.currency === updatedDetails.currency)?.balance || 0;
-            if (parseFloat(value) > selectedCurrencyBalance) {
-                setInputError(`The balance of ${updatedDetails.currency} is insufficient.`);
+            // Ensure currency is selected before allowing amount input
+            if (!withdrawDetails.currency) {
+                setInputError('Please select a currency first');
+                return; // Prevents the amount from being set if currency hasn't been chosen
+            }
+            
+            // Validate the entered amount against the selected currency's balance
+            const account = currencies.find(c => c.currency === withdrawDetails.currency);
+            const balance = account ? account.balance : 0;
+            if (parseFloat(value) > balance) {
+                setInputError(`The balance of ${withdrawDetails.currency} is insufficient.`);
             } else {
                 setInputError('');
             }
@@ -141,7 +142,8 @@ const MobileWithdrawal = () => {
                                 placeholder="Enter your provider"
                             />
                         </div>
-                        <div className="mb-2">
+                       {/* Currency Dropdown */}
+                       <div className="mb-2">
                             <label htmlFor="currency" className="block mb-1 text-sm font-medium text-gray-700">Currency</label>
                             <select
                                 name="currency"
@@ -154,6 +156,7 @@ const MobileWithdrawal = () => {
                                     <option key={index} value={account.currency}>{account.currency}</option>
                                 ))}
                             </select>
+                            {withdrawDetails.currency && <div className="mt-1 text-xs text-green-700">{withdrawDetails?.currency } balance: {selectedCurrencyBalance}</div>} {/* Display the selected currency's balance */}
                         </div>
                         <div className="mb-2">
                             <label htmlFor="amount" className="block mb-1 text-sm font-medium text-gray-700">Amount</label>

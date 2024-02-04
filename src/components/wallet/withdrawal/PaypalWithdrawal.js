@@ -20,50 +20,48 @@ const PaypalWithdrawal = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
+    const [selectedCurrencyBalance, setSelectedCurrencyBalance] = useState(0);
     const currencies = user?.accounts?.map(account => ({ currency: account.currency, balance: account.balance })) || [];
     const [inputError, setInputError] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
-        // Block amount input if currency is not selected yet
-        if (name === 'amount' && !withdrawDetails.currency) {
-            setInputError('Please select a currency first');
-            return; // Prevents the amount from being set if currency hasn't been chosen
-        } else {
-            setInputError(''); // Clears any previous error when conditions are met
-        }
-
+    
         // Proceed with state update after passing checks
         const updatedDetails = { ...withdrawDetails, [name]: value };
         setWithdrawDetails(updatedDetails);
-
+    
         // Clear global error when any input changes
         setError('');
-
+    
         if (name === 'currency') {
+            // Immediately find and set the selected currency's balance when currency changes
+            const account = currencies.find(c => c.currency === value);
+            setSelectedCurrencyBalance(account ? account.balance : 0); // Update the balance for the selected currency
+    
             // Clear amount field to force user re-entry and validation against new currency
             setWithdrawDetails({ ...updatedDetails, amount: '' });
-
-            // If there's already an amount entered, validate it against the new currency's balance
-            if (updatedDetails.amount) {
-                const selectedCurrencyBalance = currencies.find(c => c.currency === value)?.balance || 0;
-                if (parseFloat(updatedDetails.amount) > selectedCurrencyBalance) {
-                    setInputError(`The balance of ${value} is insufficient.`);
-                } else {
-                    setInputError('');
-                }
-            }
+    
+            // Reset input error if the currency is changed
+            setInputError('');
         } else if (name === 'amount') {
-            // This block now only runs if there's a currency selected due to the early return above
-            const selectedCurrencyBalance = currencies.find(c => c.currency === updatedDetails.currency)?.balance || 0;
-            if (parseFloat(value) > selectedCurrencyBalance) {
-                setInputError(`The balance of ${updatedDetails.currency} is insufficient.`);
+            // Ensure currency is selected before allowing amount input
+            if (!withdrawDetails.currency) {
+                setInputError('Please select a currency first');
+                return; // Prevents the amount from being set if currency hasn't been chosen
+            }
+            
+            // Validate the entered amount against the selected currency's balance
+            const account = currencies.find(c => c.currency === withdrawDetails.currency);
+            const balance = account ? account.balance : 0;
+            if (parseFloat(value) > balance) {
+                setInputError(`The balance of ${withdrawDetails.currency} is insufficient.`);
             } else {
                 setInputError('');
             }
         }
     };
+    
 
 
 
@@ -129,10 +127,10 @@ const PaypalWithdrawal = () => {
                                 required>
                                 <option value="">Select Currency</option>
                                 {currencies.map((account, index) => (
-                                    // Assuming each 'account' object contains 'currency' and 'balance'
                                     <option key={index} value={account.currency}>{account.currency}</option>
                                 ))}
                             </select>
+                            {withdrawDetails.currency && <div className="mt-1 text-xs text-green-700">{withdrawDetails?.currency } balance: {selectedCurrencyBalance}</div>} {/* Display the selected currency's balance */}
                         </div>
 
                         <div className="mb-2">
