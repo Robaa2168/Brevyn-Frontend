@@ -16,12 +16,12 @@ import {
 import { useUser } from './context'; 
 
 const Sidebar = ({ changeComponent }) => {
-  const { logout } = useUser();
+  const {user, logout } = useUser();
   const navigate = useNavigate();
   const [activeComponent, setActiveComponent] = useState('donationsSummary');
   const [copied, setCopied] = useState(false);
 
-  const payId = "345872"; // This could also be passed as a prop
+  const payId = user?.payId; // This could also be passed as a prop
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(payId).then(() => {

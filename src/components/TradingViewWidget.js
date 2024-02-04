@@ -13,6 +13,8 @@ const ForexStrip = () => {
     script.type = 'text/javascript';
     script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
     script.async = true;
+    script.setAttribute('crossorigin', 'anonymous');
+
     // The script's content needs to be JSON, defining the widget's configuration
     script.innerHTML = JSON.stringify({
       "symbols": [
