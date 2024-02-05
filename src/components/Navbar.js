@@ -10,11 +10,15 @@ const Navbar = () => {
   return (
     <nav className="bg-emerald-600 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-lg font-bold">
-          <a href={externalLink} className="hover:text-emerald-200">
-            Verdant Charity
-          </a>
-        </div>
+      <div className="text-lg font-bold">
+  <a href={externalLink} className="hover:text-emerald-200">
+    <img src="https://www.verdant.co/wp-content/uploads/2023/06/verdant-logo.png" 
+         alt="Verdant Charity" 
+         className="h-8 md:h-8" /> {/* Adjust sizes as needed */}
+  </a>
+</div>
+
+
         {/* Links for larger screens */}
         <div className={`hidden md:flex space-x-4`}>
         <Link to="/" className="hover:text-emerald-200 block px-3 py-2 rounded-md">Dashboard</Link>
