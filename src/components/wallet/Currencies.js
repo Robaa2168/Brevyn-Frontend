@@ -82,8 +82,8 @@ const Currencies = ({ onViewDetails }) => {
             {accounts?.length > 0 ? (
                 <div className="flex flex-col">
                     {accounts.map((account) => (
-                        <div key={account.currency} className="flex flex-wrap justify-between items-center p-4 border-b">
-                            <div className="flex flex-col md:flex-row items-center space-x-0 md:space-x-3 mb-2 md:mb-0">
+                       <div key={account.currency} className="flex flex-col md:flex-row justify-center md:justify-between items-center p-4 border-b">
+                       <div className="flex flex-col md:flex-row items-center space-x-0 md:space-x-3 mb-2 md:mb-0">
                                 <img
                                     src={getFlagImageUrl(account.currency)}
                                     alt={`${account.currency} flag`}
@@ -104,13 +104,13 @@ const Currencies = ({ onViewDetails }) => {
 
 
                             </div>
-                            <button
-                                onClick={() => handleViewDetails(account._id)}
-                                className="w-full sm:w-auto px-4 py-2 text-xs border border-emerald-500 text-emerald-500 rounded hover:bg-emerald-500 hover:text-white transition duration-150 ease-in-out">
-                                View Details
-                            </button>
-
-                        </div>
+                       <button
+                         onClick={() => handleViewDetails(account._id)}
+                         className="w-full md:w-auto px-4 py-2 text-xs border border-emerald-500 text-emerald-500 rounded hover:bg-emerald-500 hover:text-white transition duration-150 ease-in-out">
+                         View Details
+                       </button>
+                     </div>
+                     
                     ))}
                 </div>
             ) : (
