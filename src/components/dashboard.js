@@ -38,8 +38,7 @@ const Dashboard = () => {
           };
           const response = await api.get('/api/auth/info', config);
           if (response.status === 200) {
-            // Update context by spreading the existing user and overriding with new data
-            login({ ...user, ...response.data }); // Spread and update
+            login({ ...user, ...response.data }); 
           } else {
             console.error('Failed to fetch user data, status code:', response.status);
           }

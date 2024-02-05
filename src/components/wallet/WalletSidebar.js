@@ -124,12 +124,12 @@ const WalletSidebar = ({ changeComponent }) => {
 
                 {/* Deposit */}
                 <div
-                    onClick={() => handleClick('deposit')}
-                    className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'deposit' ? 'text-emerald-500' : 'text-gray-700'
+                    onClick={() => handleClick('DepositContainer')}
+                    className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'DepositContainer' ? 'text-emerald-500' : 'text-gray-700'
                         }`}
                 >
                     <AiOutlineDollarCircle className="text-xl sm:text-2xl" />
-                    <span className="text-xs sm:text-sm">Deposit</span>
+                    <span className="text-xs sm:text-sm pulse-dot-orange">Deposit</span>
                 </div>
 
                     {/* Currencies Section */}
@@ -169,7 +169,7 @@ const WalletSidebar = ({ changeComponent }) => {
     {/* Help */}
     <div onClick={() => navigate('/help')} className="flex items-center space-x-3 cursor-pointer">
                     <AiOutlineQuestionCircle className="text-xl sm:text-2xl" />
-                    <span className="text-xs sm:text-sm pulse-dot-green">Help</span>
+                    <span className="text-xs sm:text-sm ">Help</span>
                 </div>
             </nav>
               {/* Render the Review Modal */}

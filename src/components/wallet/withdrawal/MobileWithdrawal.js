@@ -16,7 +16,7 @@ const MobileWithdrawal = () => {
         amount: '',
         phoneNumber: '',
         provider: '',
-        currency: '' // Added currency to align with the PayPal logic
+        currency: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
