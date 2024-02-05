@@ -158,7 +158,7 @@ const CurrencyDetail = ({ currencyId, onBack }) => {
       color: '#424242',
       marginTop: '20px', // Adjust the margin-top value as needed
     }}>
-      To activate {currencyDetails?.currency} currency, a fee of $10 ~ KES1600 will be charged. Please note that the funds used to pay this fee must be in the same currency as the one being activated.
+      To activate {currencyDetails?.currency} currency, a fee of $20 ~ KES3200 will be charged. Please note that the funds used to pay this fee must be in the same currency as the one being activated.
     </p>
   )
 }
