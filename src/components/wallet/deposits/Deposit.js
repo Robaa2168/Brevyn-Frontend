@@ -131,7 +131,6 @@ const Deposit = ({ setActiveComponent }) => {
         
         <div className="container mx-auto p-4 bg-white rounded-lg">
             {showConfetti && <Confetti />}
-            <h2 className="text-lg font-bold mb-2">Deposit Funds</h2>
 
             {success ? (
                 <div className="flex flex-col items-center justify-center w-full p-4">
