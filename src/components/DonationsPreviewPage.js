@@ -262,6 +262,7 @@ const DonationsPreviewPage = () => {
                                     >
                                         <FaEdit className="mr-2" />Edit
                                     </button>
+                                    {/*
                                     <button
                                         onClick={() => openModal("delete")}
                                         disabled={isSubmitting}
@@ -270,6 +271,7 @@ const DonationsPreviewPage = () => {
                                         {isSubmitting && action === 'deleting' ? <FaSpinner className="mr-2 animate-spin" /> : <FaTrashAlt className="mr-2" />}
                                         {isSubmitting && action === 'deleting' ? 'Deleting...' : 'Delete'}
                                     </button>
+                                */}
                                 </div>
 
 
