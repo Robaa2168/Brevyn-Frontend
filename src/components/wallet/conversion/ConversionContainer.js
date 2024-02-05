@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Convert from './Convert';
 import ConvertHistory from './ConvertHistory';
 
-const ConversionContainer = () => {
+const ConversionContainer = ({ setActiveComponent }) => {
     const [activeTab, setActiveTab] = useState('convert');
 
     const tabButtonClass = (tabName) => `w-full sm:w-auto py-2 px-4 border-b-2 font-medium text-sm sm:text-base ${
@@ -18,7 +18,7 @@ const ConversionContainer = () => {
             </div>
 
             {/* Conditionally render Convert or ConvertHistory based on the active tab */}
-            {activeTab === 'convert' && <Convert />}
+            {activeTab === 'convert' &&  <Convert setActiveComponent={setActiveComponent} />}
             {activeTab === 'history' && <ConvertHistory />}
         </div>
     );

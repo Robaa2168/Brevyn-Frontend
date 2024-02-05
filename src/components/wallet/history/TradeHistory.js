@@ -1,11 +1,11 @@
-// History.js
+// Trade History.js
 
 import React, { useEffect, useState } from 'react';
-import api from '../../api';
+import api from '../../../api';
 import Lottie from "lottie-react";
-import unavailableAnimation from '../lottie/noLinks.json';
-import loadingAnimation from '../lottie/loading.json';
-import { useUser } from "../context";
+import unavailableAnimation from '../../lottie/noLinks.json';
+import loadingAnimation from '../../lottie/loading.json';
+import { useUser } from "../../context";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -44,8 +44,7 @@ const History = () => {
     }, []);
 
     return (
-        <div className="flex flex-col flex-grow container mx-auto p-4 bg-white rounded-lg shadow-md text-center ">
-            <h2 className="text-lg font-bold mb-4">Trade History</h2>
+        <div className="flex flex-col flex-grow container mx-auto p-4 bg-white rounded-lg text-center ">
             {isLoading ? (
                 <div className="flex justify-center items-center py-4">
                     <Lottie animationData={loadingAnimation} style={{ width: 100, height: 100 }} />

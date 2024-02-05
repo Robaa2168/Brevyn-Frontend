@@ -13,7 +13,8 @@ import {
     AiOutlineShoppingCart,
     AiOutlineQuestionCircle,
     AiOutlineHome,
-    AiOutlineStar
+    AiOutlineStar,
+    AiFillAlipayCircle
 } from 'react-icons/ai';
 
 const WalletSidebar = ({ changeComponent }) => {
@@ -104,7 +105,7 @@ const WalletSidebar = ({ changeComponent }) => {
                 {/* Convert */}
                 <div
                     onClick={() => handleClick('ConversionContainer')}
-                    className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'convert' ? 'text-emerald-500' : 'text-gray-700'
+                    className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'ConversionContainer' ? 'text-emerald-500' : 'text-gray-700'
                         }`}
                 >
                     <AiOutlineSwap className="text-xl sm:text-2xl" />
@@ -113,12 +114,12 @@ const WalletSidebar = ({ changeComponent }) => {
 
                 {/* History */}
                 <div
-                    onClick={() => handleClick('WithdrawalHistory')}
-                    className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'history' ? 'text-emerald-500' : 'text-gray-700'
+                    onClick={() => handleClick('HistoryContainer')}
+                    className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'HistoryContainer' ? 'text-emerald-500' : 'text-gray-700'
                         }`}
                 >
                     <AiOutlineHistory className="text-xl sm:text-2xl" />
-                    <span className="text-xs sm:text-sm">Withdrawal History</span>
+                    <span className="text-xs sm:text-sm">Transactions History</span>
                 </div>
 
                 {/* Deposit */}
@@ -129,6 +130,16 @@ const WalletSidebar = ({ changeComponent }) => {
                 >
                     <AiOutlineDollarCircle className="text-xl sm:text-2xl" />
                     <span className="text-xs sm:text-sm">Deposit</span>
+                </div>
+
+                    {/* Currencies Section */}
+                    <div
+                    onClick={() => handleClick('CurrenciesContainer')}
+                    className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'CurrenciesContainer' ? 'text-emerald-500' : 'text-gray-700'
+                        }`}
+                >
+                    <AiFillAlipayCircle className="text-blue-500 text-xl sm:text-2xl" />
+                    <span className="text-xs sm:text-sm">Currencies</span>
                 </div>
 
                 {/* Market Place */}

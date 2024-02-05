@@ -2,33 +2,59 @@ import React, { useState, useEffect } from 'react';
 import { useUser } from "../context";
 import { useNavigate } from 'react-router-dom';
 import { FaExclamationTriangle } from 'react-icons/fa';
+import api from '../../api';
 import WalletSidebar from './WalletSidebar';
 import Wallet from './Wallet';
 import ConversionContainer from './conversion/ConversionContainer';
 import Withdraw from './withdrawal/Withdraw';
+import CurrenciesContainer from './CurrenciesContainer';
 import Deposit from './Deposit';
-import WithdrawalHistory from './WithdrawalHistory';
-import History from './History';
+import WithdrawalHistory from './history/WithdrawalHistory';
+import HistoryContainer from './history/HistoryContainer';
 import MarketPlace from './MarketPlace';
 
 const WalletDashboard = () => {
-  const { user } = useUser();
+  const { user, login } = useUser();
   const navigate = useNavigate();
   const [activeComponent, setActiveComponent] = useState('wallet');
+
 
   useEffect(() => {
     if (!user || !user.token) {
       navigate('/login');
+    } else {
+      // Fetch updated user data when dashboard is visited
+      const fetchUserData = async () => {
+        try {
+          const config = {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${user.token}`
+            }
+          };
+          const response = await api.get('/api/auth/info', config);
+          if (response.status === 200) {
+            // Update context by spreading the existing user and overriding with new data
+            login({ ...user, ...response.data });
+          } else {
+            console.error('Failed to fetch user data, status code:', response.status);
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+      fetchUserData();
     }
-  }, [user, navigate]);
+  }, []);
 
   const componentMap = {
     wallet: <Wallet />,
-    ConversionContainer: <ConversionContainer />,
+    CurrenciesContainer: <CurrenciesContainer />,
+    ConversionContainer: <ConversionContainer setActiveComponent={setActiveComponent} />,
     withdraw: <Withdraw />,
     deposit: <Deposit />,
     WithdrawalHistory: <WithdrawalHistory />,
-    history: <History />,
+    HistoryContainer: <HistoryContainer />,
     marketPlace: <MarketPlace />,
   };
 

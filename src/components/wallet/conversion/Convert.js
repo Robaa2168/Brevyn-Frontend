@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useMemo, useState } from "react";
 import { useUser } from "../../context";
+import { FaSpinner } from 'react-icons/fa';
 import api from "../../../api";
 import Lottie from "lottie-react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,10 +9,9 @@ import successAnimation from "../../lottie/success-animation.json";
 import successConfetti from '../../lottie/ravel-success-animation.json';
 import { useNavigate } from "react-router-dom";
 
-const Convert = () => {
+const Convert = ({ setActiveComponent }) => {
   const { user, login } = useUser();
   const accounts = user?.accounts;
-  const navigate = useNavigate();
 
   const getUniqueCurrencies = (accounts) => {
     const uniqueCurrencies = Array.from(
@@ -188,22 +188,17 @@ const Convert = () => {
         setShowSuccess(true);
         // Proceed to fetch updated balances
         try {
-            const balanceResponse = await api.get("/api/getUserBalances", {
+            const balanceResponse = await api.get("/api/auth/info", {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
-            if (balanceResponse.status === 200) {
-               // Update the local storage with the new balances
-          const updatedUser = {
-            ...user,
-            accounts: balanceResponse.data.accounts,
-          };
-          console.log(updatedUser);
-          login(updatedUser);
+               if (balanceResponse.status === 200) {
+                // Update context by spreading the existing user and overriding with new data
+                login({ ...user, ...balanceResponse.data });
         }
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
-          navigate("/currencies");
+          setActiveComponent('CurrenciesContainer'); 
         }, 4000);
         } catch (balanceError) {
             console.error("Error fetching updated balances:", balanceError);
@@ -407,16 +402,16 @@ const Convert = () => {
             {/* Convert button */}
             <div className='flex justify-center mt-4'>
             <button
-  className='w-full sm:w-auto border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-bold  text-xs py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-200 ease-in-out'
+  className='w-full sm:w-auto border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-bold text-xs py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-200 ease-in-out flex justify-center items-center'
   onClick={handleConvertSubmit}
-  disabled={
-    !amount ||
-    !fromCurrency ||
-    !toCurrency ||
-    loading
-  }
+  disabled={!amount || !fromCurrency || !toCurrency || loading}
 >
-  {loading ? "Processing..." : "Convert"}
+  {loading ? (
+    <>
+      <FaSpinner className="animate-spin -ml-1 mr-2 h-4 w-4" />
+      Processing...
+    </>
+  ) : `Convert To ${toCurrency}`}
 </button>
 
 
