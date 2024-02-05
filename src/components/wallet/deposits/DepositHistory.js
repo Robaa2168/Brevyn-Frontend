@@ -60,7 +60,7 @@ const DepositHistory = ({ onViewDetails }) => {
   }
 
   return (
-    <div className="container mx-auto p-4 bg-white rounded-lg shadow-md">
+    <div className="container mx-auto p-4 bg-white rounded-lg ">
       <div className="space-y-4">
         {deposits.map((deposit, index) => (
           <div key={index} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg shadow">
