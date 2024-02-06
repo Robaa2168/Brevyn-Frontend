@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from './context';
+
 
 const Navbar = () => {
-  // State to manage whether mobile menu is shown
+  const { user, logout } = useUser();
+  const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   const externalLink = 'https://donations.verdantcharity.org';
 
@@ -34,6 +42,15 @@ const Navbar = () => {
           <a href={`${externalLink}/learn-more/contact-us`} className="hover:text-emerald-200 block px-3 py-2 rounded-md">
             Contact-Us
           </a>
+            {/* Conditional Logout Link */}
+        {user && (
+          <button
+            onClick={handleLogout}
+            className="hover:text-emerald-200 px-3 py-2 rounded-md text-sm bg-transparent border border-transparent hover:border-emerald-500"
+          >
+            Logout
+          </button>
+        )}
         </div>
         {/* Hamburger menu for smaller screens */}
         <div className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -70,6 +87,15 @@ const Navbar = () => {
           <a href={`${externalLink}/learn-more/contact-us`} className="hover:text-emerald-200 block px-3 py-2 rounded-md">
             Contact-US
           </a>
+            {/* Conditional Logout Link */}
+        {user && (
+          <button
+            onClick={handleLogout}
+            className="hover:text-emerald-200 px-3 py-2 rounded-md text-sm bg-transparent border border-transparent hover:border-emerald-500"
+          >
+            Logout
+          </button>
+        )}
         </div>
       </div>
     </nav>

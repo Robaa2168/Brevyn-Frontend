@@ -1,8 +1,7 @@
 // Wallet.js
 import React from 'react';
 import { BiDollarCircle } from 'react-icons/bi';
-import { AiOutlineCalendar } from 'react-icons/ai';
-import { MdOutlineVolunteerActivism } from 'react-icons/md';
+import { AiOutlineCalendar, AiOutlineGift } from 'react-icons/ai';
 import { useUser } from "../context";
 
 const Wallet = () => {
@@ -51,7 +50,7 @@ const Wallet = () => {
                     <p className="text-xs md:text-sm font-bold">Ksh {user?.balance}</p>
                 </div>
                 <div className="rounded-full bg-emerald-500 bg-opacity-20 p-2">
-                    <MdOutlineVolunteerActivism className="text-emerald-500 text-xl" />
+                    <AiOutlineGift className="text-emerald-500 text-xl" />
                 </div>
             </div>
 

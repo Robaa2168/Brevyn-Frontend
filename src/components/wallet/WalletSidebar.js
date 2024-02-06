@@ -14,7 +14,8 @@ import {
     AiOutlineQuestionCircle,
     AiOutlineHome,
     AiOutlineStar,
-    AiFillAlipayCircle
+    AiFillAlipayCircle,
+    AiOutlineGift
 } from 'react-icons/ai';
 
 const WalletSidebar = ({ changeComponent }) => {
@@ -77,7 +78,7 @@ const WalletSidebar = ({ changeComponent }) => {
     };
 
     return (
-        <div className="bg-white p-4 rounded-lg shadow mx-4 lg:mx-8 lg:rounded-none lg:h-full lg:w-64 mt-4 md:mt-8 lg:mt-16">
+        <div className="bg-white p-4 rounded-lg shadow-xl mx-4 lg:mx-8 lg:rounded-none lg:h-full lg:w-64 mt-4 md:mt-8 lg:mt-16">
             <nav className="flex flex-col space-y-3">
                 {/* Link back to dashboard */}
                 <Link

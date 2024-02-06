@@ -41,7 +41,7 @@ const Sidebar = ({ changeComponent }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow mx-4 lg:mx-8 lg:rounded-none lg:h-full lg:w-64 mt-4 md:mt-8 lg:mt-16">
+    <div className="bg-white p-4 rounded-lg  mx-4 lg:mx-8 lg:rounded-none lg:h-full lg:w-64 mt-4 md:mt-8 lg:mt-16 shadow-xl">
    {/* Pay ID Display */}
 <div className="mb-6 p-4 bg-green-50 rounded-lg shadow-sm border border-green-200 text-green-700 flex justify-between items-center">
   <div className="flex-grow">
