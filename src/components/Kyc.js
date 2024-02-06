@@ -1,6 +1,6 @@
 //kyc.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../api';
 import Lottie from "lottie-react";
 import { useNavigate } from 'react-router-dom';
@@ -33,6 +33,12 @@ const Kyc = () => {
         idNumber: ''
     });
 
+    useEffect(() => {
+        if (!user || !user.token) {
+          navigate('/login');
+        }
+      }, [user]); // Add dependency array if necessary
+      
     const calculateMaxDob = () => {
         const today = new Date();
         const maxYear = today.getFullYear() - 18;

@@ -45,17 +45,21 @@ const TransferHistory = ({ onViewDetails }) => {
 
   if (isLoading) {
     return (
+        <div className="container mx-auto p-4 bg-white rounded-lg ">
       <div className="flex flex-col justify-center items-center">
         <Lottie animationData={loadingAnimation} style={{ width: 150, height: 150 }} />
+      </div>
       </div>
     );
   }
 
   if (transfers.length === 0) {
     return (
+        <div className="container mx-auto p-4 bg-white rounded-lg ">
       <div className="flex flex-col justify-center items-center">
         <Lottie animationData={noRecordsAnimation} style={{ width: 200, height: 200 }} />
         <p>No transfers found.</p>
+      </div>
       </div>
     );
   }
@@ -66,9 +70,13 @@ const TransferHistory = ({ onViewDetails }) => {
         {transfers.map((transfer, index) => (
           <div key={index} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg shadow">
             <div>
-              <h3 className="text-md font-semibold">{transfer.sender === user?._id
-                            ? transfer.receiverFirstName
-                            : transfer.senderFirstName}</h3>
+            <h3 className="text-md font-semibold">
+  {transfer.sender === user?._id
+    ? transfer.receiverFirstName.charAt(0).toUpperCase() + transfer.receiverFirstName.slice(1)
+    : transfer.senderFirstName.charAt(0).toUpperCase() + transfer.senderFirstName.slice(1)}
+</h3>
+
+
               <p className={`text-xs ${transfer.sender === user?._id ? 'text-red-500' : 'text-green-500'} font-bold`}>
                         {transfer.sender === user?._id ? '-' : '+'}{transfer.currency} {transfer.amount}
                       </p>

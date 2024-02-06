@@ -67,7 +67,7 @@ const Wallet = () => {
                         </div>
                     </div>
                     <span className={`font-bold text-xs ${transaction.type === 'credit' ? 'text-green-500' : 'text-red-500'}`}>
-                        + $ {transaction.amount}
+                        + $ 
                     </span>
                 </div>
             ))}

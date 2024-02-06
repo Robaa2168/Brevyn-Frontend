@@ -6,6 +6,7 @@ import api from '../../api';
 import 'react-toastify/dist/ReactToastify.css';
 import { useUser } from '../context';
 import ReviewModal from './ReviewModal';
+import { FiSend } from "react-icons/fi";
 import {
     AiOutlineSwap,
     AiOutlineHistory,
@@ -118,7 +119,7 @@ const WalletSidebar = ({ changeComponent }) => {
     className={`flex items-center space-x-3 cursor-pointer ${activeComponent === 'TransferContainer' ? 'text-emerald-500' : 'text-gray-700'
     }`}
 >
-    <AiOutlineSwap className="text-xl sm:text-2xl" /> {/* Consider using a different icon if AiOutlineSwap is not suitable */}
+    <FiSend className="text-xl sm:text-2xl" /> {/* Consider using a different icon if AiOutlineSwap is not suitable */}
     <span className="text-xs sm:text-sm">Transfer Funds</span>
 </div>
 
