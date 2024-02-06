@@ -56,6 +56,46 @@ const Convert = ({ setActiveComponent }) => {
     },
   };
 
+  // Function to fetch updated balances
+  const fetchUpdatedBalances = async () => {
+    try {
+      const balanceResponse = await api.get("/api/auth/info", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      if (balanceResponse.status === 200) {
+        // Update context by spreading the existing user and overriding with new data
+        login({ ...user, ...balanceResponse.data });
+        setShowSuccess(true);
+        setTimeout(() => {
+          setShowSuccess(false);
+          setActiveComponent('CurrenciesContainer');
+        }, 4000);
+      } else {
+        setError("An error occurred while fetching updated balances.");
+      }
+    } catch (balanceError) {
+      console.error("Error fetching updated balances:", balanceError);
+      // Consider how to handle this error without overriding conversion success
+    }
+  };
+
+  // Countdown timer and reset logic
+  useEffect(() => {
+    if (timer > 0) {
+      const countdown = setInterval(() => {
+        setTimer(prevTimer => prevTimer - 1);
+      }, 1000);
+
+      const timeout = setTimeout(() => {
+        setTimer(15); // Reset to 15 seconds for the countdown
+      }, 15000); // 15 seconds
+
+      return () => {
+        clearInterval(countdown);
+        clearTimeout(timeout);
+      };
+    }
+  }, [timer]);
 
   useEffect(() => {
     const account = accounts.find(acc => acc.currency === fromCurrency);
@@ -66,17 +106,14 @@ const Convert = ({ setActiveComponent }) => {
     }
   }, [fromCurrency, accounts]);
 
-  // This useEffect handles the resetting of toCurrency
-  useEffect(() => {
-    if (toCurrency === fromCurrency) {
-      setToCurrency("");
-    }
-  }, [fromCurrency, toCurrency]);
+  // Function to get the current exchange rate
+  const getCurrentRate = useMemo(() => {
+    return rates[fromCurrency] && rates[fromCurrency][toCurrency]
+      ? rates[fromCurrency][toCurrency]
+      : 0;
+  }, [fromCurrency, toCurrency, rates]);
 
-  // Function to swap currencies
   const handleSwapCurrencies = useCallback(() => {
-    // Use a single state update with a functional update
-    // to ensure that all state changes happen in one go.
     setFromCurrency((prevFromCurrency) => {
       setToCurrency(prevFromCurrency);
       return toCurrency;
@@ -84,42 +121,18 @@ const Convert = ({ setActiveComponent }) => {
     setAmount('');
   }, [toCurrency]);
 
-
-
   useEffect(() => {
-    // Countdown logic
-    if (timer > 0) {
-      const countdown = setInterval(() => {
-        setTimer(prevTimer => prevTimer - 1);
-      }, 1000);
-      return () => clearInterval(countdown);
+    calculateConversion();
+  }, [amount, fromCurrency, toCurrency, getCurrentRate]);
+
+  const calculateConversion = () => {
+    if (amount && getCurrentRate) {
+      const result = parseFloat(amount) * getCurrentRate;
+      setConvertedAmount(result.toFixed(2));
+    } else {
+      setConvertedAmount(0);
     }
-  }, [timer]);
-
-  useEffect(() => {
-    // Reset timer logic
-    if (timer === 0) {
-      // Wait for 15 seconds before resetting the timer
-      const timeout = setTimeout(() => {
-        setTimer(15); // Reset to 5 seconds for the countdown (or choose another duration)
-      }, 15000); // 15 seconds
-
-      return () => clearTimeout(timeout);
-    }
-  }, [timer]);
-
-
-
-
-  // Function to get the current exchange rate
-  const getCurrentRate = () => {
-    return rates[fromCurrency] && rates[fromCurrency][toCurrency]
-      ? rates[fromCurrency][toCurrency]
-      : 0;
   };
-
-
-
 
   const handleFromCurrencyChange = (e) => {
     setFromCurrency(e.target.value);
@@ -132,23 +145,6 @@ const Convert = ({ setActiveComponent }) => {
   const setMaxAmount = () => {
     setAmount(balance.toString());
   };
-
-
-
-
-  const calculateConversion = () => {
-    if (amount && rates[fromCurrency] && rates[fromCurrency][toCurrency]) {
-      const rate = rates[fromCurrency][toCurrency];
-      const result = parseFloat(amount) * rate;
-      setConvertedAmount(result.toFixed(2));
-    } else {
-      setConvertedAmount(0);
-    }
-  };
-
-  useEffect(() => {
-    calculateConversion();
-  }, [amount, fromCurrency, toCurrency, rates]);
 
   const handleAmountChange = (e) => {
     const enteredAmount = e.target.value;
@@ -174,6 +170,7 @@ const Convert = ({ setActiveComponent }) => {
       setLoading(false);
       return;
     }
+
     try {
       const response = await api.post(
         "/api/conversions/convert",
@@ -188,25 +185,8 @@ const Convert = ({ setActiveComponent }) => {
       );
 
       if (response.status === 201) {
-        setShowSuccess(true);
         // Proceed to fetch updated balances
-        try {
-          const balanceResponse = await api.get("/api/auth/info", {
-            headers: { Authorization: `Bearer ${user.token}` },
-          });
-          if (balanceResponse.status === 200) {
-            // Update context by spreading the existing user and overriding with new data
-            login({ ...user, ...balanceResponse.data });
-          }
-          setShowSuccess(true);
-          setTimeout(() => {
-            setShowSuccess(false);
-            setActiveComponent('CurrenciesContainer');
-          }, 4000);
-        } catch (balanceError) {
-          console.error("Error fetching updated balances:", balanceError);
-          // Consider how to handle this error without overriding conversion success
-        }
+        fetchUpdatedBalances();
       } else {
         setError("An error occurred while processing your conversion.");
       }
@@ -224,7 +204,6 @@ const Convert = ({ setActiveComponent }) => {
       setLoading(false);
     }
   };
-
 
   return (
     <>
