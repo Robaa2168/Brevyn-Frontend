@@ -73,12 +73,17 @@ const Convert = ({ setActiveComponent }) => {
     }
   }, [fromCurrency, toCurrency]);
 
+  // Function to swap currencies
   const handleSwapCurrencies = useCallback(() => {
-    // Swap the currencies
+    // Use a single state update with a functional update
+    // to ensure that all state changes happen in one go.
+    setFromCurrency((prevFromCurrency) => {
+      setToCurrency(prevFromCurrency);
+      return toCurrency;
+    });
     setAmount('');
-    setFromCurrency(toCurrency);
-    setToCurrency(fromCurrency);
-  }, [fromCurrency, toCurrency]);
+  }, [toCurrency]);
+
 
 
   useEffect(() => {
@@ -127,7 +132,7 @@ const Convert = ({ setActiveComponent }) => {
   const setMaxAmount = () => {
     setAmount(balance.toString());
   };
-  
+
 
 
 
@@ -363,15 +368,12 @@ const Convert = ({ setActiveComponent }) => {
                   value={amount}
                   onChange={handleAmountChange}
                 />
-
-<div
-  onClick={(e) => {
-    e.preventDefault();
-    setMaxAmount();
-  }}
->
-  Max: {balance}
-</div>
+                <div
+                  className='mt-2 text-xs text-gray-600 border-1 border border-gray-400 p-1 inline-block focus:bg-white focus:bg-opacity-5 outline-none cursor-pointer'
+                  onClick={setMaxAmount}
+                >
+                  Max: {balance}
+                </div>
 
               </div>
 
