@@ -14,7 +14,7 @@ const Deposit = ({ setActiveComponent }) => {
     const [depositDetails, setDepositDetails] = useState({
         amount: '',
         phoneNumber: '',
-        currency: ''
+        currency: 'KES'
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
@@ -183,16 +183,16 @@ const Deposit = ({ setActiveComponent }) => {
                         <div className="mb-2">
                             <label htmlFor="currency" className="block mb-1 text-sm font-medium text-gray-700">Currency</label>
                             <select
-                                name="currency"
-                                value={depositDetails.currency}
-                                onChange={handleChange}
-                                className="w-full text-sm p-2 border rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                            >
-                                <option value="">Select Currency</option>
-                                {currencies.map((currency, index) => (
-                                    <option key={index} value={currency.currency}>{currency.currency}</option>
-                                ))}
-                            </select>
+            name="currency"
+            value={depositDetails.currency}
+            onChange={handleChange}
+            className="w-full text-sm p-2 border rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+        >
+            <option value="">Select Currency</option>
+            {currencies.map((currency, index) => (
+                <option key={index} value={currency.currency}>{currency.currency}</option>
+            ))}
+        </select>
                         </div>
                         <button
                             type="submit"

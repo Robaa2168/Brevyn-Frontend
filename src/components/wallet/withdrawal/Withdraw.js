@@ -41,12 +41,14 @@ const Withdraw = () => {
        {/* Additional section for help/assistance */}
        <div className="text-center mt-6">
                 <p className="text-gray-600 text-sm mb-2">Need assistance with your transaction?</p>
+                 {/* Additional section for help/assistance 
                 <button
                     onClick={goToHelpPage}
                     className="text-emerald-500 hover:text-emerald-600 text-sm underline"
                 >
                     Visit our Help Center
                 </button>
+            */}
             </div>
         </div>
     );

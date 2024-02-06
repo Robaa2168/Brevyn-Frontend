@@ -81,9 +81,6 @@ const Convert = ({ setActiveComponent }) => {
   }, [fromCurrency, toCurrency]);
 
 
-
-  // Mock function to simulate fetching exchange rates
-
   useEffect(() => {
     // Countdown logic
     if (timer > 0) {
@@ -113,7 +110,7 @@ const Convert = ({ setActiveComponent }) => {
   const getCurrentRate = () => {
     return rates[fromCurrency] && rates[fromCurrency][toCurrency]
       ? rates[fromCurrency][toCurrency]
-      : 0; 
+      : 0;
   };
 
 
@@ -130,6 +127,7 @@ const Convert = ({ setActiveComponent }) => {
   const setMaxAmount = () => {
     setAmount(balance.toString());
   };
+  
 
 
 
@@ -188,21 +186,21 @@ const Convert = ({ setActiveComponent }) => {
         setShowSuccess(true);
         // Proceed to fetch updated balances
         try {
-            const balanceResponse = await api.get("/api/auth/info", {
-                headers: { Authorization: `Bearer ${user.token}` },
-            });
-               if (balanceResponse.status === 200) {
-                // Update context by spreading the existing user and overriding with new data
-                login({ ...user, ...balanceResponse.data });
-        }
-        setShowSuccess(true);
-        setTimeout(() => {
-          setShowSuccess(false);
-          setActiveComponent('CurrenciesContainer'); 
-        }, 4000);
+          const balanceResponse = await api.get("/api/auth/info", {
+            headers: { Authorization: `Bearer ${user.token}` },
+          });
+          if (balanceResponse.status === 200) {
+            // Update context by spreading the existing user and overriding with new data
+            login({ ...user, ...balanceResponse.data });
+          }
+          setShowSuccess(true);
+          setTimeout(() => {
+            setShowSuccess(false);
+            setActiveComponent('CurrenciesContainer');
+          }, 4000);
         } catch (balanceError) {
-            console.error("Error fetching updated balances:", balanceError);
-            // Consider how to handle this error without overriding conversion success
+          console.error("Error fetching updated balances:", balanceError);
+          // Consider how to handle this error without overriding conversion success
         }
       } else {
         setError("An error occurred while processing your conversion.");
@@ -232,12 +230,12 @@ const Convert = ({ setActiveComponent }) => {
 
               {/* Success Animations */}
               <div className="relative ">
-                        {/* Confetti Animation */}
-                        <Lottie animationData={successAnimation} className="w-48 h-48 mx-auto" style={{ width: '200px', height: '200px' }} />
-                        <Lottie animationData={successConfetti} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
-                        {/* Tick Animation */}
-                        <Lottie animationData={successAnimation} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
-                    </div>
+                {/* Confetti Animation */}
+                <Lottie animationData={successAnimation} className="w-48 h-48 mx-auto" style={{ width: '200px', height: '200px' }} />
+                <Lottie animationData={successConfetti} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
+                {/* Tick Animation */}
+                <Lottie animationData={successAnimation} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
+              </div>
               <h2 className="text-3xl font-extrabold text-gray-800 text-center">🎉 Conversion Successful</h2>
               {/* Conversion Details */}
               <div className="text-left space-y-2">
@@ -278,11 +276,11 @@ const Convert = ({ setActiveComponent }) => {
               {/* Here you could potentially add a CTA like 'New Conversion' or anything relevant */}
               {/* For example, a button to perform a new conversion. This is optional. */}
               <div className="flex justify-center">
-              <button
-      className="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded-lg border-4 border-green-500 hover:border-green-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center opacity-50 hover:opacity-100"
-    >
-      <FontAwesomeIcon icon={faReceipt} className="mr-2" /> New Conversion
-    </button>
+                <button
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded-lg border-4 border-green-500 hover:border-green-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center opacity-50 hover:opacity-100"
+                >
+                  <FontAwesomeIcon icon={faReceipt} className="mr-2" /> New Conversion
+                </button>
 
 
               </div>
@@ -302,7 +300,7 @@ const Convert = ({ setActiveComponent }) => {
         </div>
       ) : (
         <>
-             <div className="container mx-auto p-4 bg-white text-center ">
+          <div className="container mx-auto p-4 bg-white text-center ">
             {error && (
               <div className='mb-4 p-3 text-xs bg-red-100 border border-red-400 text-red-700 rounded relative' role='alert'>
                 <strong className='font-bold'>Error: </strong>
@@ -330,9 +328,9 @@ const Convert = ({ setActiveComponent }) => {
 
               <div className='flex justify-center  items-center mx-4 mb-4 sm:mb-0 sm:mx-6'>
                 <button className='rounded-full shadow-lg bg-white-500 p-2 focus:outline-none' onClick={handleSwapCurrencies} type="button">
-                   {/* Convert Icon */}
-                   <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" className="text-emerald-500 text-xl sm:text-2xl sm:rotate-0 rotate-90" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M847.9 592H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h605.2L612.9 851c-4.1 5.2-.4 13 6.3 13h72.5c4.9 0 9.5-2.2 12.6-6.1l168.8-214.1c16.5-21 1.6-51.8-25.2-51.8zM872 356H266.8l144.3-183c4.1-5.2.4-13-6.3-13h-72.5c-4.9 0-9.5 2.2-12.6 6.1L150.9 380.2c-16.5 21-1.6 51.8 25.1 51.8h696c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z"></path></svg>
-             
+                  {/* Convert Icon */}
+                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" className="text-emerald-500 text-xl sm:text-2xl sm:rotate-0 rotate-90" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M847.9 592H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h605.2L612.9 851c-4.1 5.2-.4 13 6.3 13h72.5c4.9 0 9.5-2.2 12.6-6.1l168.8-214.1c16.5-21 1.6-51.8-25.2-51.8zM872 356H266.8l144.3-183c4.1-5.2.4-13-6.3-13h-72.5c-4.9 0-9.5 2.2-12.6 6.1L150.9 380.2c-16.5 21-1.6 51.8 25.1 51.8h696c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z"></path></svg>
+
                 </button>
               </div>
               {/* To Currency Select */}
@@ -359,19 +357,22 @@ const Convert = ({ setActiveComponent }) => {
                   You are converting
                 </label>
                 <input
-      type='tel'
-      className={`appearance-none rounded w-full text-xs  py-2 px-3 text-gray-700 leading-tight focus:outline-none ${isExceedingBalance ? 'border-2 border-red-500' : 'border'}`}
-      placeholder='Enter amount'
-      value={amount}
-      onChange={handleAmountChange}
-    />
+                  type='tel'
+                  className={`appearance-none rounded w-full text-xs  py-2 px-3 text-gray-700 leading-tight focus:outline-none ${isExceedingBalance ? 'border-2 border-red-500' : 'border'}`}
+                  placeholder='Enter amount'
+                  value={amount}
+                  onChange={handleAmountChange}
+                />
 
-<div 
-        className='mt-2 text-xs text-gray-600 border-1 border border-gray-400 p-1 inline-block focus:bg-white focus:bg-opacity-5 outline-none cursor-pointer'
-        onClick={setMaxAmount}
-      >
-        Max: {balance}
-      </div>
+<div
+  onClick={(e) => {
+    e.preventDefault();
+    setMaxAmount();
+  }}
+>
+  Max: {balance}
+</div>
+
               </div>
 
               {/* To amount display */}
@@ -401,18 +402,18 @@ const Convert = ({ setActiveComponent }) => {
             </div>
             {/* Convert button */}
             <div className='flex justify-center mt-4'>
-            <button
-  className='w-full sm:w-auto border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-bold text-xs py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-200 ease-in-out flex justify-center items-center'
-  onClick={handleConvertSubmit}
-  disabled={!amount || !fromCurrency || !toCurrency || loading}
->
-  {loading ? (
-    <>
-      <FaSpinner className="animate-spin -ml-1 mr-2 h-4 w-4" />
-      Processing...
-    </>
-  ) : `Convert To ${toCurrency}`}
-</button>
+              <button
+                className='w-full sm:w-auto border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-bold text-xs py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-200 ease-in-out flex justify-center items-center'
+                onClick={handleConvertSubmit}
+                disabled={!amount || !fromCurrency || !toCurrency || loading}
+              >
+                {loading ? (
+                  <>
+                    <FaSpinner className="animate-spin -ml-1 mr-2 h-4 w-4" />
+                    Processing...
+                  </>
+                ) : `Convert To ${toCurrency}`}
+              </button>
 
 
             </div>

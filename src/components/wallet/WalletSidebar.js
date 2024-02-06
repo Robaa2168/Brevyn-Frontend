@@ -166,14 +166,15 @@ const WalletSidebar = ({ changeComponent }) => {
                     <span className="text-xs sm:text-sm">Reviews</span>
                 </div>
 
-    {/* Help */}
+    {/* Help 
     <div onClick={() => navigate('/help')} className="flex items-center space-x-3 cursor-pointer">
                     <AiOutlineQuestionCircle className="text-xl sm:text-2xl" />
                     <span className="text-xs sm:text-sm ">Help</span>
                 </div>
+                */}
             </nav>
               {/* Render the Review Modal */}
-        {showReviewModal && (
+              {showReviewModal && (
             <ReviewModal
                 onClose={() => setShowReviewModal(false)}
                 reviews={reviews}
