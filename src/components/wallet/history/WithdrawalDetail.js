@@ -5,6 +5,7 @@ import { FaLock } from 'react-icons/fa';
 import loadingAnimation from '../../lottie/loading.json';
 import errorAnimation from '../../lottie/noLinks.json';
 import { useUser } from "../../context";
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 
 const WithdrawalDetail = ({ withdrawalId, onBack }) => {
@@ -53,25 +54,43 @@ const WithdrawalDetail = ({ withdrawalId, onBack }) => {
                 return 'bg-gray-200 text-gray-800'; // Default case for an unknown status
         }
     };
-
     if (isLoading) {
-        return <div className="flex justify-center items-center">
-            <Lottie animationData={loadingAnimation} style={{ width: 100, height: 100 }} />
-        </div>;
+        return (
+            <div className="container mx-auto p-4 bg-white rounded-lg border shadow-xl ">
+                <div className="flex justify-center items-center">
+                    <Lottie animationData={loadingAnimation} style={{ width: 100, height: 100 }} />
+                </div>
+            </div>
+        );
     }
+    
 
     if (error || !withdrawalDetails) {
-        return <div className="flex flex-col justify-center items-center">
-            <Lottie animationData={errorAnimation} style={{ width: 200, height: 200 }} />
-            <p className="mt-4 text-sm font-semibold text-gray-600">{error || "No withdrawal details found."}</p>
-        </div>;
+        return (
+            <div className="container mx-auto p-4 bg-white rounded-lg border shadow-xl ">
+            <div className="flex flex-col justify-center items-center">
+                <Lottie animationData={errorAnimation} style={{ width: 200, height: 200 }} />
+                <p className="mt-4 text-sm font-semibold text-gray-600">{error || "No withdrawal details found."}</p>
+            </div>
+            </div>
+        );
     }
-
+    
     return (
         <div className="container mx-auto p-4 bg-white rounded-lg border shadow-xl ">
-          <div className="border-b border-dotted pb-4">
-    <p className="text-xs text-center text-gray-600">Please review the details of your withdrawal below.</p>
+<div className="border-b border-dotted pb-4">
+    <div className="flex flex-col lg:flex-row items-center justify-between">
+        <button onClick={onBack} className="flex items-center justify-center p-2 text-emerald-600 hover:text-emerald-800 transition-colors duration-150 ease-in-out mb-4 lg:mb-0 lg:mr-4">
+            <span className="inline-flex items-center justify-center p-2 mr-2 rounded-full border border-green-600 bg-green-100 hover:bg-green-200">
+                <AiOutlineArrowLeft />
+            </span>
+            Back
+        </button>
+        <p className="text-xs text-center text-gray-600 flex-1">Please review the details of your withdrawal below.</p>
+    </div>
 </div>
+
+
  {/* Informational message for processing or pending transactions */}
  {(withdrawalDetails.status === 'processing' || withdrawalDetails.status === 'pending') && (
         <div className="bg-blue-50 border border-blue-300 text-blue-700 p-4 mt-4 rounded text-xs" role="alert">
