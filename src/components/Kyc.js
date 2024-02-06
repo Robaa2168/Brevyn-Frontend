@@ -3,16 +3,24 @@
 import React, { useState } from 'react';
 import api from '../api';
 import Lottie from "lottie-react";
+import { useNavigate } from 'react-router-dom';
 import successAnimation from "./lottie/success-animation.json";
 import successConfetti from './lottie/success-confetti.json';
 import { FaSpinner } from 'react-icons/fa';
 import { useUser } from "./context";
 
 const Kyc = () => {
+    const navigate = useNavigate();
     const { user, login } = useUser();
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccessful, setIsSuccessful] = useState(false);
+    const [isExact18YearsAgo, setIsExact18YearsAgo] = useState(false);
+    const [validation, setValidation] = useState({
+        phoneInUse: false,
+        emailInUse: false,
+    });
+
 
     const [kycDetails, setKycDetails] = useState({
         firstName: '',
@@ -25,11 +33,48 @@ const Kyc = () => {
         idNumber: ''
     });
 
+    const calculateMaxDob = () => {
+        const today = new Date();
+        const maxYear = today.getFullYear() - 18;
+        const maxMonth = String(today.getMonth() + 1).padStart(2, '0'); // JS months are 0-indexed
+        const maxDay = String(today.getDate()).padStart(2, '0');
+        return `${maxYear}-${maxMonth}-${maxDay}`;
+    };
+
+    const validatePhone = async (phone) => {
+        try {
+            const response = await api.get(`/api/auth/check-phone?phone=${phone}`);
+            // Assuming the API returns { inUse: true } if the phone is in use
+            setValidation((prev) => ({ ...prev, phoneInUse: response.data.inUse }));
+        } catch (error) {
+            console.error("Error validating phone number", error);
+        }
+    };
+
+    const validateEmail = async (email) => {
+        try {
+            const response = await api.get(`/api/auth/check-email?email=${email}`);
+            // Assuming the API returns { inUse: true } if the email is in use
+            setValidation((prev) => ({ ...prev, emailInUse: response.data.inUse }));
+        } catch (error) {
+            console.error("Error validating email address", error);
+        }
+    };
+
+
 
 
     const handleChange = (e) => {
-        setKycDetails({ ...kycDetails, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setKycDetails({ ...kycDetails, [name]: value });
+    
+        // Check for the DOB field specifically
+        if (name === 'dob') {
+            const maxDob = calculateMaxDob();
+            setIsExact18YearsAgo(value === maxDob);
+        }
     };
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -126,9 +171,11 @@ const Kyc = () => {
                                 name="phone"
                                 value={kycDetails.phone}
                                 onChange={handleChange}
-                                className="w-full p-2 border rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                                onBlur={() => validatePhone(kycDetails.phone)}
+                                className={`w-full p-2 border ${validation.phoneInUse ? 'border-red-500 rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500' : 'rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500'}`}
                                 placeholder="Enter phone number"
                             />
+                            {validation.phoneInUse && <p className="text-red-500 text-xs mt-1">This phone number is already in use.</p>}
                         </div>
                         {/* Email */}
                         <div className="mb-4">
@@ -138,23 +185,27 @@ const Kyc = () => {
                                 name="email"
                                 value={kycDetails.email}
                                 onChange={handleChange}
-                                className="w-full p-2 border rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                                onBlur={() => validateEmail(kycDetails.email)}
+                                className={`w-full p-2 border ${validation.emailInUse ? 'border-red-500 rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500' : 'rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500'}`}
                                 placeholder="Enter email address"
                             />
+                            {validation.emailInUse && <p className="text-red-500 text-xs mt-1">This email address is already in use.</p>}
                         </div>
 
 
-                        {/* Date of Birth */}
                         <div className="mb-4">
-                            <label htmlFor="dob" className="block text-sm font-medium text-gray-700">Date of Birth</label>
-                            <input
-                                type="date"
-                                name="dob"
-                                value={kycDetails.dob}
-                                onChange={handleChange}
-                                className="w-full p-2 border rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                            />
-                        </div>
+    <label htmlFor="dob" className="block text-sm font-medium text-gray-700">Date of Birth</label>
+    <input
+        type="date"
+        name="dob"
+        value={kycDetails.dob}
+        onChange={handleChange}
+        max={calculateMaxDob()} // Set the max attribute dynamically
+        className="w-full p-2 border rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+    />
+    {isExact18YearsAgo && <p className="text-xs text-blue-600 mt-2">Are you sure that is your date of birth?</p>}
+</div>
+
 
                         {/* ID Number */}
                         <div className="mb-4">
@@ -224,9 +275,11 @@ const Kyc = () => {
                     <p className="text-lg font-semibold text-emerald-700 mt-4 text-center">KYC Submitted Successfully!</p>
 
                     <button
-                        className="mt-4 text-emerald-500 border border-emerald-500 hover:bg-emerald-500 hover:text-white transition duration-300 py-2 px-4 rounded text-sm bg-emerald-500 bg-opacity-10">
-                        Done
-                    </button>
+    onClick={() => navigate('/wallet')} // Assuming '/dashboard' is the path
+    className="mt-4 text-emerald-500 border border-emerald-500 hover:bg-emerald-500 hover:text-white transition duration-300 py-2 px-4 rounded text-sm bg-emerald-500 bg-opacity-10">
+    Done
+</button>
+
 
                 </div>
 
