@@ -8,7 +8,7 @@ import loadingAnimation from '../../lottie/loading.json';
 import { useUser } from "../../context";
 import { useNavigate } from 'react-router-dom';
 
-const WithdrawalHistory = () => {
+const WithdrawalHistory = ({ onViewDetails }) => {
     const navigate = useNavigate();
     const { user } = useUser();
     const [withdrawals, setWithdrawals] = useState([]);
@@ -39,6 +39,10 @@ const WithdrawalHistory = () => {
         fetchWithdrawals();
     }, []);
 
+    const handleViewDetails = (withdrawalId) => {
+        onViewDetails(withdrawalId);
+      };
+
     return (
         <div className="flex flex-col flex-grow container mx-auto p-4 bg-white rounded-lg text-center ">
             {isLoading ? (
@@ -47,7 +51,7 @@ const WithdrawalHistory = () => {
                 </div>
             ) : withdrawals.length > 0 ? (
                 withdrawals.map((withdrawal, index) => (
-                    <div key={index} className="flex items-center justify-between p-2 mt-3 border rounded">
+                    <div key={index} className="flex items-center justify-between p-2 mt-3 bg-green-50  border rounded">
                         <div className="text-left">
                             <p className="font-semibold text-xs">{withdrawal.withdrawalId}</p>
                             <p className="text-xs text-gray-500">${withdrawal.amount}</p>
@@ -62,9 +66,9 @@ const WithdrawalHistory = () => {
 
                         </div>
                         <button
-                            onClick={() => window.location.href = `/withdrawal-details/${withdrawal.withdrawalId}`}
+                        onClick={() => handleViewDetails(withdrawal._id)}
                             className="px-4 py-1 text-xs border border-emerald-500 text-emerald-500 rounded hover:bg-emerald-100 hover:text-emerald-600">
-                            View Details
+                            View
                         </button>
                     </div>
                 ))

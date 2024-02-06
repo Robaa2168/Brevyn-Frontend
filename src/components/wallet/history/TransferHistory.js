@@ -9,7 +9,7 @@ import { useUser } from "../../context";
 import { useNavigate } from 'react-router-dom';
 
 
-const TransferHistory = () => {
+const TransferHistory = ({ setActiveComponent }) => {
     const { user } = useUser(); // Assuming you have a context that provides user info
     const navigate = useNavigate();
     const [transactions, setTransactions] = useState([]);

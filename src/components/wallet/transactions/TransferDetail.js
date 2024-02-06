@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../../api'; // Adjust the path as needed
+import api from '../../../api';
 import Lottie from "lottie-react";
-import loadingAnimation from '../../lottie/loading.json'; // Adjust the path as needed
-import noRecordAnimation from '../../lottie/noLinks.json'; // Ensure you have a suitable animation for "no records found"
+import loadingAnimation from '../../lottie/loading.json';
+import noRecordAnimation from '../../lottie/noLinks.json'; 
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import { useUser } from "../../context"; // Adjust the import path to your context
+import { useUser } from "../../context";
 
 const TransferDetail = ({ transferId, onBack }) => {
     const { user } = useUser();

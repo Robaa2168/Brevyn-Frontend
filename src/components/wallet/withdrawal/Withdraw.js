@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import BankWithdrawal from './BankWithdrawal';
 import PaypalWithdrawal from './PaypalWithdrawal';
 import MobileWithdrawal from './MobileWithdrawal';
+import { FaLock } from 'react-icons/fa';
 
 const Withdraw = () => {
     const [activeTab, setActiveTab] = useState('bank');
@@ -38,18 +39,30 @@ const Withdraw = () => {
                 <button onClick={() => setActiveTab('mobile')} className={tabButtonClass('mobile')}>Mobile Money</button>
             </div>
             {renderComponent()}
-       {/* Additional section for help/assistance */}
+       {/* Additional section for help/assistance 
        <div className="text-center mt-6">
+        
                 <p className="text-gray-600 text-sm mb-2">Need assistance with your transaction?</p>
-                 {/* Additional section for help/assistance 
+                
                 <button
                     onClick={goToHelpPage}
                     className="text-emerald-500 hover:text-emerald-600 text-sm underline"
                 >
                     Visit our Help Center
                 </button>
-            */}
+            
             </div>
+            */}
+
+<div className="mt-4 py-4 border-t text-xs text-gray-600 text-center rounded bg-gray-100">
+    <div className="flex justify-center items-center mt-2">
+        <FaLock className="text-green-600 mr-2" />
+        <span>Payment is secured with DLocal</span>
+    </div>
+    <p className="mt-2">Ravel Global Pay, Apt. 992</p>
+    <p>54072 Larson Stravenue, Port Kymside, IA 70661-2925</p>
+    <p className="mt-2">For support: <a href="mailto:support@verdantcharity.org" className="text-blue-600 hover:text-blue-800">support@verdantcharity.org</a> | Hotline: +1 800 555 0199</p>
+</div>
         </div>
     );
 };

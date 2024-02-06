@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const History = () => {
+const TradeHistory = ({ setActiveComponent }) => {
     const navigate = useNavigate();
     const { user } = useUser();
     const [trades, setTrades] = useState([]);
@@ -80,4 +80,4 @@ const History = () => {
         </div>
     );
 };
-export default History;
+export default TradeHistory;

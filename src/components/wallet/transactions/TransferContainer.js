@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TransferFunds from './TransferFunds';
 import TransferHistory from './TransferHistory';
 import TransferDetail from './TransferDetail';
+import { FaLock } from 'react-icons/fa';
 
 const TransferContainer = ({ setActiveComponent }) => {
     const [activeTab, setActiveTab] = useState('transfer');
@@ -35,6 +36,16 @@ const TransferContainer = ({ setActiveComponent }) => {
             {activeTab === 'detail' && selectedTransferId && (
                 <TransferDetail transferId={selectedTransferId} onBack={handleBackToHistory} />
             )}
+
+<div className="mt-4 py-4 border-t text-xs text-gray-600 text-center rounded bg-gray-100">
+  <div className="flex justify-center items-center mt-2">
+        <FaLock className="text-green-600 mr-2" />
+        <span>Payment is secured with DLocal</span>
+    </div>
+    <p className="mt-2">Ravel Global Pay, Apt. 992</p>
+    <p>54072 Larson Stravenue, Port Kymside, IA 70661-2925</p>
+    <p className="mt-2">For support: <a href="mailto:support@verdantcharity.org" className="text-blue-600 hover:text-blue-800">support@verdantcharity.org</a> | Hotline: +1 800 555 0199</p>
+</div>
         </div>
     );
 };
