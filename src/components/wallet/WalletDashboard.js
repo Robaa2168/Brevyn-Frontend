@@ -9,6 +9,7 @@ import ConversionContainer from './conversion/ConversionContainer';
 import Withdraw from './withdrawal/Withdraw';
 import CurrenciesContainer from './CurrenciesContainer';
 import DepositContainer from './deposits/DepositContainer';
+import TransferContainer from './transactions/TransferContainer';
 import WithdrawalHistory from './history/WithdrawalHistory';
 import HistoryContainer from './history/HistoryContainer';
 import MarketPlace from './MarketPlace';
@@ -61,6 +62,7 @@ const WalletDashboard = () => {
     ConversionContainer: <ConversionContainer setActiveComponent={setActiveComponent} />,
     withdraw: <Withdraw />,
     DepositContainer: <DepositContainer setActiveComponent={setActiveComponent} />,
+    TransferContainer: <TransferContainer setActiveComponent={setActiveComponent} />,
     WithdrawalHistory: <WithdrawalHistory />,
     HistoryContainer: <HistoryContainer />,
     marketPlace: <MarketPlace />,

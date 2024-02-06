@@ -64,7 +64,6 @@ const DepositDetail = ({ depositId, onBack }) => {
                 {depositDetails.error && <p className="mb-2 text-red-500"><strong>Error:</strong> {depositDetails.error}</p>}
                 {/* Include additional details as needed */}
             </div>
-            {/* Additional actions or information can be added here */}
         </div>
     );
 };

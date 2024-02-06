@@ -6,7 +6,7 @@ import { FaLock } from 'react-icons/fa';
 
 const DepositContainer = ({ setActiveComponent }) => {
     const [activeTab, setActiveTab] = useState('deposit');
-    const [selectedDepositId, setSelectedDepositId] = useState(null); // Add state for selected deposit ID
+    const [selectedDepositId, setSelectedDepositId] = useState(null); 
 
     const tabButtonClass = (tabName) => `w-full sm:w-auto py-2 px-4 border-b-2 font-medium text-sm sm:text-base ${
         activeTab === tabName ? 'border-emerald-500 text-emerald-600' : 'border-transparent hover:border-gray-300 hover:text-gray-600'
