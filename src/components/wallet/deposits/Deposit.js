@@ -4,6 +4,7 @@ import Lottie from 'lottie-react';
 import successAnimation from "../../lottie/success-animation.json";
 import successConfetti from '../../lottie/success-confetti.json';
 import { FaSpinner } from 'react-icons/fa';
+import { HiOutlineChevronDoubleUp } from "react-icons/hi";
 import api from '../../../api'; // Adjust this path as needed
 import { useUser } from "../../context";
 import { useNavigate } from 'react-router-dom';
@@ -205,7 +206,10 @@ const Deposit = ({ setActiveComponent }) => {
                                     Processing...
                                 </>
                             ) : (
-                                'Deposit'
+                                <>
+                                <HiOutlineChevronDoubleUp  className=" mr-2" />
+                                Deposit
+                                </>
                             )}
                         </button>
                     </form>

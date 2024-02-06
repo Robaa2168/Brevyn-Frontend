@@ -4,6 +4,7 @@ import Lottie from 'lottie-react';
 import successAnimation from "../../lottie/success-animation.json";
 import successConfetti from '../../lottie/success-confetti.json';
 import { FaSpinner } from 'react-icons/fa';
+import { HiOutlineDownload } from "react-icons/hi";
 import api from '../../../api';
 import { useUser } from "../../context";
 import { useNavigate } from 'react-router-dom';
@@ -26,22 +27,22 @@ const PaypalWithdrawal = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-    
+
         // Proceed with state update after passing checks
         const updatedDetails = { ...withdrawDetails, [name]: value };
         setWithdrawDetails(updatedDetails);
-    
+
         // Clear global error when any input changes
         setError('');
-    
+
         if (name === 'currency') {
             // Immediately find and set the selected currency's balance when currency changes
             const account = currencies.find(c => c.currency === value);
             setSelectedCurrencyBalance(account ? account.balance : 0); // Update the balance for the selected currency
-    
+
             // Clear amount field to force user re-entry and validation against new currency
             setWithdrawDetails({ ...updatedDetails, amount: '' });
-    
+
             // Reset input error if the currency is changed
             setInputError('');
         } else if (name === 'amount') {
@@ -50,7 +51,7 @@ const PaypalWithdrawal = () => {
                 setInputError('Please select a currency first');
                 return; // Prevents the amount from being set if currency hasn't been chosen
             }
-            
+
             // Validate the entered amount against the selected currency's balance
             const account = currencies.find(c => c.currency === withdrawDetails.currency);
             const balance = account ? account.balance : 0;
@@ -61,7 +62,7 @@ const PaypalWithdrawal = () => {
             }
         }
     };
-    
+
 
 
 
@@ -130,7 +131,7 @@ const PaypalWithdrawal = () => {
                                     <option key={index} value={account.currency}>{account.currency}</option>
                                 ))}
                             </select>
-                            {withdrawDetails.currency && <div className="mt-1 text-xs text-green-700">{withdrawDetails?.currency } balance: {selectedCurrencyBalance}</div>} {/* Display the selected currency's balance */}
+                            {withdrawDetails.currency && <div className="mt-1 text-xs text-green-700">{withdrawDetails?.currency} balance: {selectedCurrencyBalance}</div>} {/* Display the selected currency's balance */}
                         </div>
 
                         <div className="mb-2">
@@ -169,8 +170,17 @@ const PaypalWithdrawal = () => {
                                 className={`flex justify-center items-center w-full text-white py-2 px-4 rounded transition duration-300 ${isSubmitting || inputError || !withdrawDetails.amount || !withdrawDetails.email || !withdrawDetails.currency ? 'bg-gray-400' : 'bg-emerald-500 hover:bg-emerald-600'
                                     }`}
                             >
-                                {isSubmitting && <FaSpinner className="animate-spin mr-2" />}
-                                Withdraw
+                                {isSubmitting ? (
+                                    <>
+                                        <FaSpinner className="animate-spin mr-2" />
+                                        Initiating withdrawal...
+                                    </>
+                                ) : (
+                                    <>
+                                        <HiOutlineDownload className="mr-2" />
+                                        Withdraw Funds
+                                    </>
+                                )}
                             </button>
 
                         </div>

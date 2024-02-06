@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useMemo, useState } from "react";
 import { useUser } from "../../context";
 import { FaSpinner } from 'react-icons/fa';
+import { HiRefresh } from "react-icons/hi";
 import api from "../../../api";
 import Lottie from "lottie-react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -390,13 +391,18 @@ const Convert = ({ setActiveComponent }) => {
                 onClick={handleConvertSubmit}
                 disabled={!amount || !fromCurrency || !toCurrency || loading}
               >
-                {loading ? (
-                  <>
-                    <FaSpinner className="animate-spin -ml-1 mr-2 h-4 w-4" />
-                    Processing...
-                  </>
-                ) : `Convert To ${toCurrency}`}
-              </button>
+                 {loading ? (
+    <>
+      <FaSpinner className="animate-spin -ml-1 mr-2 h-4 w-4" />
+      Processing...
+    </>
+  ) : (
+    <>
+    <HiRefresh className="-ml-1 mr-2 h-4 w-4" />
+    Convert To {toCurrency}
+  </>
+  )}
+</button>
 
 
             </div>
