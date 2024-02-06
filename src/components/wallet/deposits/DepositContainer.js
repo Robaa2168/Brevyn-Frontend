@@ -6,11 +6,10 @@ import { FaLock } from 'react-icons/fa';
 
 const DepositContainer = ({ setActiveComponent }) => {
     const [activeTab, setActiveTab] = useState('deposit');
-    const [selectedDepositId, setSelectedDepositId] = useState(null); 
+    const [selectedDepositId, setSelectedDepositId] = useState(null);
 
-    const tabButtonClass = (tabName) => `w-full sm:w-auto py-2 px-4 border-b-2 font-medium text-sm sm:text-base ${
-        activeTab === tabName ? 'border-emerald-500 text-emerald-600' : 'border-transparent hover:border-gray-300 hover:text-gray-600'
-    }`;
+    const tabButtonClass = (tabName) => `w-full sm:w-auto py-2 px-4 border-b-2 font-medium text-sm sm:text-base ${activeTab === tabName ? 'border-emerald-500 text-emerald-600' : 'border-transparent hover:border-gray-300 hover:text-gray-600'
+        }`;
 
     // Function to handle selecting a deposit to view details
     const handleViewDetails = (depositId) => {
@@ -40,11 +39,14 @@ const DepositContainer = ({ setActiveComponent }) => {
             )}
 
             {/* Security Information Section */}
-            <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center text-gray-700">
-                <FaLock className="text-green-500 mb-2" size={24} />
-                <p>Payment is secured with DLocal</p>
-                <p className="text-xs mt-2">Ravel Global Pay, Apt. 992 54072 Larson Stravenue, Port Kymside, IA 70661-2925</p>
-                <p className="text-xs">For support: <a href="mailto:support@ravelmobile.com" className="text-blue-500">support@ravelmobile.com</a> | Hotline: <a href="tel:+18005550199" className="text-blue-500">+1 800 555 0199</a></p>
+            <div className="mt-4 py-4 border-t text-xs text-gray-600 text-center rounded bg-gray-100">
+                <div className="flex justify-center items-center mt-2">
+                    <FaLock className="text-green-600 mr-2" />
+                    <span>Payment is secured with DLocal</span>
+                </div>
+                <p className="mt-2">Ravel Global Pay, Apt. 992</p>
+                <p>54072 Larson Stravenue, Port Kymside, IA 70661-2925</p>
+                <p className="mt-2">For support: <a href="mailto:support@verdantcharity.org" className="text-blue-600 hover:text-blue-800">support@verdantcharity.org</a> | Hotline: +1 800 555 0199</p>
             </div>
         </div>
     );
