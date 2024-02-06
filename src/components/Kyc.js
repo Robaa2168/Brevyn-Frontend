@@ -88,7 +88,7 @@ const Kyc = () => {
                         fontSize: '14px', // adjust as needed
                         color: '#424242' // adjust as needed
                     }}>
-                        <p className="text-yellow-800">Please take a moment to complete these necessary details to continue creating your donation link. We appreciate your cooperation and patience!</p>
+                        <p className="text-yellow-800">Please take a moment to complete these necessary details to continue. We appreciate your cooperation and patience!</p>
                     </div>
                     <p className="text-sm text-gray-500 mb-4">Please fill in the information below to complete your KYC verification.</p>
                     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">

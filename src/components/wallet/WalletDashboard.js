@@ -12,6 +12,7 @@ import DepositContainer from './deposits/DepositContainer';
 import WithdrawalHistory from './history/WithdrawalHistory';
 import HistoryContainer from './history/HistoryContainer';
 import MarketPlace from './MarketPlace';
+import Kyc from '../Kyc';
 
 const WalletDashboard = () => {
   const { user, login } = useUser();
@@ -47,6 +48,13 @@ const WalletDashboard = () => {
     }
   }, []);
 
+  useEffect(() => {
+    // This useEffect is specifically for setting the active component based on user's primary info
+    if (!user?.primaryInfo?.firstName || !user?.primaryInfo?.lastName) {
+      setActiveComponent('kyc');
+    }
+  }, [user]);
+
   const componentMap = {
     wallet: <Wallet />,
     CurrenciesContainer: <CurrenciesContainer />,
@@ -56,6 +64,7 @@ const WalletDashboard = () => {
     WithdrawalHistory: <WithdrawalHistory />,
     HistoryContainer: <HistoryContainer />,
     marketPlace: <MarketPlace />,
+    kyc: <Kyc />,
   };
 
   return (

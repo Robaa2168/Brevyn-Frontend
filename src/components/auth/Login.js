@@ -68,7 +68,8 @@ const Login = () => {
             // Check if the error is due to a 403 status code
             if (error.response && error.response.status === 403) {
                 // Navigate to the verification page and pass the email to it
-                navigate('/verify', { state: { email: loginData.email } });
+                const token = error.response.data.token; // Make sure your backend sends the token in this case
+                navigate('/verify', { state: { email: loginData.email, token: token } });
             } else {
                 // For all other errors, update the error state
                 setError(error.response?.data?.message || 'Login failed. Please try again later.');
