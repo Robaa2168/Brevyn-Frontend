@@ -208,7 +208,7 @@ const Deposit = ({ setActiveComponent }) => {
                             ) : (
                                 <>
                                 <HiOutlineChevronDoubleUp  className=" mr-2" />
-                                Deposit
+                                Deposit Funds
                                 </>
                             )}
                         </button>
