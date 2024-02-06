@@ -4,6 +4,7 @@ import Lottie from 'lottie-react';
 import successAnimation from "../../lottie/success-animation.json";
 import successConfetti from '../../lottie/success-confetti.json';
 import { FaSpinner } from 'react-icons/fa';
+import { HiOutlineChevronDoubleRight } from "react-icons/hi";
 import api from '../../../api';
 import { useUser } from "../../context";
 import { useNavigate } from 'react-router-dom';
@@ -75,37 +76,48 @@ const TransferFunds = () => {
 
 
     useEffect(() => {
+        // Check if the input payId has sufficient length and is not the user's own payId
         if (withdrawDetails.payId.length > 5) {
-            setIsLoading(true);
-            setReceiverName('...querying database for receiver name...');
-            setUserError('');
-            
-            const fetchUserName = async () => {
-                try {
-                    const response = await api.get(`/api/transfers/${withdrawDetails.payId}`, {
-                        headers: { 'Authorization': `Bearer ${user.token}` },
-                    });
-
-                    if (response.status === 200 && response.data.name) {
-                        setReceiverName(response.data.name);
-                    } else {
+            if (withdrawDetails.payId === user?.payId) {
+                // Set error and prevent API call if the payId matches the user's payId
+                setUserError("Cannot transact with your own account.");
+                setReceiverName('Cannot transact with your own account.');
+                setIsLoading(false); // Ensure loading state is correctly reset
+            } else {
+                setIsLoading(true);
+                setReceiverName('...querying database for receiver name...');
+                setUserError('');
+    
+                const fetchUserName = async () => {
+                    try {
+                        const response = await api.get(`/api/transfers/${withdrawDetails.payId}`, {
+                            headers: { 'Authorization': `Bearer ${user.token}` },
+                        });
+    
+                        if (response.status === 200 && response.data.name) {
+                            setReceiverName(response.data.name);
+                            setUserError(''); // Reset user error in case it was set before
+                        } else {
+                            setReceiverName('Receiver Not found');
+                            setUserError('Receiver Not found');
+                        }
+                    } catch (error) {
+                        console.error("Error querying receiver name:", error);
                         setReceiverName('Receiver Not found');
                         setUserError('Receiver Not found');
+                    } finally {
+                        setIsLoading(false);
                     }
-                } catch (error) {
-                    console.error("Error querying receiver name:", error);
-                    setReceiverName('Receiver Not found');
-                    setUserError('Receiver Not found');
-                } finally {
-                    setIsLoading(false);
-                }
-            };
-
-            fetchUserName();
+                };
+    
+                fetchUserName();
+            }
         } else {
             setReceiverName('');
+            setUserError(''); // Reset user error when payId is cleared or too short
         }
     }, [withdrawDetails.payId]);
+    
 
 
     const handleSubmit = async (e) => {
@@ -206,25 +218,29 @@ const TransferFunds = () => {
                         </div>
 
                         <div className="col-span-1">
-                            <div className="col-span-1">
-                                <button
-                                    type="submit"
-                                    disabled={
-                                        isSubmitting ||
-                                        inputError ||
-                                        !withdrawDetails.amount ||
-                                        !withdrawDetails.payId ||
-                                        !withdrawDetails.currency
-                                    }
-                                    className={`flex justify-center items-center w-full text-white py-2 px-4 rounded transition duration-300 ${isSubmitting || inputError || userError || !withdrawDetails.amount || !withdrawDetails.payId || !withdrawDetails.currency ? 'bg-gray-400' : 'bg-emerald-500 hover:bg-emerald-600'
-                                        }`}
-                                >
-                                    {isSubmitting && <FaSpinner className="animate-spin mr-2" />}
-                                    Transfer Funds
-                                </button>
-                            </div>
-
-                        </div>
+  <div className="col-span-1">
+    <button
+      type="submit"
+      disabled={
+        isSubmitting ||
+        inputError ||
+        userError ||
+        !withdrawDetails.amount ||
+        !withdrawDetails.payId ||
+        !withdrawDetails.currency
+      }
+      className={`flex justify-center items-center w-full text-white py-2 px-4 rounded transition duration-300 ${isSubmitting || inputError || userError || !withdrawDetails.amount || !withdrawDetails.payId || !withdrawDetails.currency ? 'bg-gray-400' : 'bg-emerald-500 hover:bg-emerald-600'
+      }`}
+    >
+      {isSubmitting ? (
+        <FaSpinner className="animate-spin mr-2" />
+      ) : (
+        <HiOutlineChevronDoubleRight className="mr-2" /> 
+      )}
+      Transfer Funds
+    </button>
+  </div>
+</div>
                     </form>
                 </>
             )}

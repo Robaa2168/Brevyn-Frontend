@@ -51,7 +51,7 @@ const NotificationsPanel = ({ setShowNotifications }) => {
     
 
     return (
-        <div className="notifications-panel fixed inset-x-0 bottom-0 mb-16 mx-4 p-4 bg-emerald-500 shadow-md rounded-t-md transform transition-transform duration-300 text-white">
+        <div className="notifications-panel fixed inset-x-0 bottom-0 mb-16 mx-4 p-4 bg-emerald-500 shadow-lg rounded-t-md transform transition-transform duration-300 text-white">
             <div className="flex justify-between items-center border-b border-emerald-300 pb-2">
                 <h2 className="text-lg px-2">Notifications</h2>
                 <button onClick={() => setShowNotifications(false)} className="text-white">
@@ -67,6 +67,22 @@ const NotificationsPanel = ({ setShowNotifications }) => {
                     notifications.map(notification => (
                         <li key={notification._id} className="border-b border-emerald-300 py-2">
                             <div className="flex flex-col justify-between">
+                            <div className="flex">
+  <span className="text-emerald-200 text-xs hover:text-white mr-2" style={{ fontStyle: 'italic' }}>
+    {new Date(notification.createdAt).toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    })}
+  </span>
+  <span className="text-emerald-200 text-xs hover:text-white" style={{ fontStyle: 'italic' }}>
+    {new Date(notification.createdAt).toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+    })}
+  </span>
+</div>
+
                                 <span className="text-white">{notification.text}</span>
                                 {!notification.isRead && (
                                     <div className="flex justify-end">
