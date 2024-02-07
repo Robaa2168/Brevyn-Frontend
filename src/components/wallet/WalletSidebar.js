@@ -198,4 +198,5 @@ const WalletSidebar = ({ changeComponent }) => {
     );
 };
 
-export default WalletSidebar;
+export default React.memo(WalletSidebar);
+

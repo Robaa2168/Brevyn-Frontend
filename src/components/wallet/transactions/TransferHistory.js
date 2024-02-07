@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import api from '../../../api'; // Adjust this import path to your file structure
 import Lottie from 'lottie-react';
 import loadingAnimation from '../../lottie/loading.json'; // Adjust this path as needed
@@ -39,9 +39,9 @@ const TransferHistory = ({ onViewDetails }) => {
 }, [user?.token]);
   
 
-  const handleViewDetails = (transferId) => {
-    onViewDetails(transferId);
-  };
+const handleViewDetails = useCallback((transferId) => {
+  onViewDetails(transferId);
+}, []);
 
   if (isLoading) {
     return (
@@ -65,7 +65,7 @@ const TransferHistory = ({ onViewDetails }) => {
   }
 
   return (
-    <div className="container mx-auto p-4 bg-white rounded-lg ">
+    <div className="container mx-auto sm:p-1 lg:p-4 bg-white rounded-lg">
       <div className="space-y-4">
         {transfers.map((transfer, index) => (
           <div key={index} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg shadow">

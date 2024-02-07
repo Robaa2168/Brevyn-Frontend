@@ -35,9 +35,12 @@ const Wallet = () => {
             {/* Highest Balance Card */}
             <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center justify-between">
                 <div>
-                    <h5 className="text-sm">{highestCurrency} Balance</h5>
-                    <p className="text-xs md:text-sm font-bold">{highestBalanceSymbol} {highestBalance}</p>
+                    <h5 className="text-sm">{highestCurrency || 'Currency'} Balance</h5>
+                    <p className="text-xs md:text-sm font-bold">
+                        {highestBalanceSymbol || '$'} {highestBalance || '0'}
+                    </p>
                 </div>
+
                 <div className="rounded-full bg-emerald-500 bg-opacity-20 p-2">
                     <BiDollarCircle className="text-emerald-500 text-xl" />
                 </div>
@@ -47,7 +50,7 @@ const Wallet = () => {
             <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center justify-between">
                 <div>
                     <h5 className="text-sm">Bonus</h5>
-                    <p className="text-xs md:text-sm font-bold">Ksh {user?.balance}</p>
+                    <p className="text-xs md:text-sm font-bold">Ksh {user?.balance || '0'}</p>
                 </div>
                 <div className="rounded-full bg-emerald-500 bg-opacity-20 p-2">
                     <AiOutlineGift className="text-emerald-500 text-xl" />
@@ -67,7 +70,7 @@ const Wallet = () => {
                         </div>
                     </div>
                     <span className={`font-bold text-xs ${transaction.type === 'credit' ? 'text-green-500' : 'text-red-500'}`}>
-                        + $ 
+                        + $
                     </span>
                 </div>
             ))}

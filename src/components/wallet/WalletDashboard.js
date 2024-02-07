@@ -67,6 +67,7 @@ const WalletDashboard = () => {
     HistoryContainer: <HistoryContainer />,
     marketPlace: <MarketPlace />,
     kyc: <Kyc />,
+    
   };
 
   return (

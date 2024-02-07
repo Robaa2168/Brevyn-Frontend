@@ -372,10 +372,6 @@ const Convert = ({ setActiveComponent }) => {
               </div>
             </div>
 
-
-
-
-            {/* Exchange rate and timer alert */}
           {/* Exchange rate and timer alert */}
 <div className='mt-4 p-4 bg-green-50 border border-green-200 text-green-700 rounded text-xs' role='alert'>
   <div className='font-bold text-xs'>Exchange Rate: <span>{`${fromCurrency} 1 = ${toCurrency} ${getCurrentRate}`}</span></div>
