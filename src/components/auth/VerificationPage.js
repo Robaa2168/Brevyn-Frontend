@@ -64,26 +64,27 @@ const VerificationPage = () => {
         setLoading(true);
         setError('');
         setMessage('Sending a new code...');
-      
+
         try {
-          const response = await api.post('/api/auth/resend-verification-code', { email });
-      
-          if (response.status === 200) {
-            // Successful response
-            setMessage(`A new verification code has been sent to ${email}. Please check your inbox and spam folder.`);
-            setTimeLeft(60); // Start the countdown again
-          } else {
-            // Handle other response statuses if needed
-            setError('Failed to resend code. Please try again later.');
-          }
+            const dataToSend = email;
+            const response = await api.post('/api/auth/resend-verification-code', { dataToSend });
+
+            if (response.status === 200) {
+                // Successful response
+                setMessage(`A new verification code has been sent to ${email}. Please check your inbox and spam folder.`);
+                setTimeLeft(60); // Start the countdown again
+            } else {
+                // Handle other response statuses if needed
+                setError('Failed to resend code. Please try again later.');
+            }
         } catch (error) {
-          // Handle any network or request error
-          setError('Failed to resend code. Please try again later.');
+            // Handle any network or request error
+            setError('Failed to resend code. Please try again later.');
         } finally {
-          setLoading(false);
+            setLoading(false);
         }
-      };
-      
+    };
+
 
     return (
         <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -124,8 +125,8 @@ const VerificationPage = () => {
                     </div>
                 </form>
                 <button onClick={handleResendCode} disabled={loading || timeLeft > 0} className="mt-4 text-sm underline text-emerald-600 hover:text-emerald-500">
-                {timeLeft > 0 ? `Resend Code in (${timeLeft}s)` : 'Resend Code'}
-            </button>
+                    {timeLeft > 0 ? `Resend Code in (${timeLeft}s)` : 'Resend Code'}
+                </button>
             </div>
         </div>
     );

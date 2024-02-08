@@ -50,34 +50,38 @@ const Login = () => {
         try {
             const fingerprintId = await getFingerprint();
             
-            // Spread the loginData object and add the fingerprintId to it
             const loginDataWithFingerprint = { ...loginData, fingerprintId };
     
             const response = await api.post('/api/auth/login', loginDataWithFingerprint);
     
-            // Check if the response status code is 200 (OK)
             if (response.status === 200) {
                 const user = response.data;
-                login(user);
+                login(user); // Assuming login is a function that handles setting user session
                 navigate('/dashboard');
             } else {
-                // Handle unexpected status codes
                 setError('Login failed due to unexpected response. Please try again later.');
             }
         } catch (error) {
-            // Check if the error is due to a 403 status code
             if (error.response && error.response.status === 403) {
-                // Navigate to the verification page and pass the email to it
-                const token = error.response.data.token; // Make sure your backend sends the token in this case
-                navigate('/verify', { state: { email: loginData.email, token: token } });
+                // Assuming the backend indicates phone verification is needed in the message
+                if (error.response.data.message.includes('Phone verification needed')) {
+                    // Extract the token and phone number from the response
+                    const { token, phoneNumber } = error.response.data;
+    
+                    // Navigate to phone verification page, passing necessary state
+                    navigate('/phone-verify', { state: { phoneNumber: phoneNumber, token: token } });
+                } else {
+                    // If it's a different 403 error (e.g., email verification needed)
+                    navigate('/verify', { state: { email: loginData.email, token: error.response.data.token } });
+                }
             } else {
-                // For all other errors, update the error state
                 setError(error.response?.data?.message || 'Login failed. Please try again later.');
             }
         } finally {
             setLoading(false);
         }
     };
+    
     
     
 

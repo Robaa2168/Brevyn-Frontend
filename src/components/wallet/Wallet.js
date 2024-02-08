@@ -3,6 +3,7 @@ import React from 'react';
 import { BiDollarCircle } from 'react-icons/bi';
 import { AiOutlineCalendar, AiOutlineGift } from 'react-icons/ai';
 import { useUser } from "../context";
+import TransferHistory from './history/TransferHistory'; 
 
 const Wallet = () => {
     const { user } = useUser();
@@ -31,7 +32,8 @@ const Wallet = () => {
     const highestCurrency = highestBalanceAccount ? highestBalanceAccount.currency : '';
 
     return (
-        <div className="bg-white p-4 space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
+        <>
+        <div className="bg-white mb-3 p-4 space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
             {/* Highest Balance Card */}
             <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center justify-between">
                 <div>
@@ -75,6 +77,8 @@ const Wallet = () => {
                 </div>
             ))}
         </div>
+        <TransferHistory />
+        </>
     );
 };
 

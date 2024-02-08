@@ -8,6 +8,8 @@ import VerificationPage from './auth/VerificationPage';
 import ForgotPassword from './auth/ForgotPassword';
 import ResetPassword from './auth/ResetPassword';
 import Verify from './auth/Verify';
+import PhoneVerify from './auth/PhoneVerify';
+import ChangeNumber from './auth/changeNumber';
 import Profile from './Profile';
 import Dashboard from './dashboard';
 import Navbar from './Navbar'; 
@@ -35,7 +37,7 @@ import AboutUsPage from './Help/AboutUs';
 const AppLayout = () => {
   const { user } = useUser();
   const location = useLocation();
-  const excludedRoutes = ['/login', '/signup', '/KYC', '/donate/*', '/forgot-password', '/verification', '/reset-password', '/verify'];
+  const excludedRoutes = ['/login', '/signup', '/KYC', '/donate/*', '/forgot-password', '/verification', '/reset-password', '/verify', 'phone-verify'];
   const dynamicRoutesToExclude = ['/donate', '/donation-link'];
 
   const isExcludedRoute = excludedRoutes.includes(location.pathname) ||
@@ -101,6 +103,8 @@ function setTawkAttributes() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verification" element={<VerificationPage />} />
         <Route path="/verify" element={<Verify />} />
+        <Route path="/phone-verify" element={<PhoneVerify />} />
+        <Route path="/changeNumber" element={<ChangeNumber />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/dashboard"  element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

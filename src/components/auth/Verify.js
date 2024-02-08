@@ -141,8 +141,8 @@ const Verify = () => {
         setMessage('Sending a new code...');
     
         try {
-          const response = await api.post('/api/auth/resend-verification-code', { email });
-    
+            const dataToSend = email;
+            const response = await api.post('/api/auth/resend-verification-code', { dataToSend });
           if (response.status === 200) {
             // Successful response
             setMessage(`A new verification code has been sent to ${email}. Please check your inbox and spam folder.`);
@@ -176,7 +176,7 @@ const Verify = () => {
                 <Lottie animationData={successConfetti} style={{ width: 200, height: 200 }} />
                 <Lottie animationData={successAnimation} style={{ width: 200, height: 200 }} />
                 <p className="text-lg font-semibold text-emerald-700 mt-4 text-center">Verification Successful!</p>
-                <button onClick={() => navigate('/verifyPhone')} className="mt-4 px-4 py-2 rounded bg-emerald-500 text-white">
+                <button onClick={() => navigate('/login')} className="mt-4 px-4 py-2 rounded bg-emerald-500 text-white">
                     Done
                 </button>
             </div>
@@ -188,7 +188,7 @@ const Verify = () => {
         <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8 text-center">
                 <div className="text-center">
-                    <h2 className="text-lg sm:text-2xl font-extrabold text-gray-900 mb-2">Enter Verification Code</h2>
+                    <h2 className="text-lg sm:text-2xl font-extrabold text-gray-900 mb-2">Email Verification Code</h2>
                     {message && <div className="bg-green-100 border border-green-400 text-green-700 text-xs px-4 py-3 rounded relative mb-4" role="alert">{message}</div>}
                     {error && (
                         <div className="bg-red-100 text-xs border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">

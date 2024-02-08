@@ -28,12 +28,12 @@ const HistoryContainer = () => {
                 <WithdrawalDetail withdrawalId={selectedWithdrawalId} onBack={handleBackToHistory} />
             ) : (
                 // Only render the container with tabs and content if no specific withdrawal ID is selected
-                <div className="container mx-auto p-4 bg-white rounded-lg shadow-md">
+                <div className="container flex-grow mx-auto p-4 bg-white rounded-lg shadow-md">
                     {/* Tab buttons */}
                     <div className="flex flex-wrap mb-4 border-b">
                         <button onClick={() => setActiveTab('withdrawHistory')} className={tabButtonClass('withdrawHistory')}>Withdrawal History</button>
-                        <button onClick={() => setActiveTab('tradeHistory')} className={tabButtonClass('tradeHistory')}>Trade History</button>
                         <button onClick={() => setActiveTab('transferHistory')} className={tabButtonClass('transferHistory')}>Transfer History</button>
+                        <button onClick={() => setActiveTab('tradeHistory')} className={tabButtonClass('tradeHistory')}>Trade History</button>
                     </div>
                     
                     {/* Conditional rendering based on the active tab */}
