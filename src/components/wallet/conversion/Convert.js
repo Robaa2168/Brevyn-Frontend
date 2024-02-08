@@ -286,6 +286,10 @@ const Convert = ({ setActiveComponent }) => {
       ) : (
         <>
           <div className="container mx-auto p-4 bg-white text-center ">
+                            {/* Centered small image */}
+    <div className="flex justify-center">
+        <img src="https://cdn-icons-png.flaticon.com/256/3235/3235980.png" alt="Convert Icon" className="w-24 h-auto mb-1" /> {/* Adjust the w-24 class as needed for your image size */}
+    </div>
             {error && (
               <div className='mb-4 p-3 text-xs bg-red-100 border border-red-400 text-red-700 rounded relative' role='alert'>
                 <strong className='font-bold'>Error: </strong>
@@ -298,6 +302,7 @@ const Convert = ({ setActiveComponent }) => {
 
             {/* Currency selection section */}
             <div className='flex flex-col text-xs p-4 sm:flex-row lg:items-start items-center justify-between mb-4'>
+              
               {/* From Currency Select */}
               <div className='w-full mb-4 sm:mb-0 sm:mr-2'>
                 <select

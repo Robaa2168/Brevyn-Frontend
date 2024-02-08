@@ -169,6 +169,10 @@ const TransferFunds = () => {
                 </div>
             ) : (
                 <>
+                                                 {/* Centered small image */}
+    <div className="flex justify-center">
+        <img src="https://cdn-icons-png.flaticon.com/256/3141/3141835.png" alt="Transafer Icon" className="w-24 h-auto mb-1" /> {/* Adjust the w-24 class as needed for your image size */}
+    </div>
                     {error && (
                         <div className="mb-4 p-4 text-xs sm:text-xs  bg-red-100 border-l-4 border-red-500 text-red-700">
                             <p>{error}</p>

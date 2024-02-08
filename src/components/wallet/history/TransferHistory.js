@@ -58,7 +58,7 @@ const formatDate = (dateString) => {
                 transactions.map((transaction, index) => (
                     <div key={index} className="flex items-center justify-between p-2 mt-3 border rounded">
                         <div className="flex items-center space-x-3">
-                            {transaction.sender === user._id ? (
+                            {transaction.sender._id=== user._id ? (
                                 transaction.receiver.profileImage && transaction.receiver.profileImage !== DEFAULT_IMAGE_URL ? (
                                     <img src={transaction.receiver.profileImage} alt="Receiver's Profile" className="h-10 w-10 rounded-full" />
                                 ) : (
@@ -81,7 +81,7 @@ const formatDate = (dateString) => {
                             )}
                             <div>
                                 <p className="font-semibold text-xs">
-                                    {transaction.sender === user._id ? transaction.receiverFirstName : transaction.senderFirstName}
+                                    {transaction.sender._id === user._id ? transaction.receiverFirstName : transaction.senderFirstName}
                                 </p>
                                 <p className="text-xs text-gray-500">
                                     {formatDate(transaction.createdAt)} · {transaction.status}

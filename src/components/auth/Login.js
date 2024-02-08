@@ -94,6 +94,10 @@ const Login = () => {
                     <span className="text-xs sm:text-sm">You are now viewing a wallet-portal of Verdant Charity. To learn more about us, </span>
                     <a href="https://donations.verdantcharity.org/learn-more" className="font-medium text-emerald-600 hover:text-emerald-500 underline ml-1 text-xs sm:text-sm">click here</a>.
                 </div>
+                    {/* Centered small image */}
+    <div className="flex justify-center">
+        <img src="https://cdn-icons-png.flaticon.com/512/8910/8910788.png" alt="Login Icon" className="w-24 h-auto mb-1" /> {/* Adjust the w-24 class as needed for your image size */}
+    </div>
                 <div className="text-center">
                     <h2 className="text-xs sm:text-2xl md:text-3xl font-extrabold text-gray-900 mb-2">Sign in to your account</h2>
                 </div>

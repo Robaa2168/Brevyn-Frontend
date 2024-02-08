@@ -37,7 +37,7 @@ import AboutUsPage from './Help/AboutUs';
 const AppLayout = () => {
   const { user } = useUser();
   const location = useLocation();
-  const excludedRoutes = ['/login', '/signup', '/KYC', '/donate/*', '/forgot-password', '/verification', '/reset-password', '/verify', 'phone-verify'];
+  const excludedRoutes = ['/login', '/signup', '/KYC', '/donate/*', '/forgot-password', '/verification', '/reset-password', '/verify', '/phone-verify', '/changeNumber'];
   const dynamicRoutesToExclude = ['/donate', '/donation-link'];
 
   const isExcludedRoute = excludedRoutes.includes(location.pathname) ||

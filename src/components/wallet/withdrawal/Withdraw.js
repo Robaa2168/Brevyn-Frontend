@@ -38,6 +38,10 @@ const Withdraw = () => {
                 <button onClick={() => setActiveTab('paypal')} className={tabButtonClass('paypal')}>PayPal</button>
                 <button onClick={() => setActiveTab('mobile')} className={tabButtonClass('mobile')}>Mobile Money</button>
             </div>
+                                      {/* Centered small image */}
+    <div className="flex justify-center">
+        <img src="https://cdn-icons-png.flaticon.com/256/848/848533.png" alt="Withdrawal Icon" className="w-24 h-auto mb-1" /> {/* Adjust the w-24 class as needed for your image size */}
+    </div>
             {renderComponent()}
        {/* Additional section for help/assistance 
        <div className="text-center mt-6">

@@ -56,7 +56,7 @@ const Profile = () => {
     } else {
         // Render profile view
         return (
-            <div className="container bg-white rounded-md mx-auto">
+            <div className="container flex-grow bg-white rounded-md mx-auto">
                 <div className="pt-4">
                     <div className="bg-white overflow-hidden sm:rounded-lg">
                         <div className="px-2 py-3 sm:px-4 grid grid-cols-1 md:grid-cols-3">

@@ -69,7 +69,7 @@ const ChangePassword = () => {
 
 
   return (
-    <div className="container mx-auto p-4 bg-white rounded-lg shadow-md">
+    <div className="container flex-grow mx-auto p-4 bg-white rounded-lg shadow-md">
       {success ? (
         <div className="flex flex-col items-center justify-center w-full p-4">
           {/* Success Animations */}
