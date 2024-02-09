@@ -141,7 +141,7 @@ const WalletSidebar = ({ changeComponent }) => {
                         }`}
                 >
                     <AiOutlineDollarCircle className="text-xl sm:text-2xl" />
-                    <span className="text-xs sm:text-sm pulse-dot-orange">Deposit</span>
+                    <span className="text-xs sm:text-sm ">Deposit</span>
                 </div>
 
                     {/* Currencies Section */}
@@ -178,12 +178,10 @@ const WalletSidebar = ({ changeComponent }) => {
                     <span className="text-xs sm:text-sm">Reviews</span>
                 </div>
 
-    {/* Help 
     <div onClick={() => navigate('/help')} className="flex items-center space-x-3 cursor-pointer">
                     <AiOutlineQuestionCircle className="text-xl sm:text-2xl" />
-                    <span className="text-xs sm:text-sm ">Help</span>
+                    <span className="text-xs sm:text-sm pulse-dot-green">Help</span>
                 </div>
-                */}
             </nav>
               {/* Render the Review Modal */}
               {showReviewModal && (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; 
+import 'react-quill/dist/quill.snow.css';
 import api from '../../api';
 import { useUser } from '../context';
 
@@ -9,7 +9,8 @@ const PostFaq = () => {
     const { user } = useUser();
     const [faqDetails, setFaqDetails] = useState({
         question: '',
-        answer: ''
+        answer: '',
+        category: 'Transaction' 
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
@@ -67,6 +68,19 @@ const PostFaq = () => {
             )}
 
             <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
+
+            <div className="mb-4">
+                    <label htmlFor="category" className="block mb-1 text-sm font-medium text-gray-700">Category</label>
+                    <select
+                        name="category"
+                        value={faqDetails.category}
+                        onChange={handleChange}
+                        className="w-full p-2 border rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                    >
+                        <option value="Impact">Impact</option>
+                        <option value="Transaction">Transaction</option>
+                    </select>
+                </div>
                 <div className="mb-4">
                     <label htmlFor="question" className="block mb-1 text-sm font-medium text-gray-700">Question</label>
                     <input
@@ -79,16 +93,16 @@ const PostFaq = () => {
                     />
                 </div>
 
-                
+
                 <div className="mb-4">
-    <label htmlFor="answer" className="block mb-1 text-sm font-medium text-gray-700">Answer</label>
-    <ReactQuill
-        value={faqDetails.answer}
-        onChange={handleChange}
-        style={{ height: '200px' }} // Inline style for height
-        className="w-full border rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-    />
-</div>
+                    <label htmlFor="answer" className="block mb-1 text-sm font-medium text-gray-700">Answer</label>
+                    <ReactQuill
+                        value={faqDetails.answer}
+                        onChange={handleChange}
+                        style={{ height: '200px' }} // Inline style for height
+                        className="w-full border rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                    />
+                </div>
 
 
                 <div className="col-span-1">
