@@ -43,7 +43,7 @@ const Withdraw = () => {
         <img src="https://cdn-icons-png.flaticon.com/256/848/848533.png" alt="Withdrawal Icon" className="w-24 h-auto mb-1" /> {/* Adjust the w-24 class as needed for your image size */}
     </div>
             {renderComponent()}
-       {/* Additional section for help/assistance 
+       {/* Additional section for help/assistance */}
        <div className="text-center mt-6">
         
                 <p className="text-gray-600 text-sm mb-2">Need assistance with your transaction?</p>
@@ -56,17 +56,9 @@ const Withdraw = () => {
                 </button>
             
             </div>
-            */}
+            
 
-<div className="mt-4 py-4 border-t text-xs text-gray-600 text-center rounded bg-gray-100">
-    <div className="flex justify-center items-center mt-2">
-        <FaLock className="text-green-600 mr-2" />
-        <span>Payment is secured with DLocal</span>
-    </div>
-    <p className="mt-2">Ravel Global Pay, Apt. 992</p>
-    <p>54072 Larson Stravenue, Port Kymside, IA 70661-2925</p>
-    <p className="mt-2">For support: <a href="mailto:support@verdantcharity.org" className="text-blue-600 hover:text-blue-800">support@verdantcharity.org</a> | Hotline: +1 800 555 0199</p>
-</div>
+
         </div>
     );
 };
