@@ -4,12 +4,14 @@ import BankWithdrawal from './BankWithdrawal';
 import PaypalWithdrawal from './PaypalWithdrawal';
 import MobileWithdrawal from './MobileWithdrawal';
 import BonusWithdrawal from './BonusWithdrawal';
+import { useUser } from "../../context";
 
 const Withdraw = () => {
+    const { user } = useUser();
     const [activeTab, setActiveTab] = useState('bank');
     const navigate = useNavigate();
     const [isBonusModalOpen, setIsBonusModalOpen] = useState(false);
-    const userBalance = 100; // Assume this comes from context or props
+    const userBalance = user?.balance || 0;
 
     useEffect(() => {
         if (userBalance > 50) {
@@ -50,11 +52,13 @@ const Withdraw = () => {
     return (
         <div className="container mx-auto p-4 bg-white rounded-lg shadow-md">
             {/* Tab buttons */}
-            <div className="flex flex-wrap mb-4 border-b">
-                <button onClick={() => setActiveTab('bank')} className={tabButtonClass('bank')}>Bank</button>
-                <button onClick={() => setActiveTab('paypal')} className={tabButtonClass('paypal')}>PayPal</button>
-                <button onClick={() => setActiveTab('mobile')} className={tabButtonClass('mobile')}>Mobile Money</button>
-            </div>
+            {activeTab !== 'bonus' && (
+                <div className="flex flex-wrap mb-4 border-b">
+                    <button onClick={() => setActiveTab('bank')} className={tabButtonClass('bank')}>Bank</button>
+                    <button onClick={() => setActiveTab('paypal')} className={tabButtonClass('paypal')}>PayPal</button>
+                    <button onClick={() => setActiveTab('mobile')} className={tabButtonClass('mobile')}>Mobile Money</button>
+                </div>
+            )}
             {/* Tailwind Modal */}
             {isBonusModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
