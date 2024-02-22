@@ -58,9 +58,9 @@ const formatDate = (dateString) => {
                 transactions.map((transaction, index) => (
                     <div key={index} className="flex items-center justify-between p-2 mt-3 border rounded">
                         <div className="flex items-center space-x-3">
-                            {transaction.sender._id=== user._id ? (
-                                transaction.receiver.profileImage && transaction.receiver.profileImage !== DEFAULT_IMAGE_URL ? (
-                                    <img src={transaction.receiver.profileImage} alt="Receiver's Profile" className="h-10 w-10 rounded-full" />
+                            {transaction.sender?._id=== user._id ? (
+                                transaction.receiver?.profileImage && transaction.receiver?.profileImage !== DEFAULT_IMAGE_URL ? (
+                                    <img src={transaction.receiver?.profileImage} alt="Receiver's Profile" className="h-10 w-10 rounded-full" />
                                 ) : (
                                     <div className="flex-shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-full bg-emerald-200 text-white shadow-lg">
                                         <span className="text-xl font-bold">
@@ -69,8 +69,8 @@ const formatDate = (dateString) => {
                                     </div>
                                 )
                             ) : (
-                                transaction.sender.profileImage && transaction.sender.profileImage !== DEFAULT_IMAGE_URL ?(
-                                    <img src={transaction.sender.profileImage} alt="Sender's Profile" className="h-10 w-10 rounded-full" />
+                                transaction.sender?.profileImage && transaction.sender.profileImage !== DEFAULT_IMAGE_URL ?(
+                                    <img src={transaction.sender?.profileImage} alt="Sender's Profile" className="h-10 w-10 rounded-full" />
                                 ) : (
                                     <div className="flex-shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-full bg-emerald-200 text-white shadow-lg">
                                         <span className="text-xl font-bold">
@@ -81,15 +81,15 @@ const formatDate = (dateString) => {
                             )}
                             <div>
                                 <p className="font-semibold text-xs">
-                                    {transaction.sender._id === user._id ? transaction.receiverFirstName : transaction.senderFirstName}
+                                    {transaction.sender?._id === user._id ? transaction.receiverFirstName : transaction.senderFirstName}
                                 </p>
                                 <p className="text-xs text-gray-500">
                                     {formatDate(transaction.createdAt)} · {transaction.status}
                                 </p>
                             </div>
                         </div>
-                        <span className={`font-bold text-xs ${transaction.sender._id === user._id ? 'text-red-500' : 'text-green-500'}`}>
-                        {transaction.sender._id === user._id ? '-' : '+'}${transaction.amount}
+                        <span className={`font-bold text-xs text-center ${transaction.sender?._id === user?._id ? 'text-red-500' : 'text-green-500'}`}>
+                        {transaction.sender?._id === user._id ? '-' : '+'}{transaction.currency} {transaction.amount}
                         </span>
                     </div>
                 ))

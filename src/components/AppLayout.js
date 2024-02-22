@@ -16,6 +16,7 @@ import Navbar from './Navbar';
 import Footer from './Footer'; 
 import ProtectedRoute from './ProtectedRoute'; 
 import WalletDashboard from './wallet/WalletDashboard';
+import TransferBonusDash from './wallet/transactions/TransferBonusDash';
 import PurchasePage from './wallet/PurchasePage';
 import Chat from './wallet/Chat';
 import SellerPortal from './wallet/SellerPortal';
@@ -108,6 +109,7 @@ function setTawkAttributes() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/dashboard"  element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/hamerling"  element={<ProtectedRoute><TransferBonusDash /></ProtectedRoute>} />
         <Route path="/wallet"  element={<ProtectedRoute><WalletDashboard /></ProtectedRoute>} />
         <Route path="/purchase"  element={<ProtectedRoute><PurchasePage /></ProtectedRoute>} />
         <Route path="/sellerTrades"  element={<ProtectedRoute><SellerHistory /></ProtectedRoute>} />

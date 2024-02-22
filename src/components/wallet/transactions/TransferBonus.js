@@ -9,7 +9,7 @@ import api from '../../../api';
 import { useUser } from "../../context";
 import { useNavigate } from 'react-router-dom';
 
-const TransferFunds = () => {
+const TransferBonus = () => {
     const { user } = useUser();
     const navigate = useNavigate();
     // Adjusting the initial state to include currency
@@ -130,7 +130,7 @@ const TransferFunds = () => {
         setError('');
 
         try {
-            const response = await api.post('/api/transfers/transfer/', withdrawDetails, {
+            const response = await api.post('/api/transfers/bonus/', withdrawDetails, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -241,7 +241,7 @@ const TransferFunds = () => {
                                     ) : (
                                         <HiOutlineChevronDoubleRight className="mr-2" />
                                     )}
-                                    Transfer Funds
+                                    Transfer Bonus
                                 </button>
                             </div>
                         </div>
@@ -252,4 +252,4 @@ const TransferFunds = () => {
     );
 };
 
-export default TransferFunds;
+export default TransferBonus;
