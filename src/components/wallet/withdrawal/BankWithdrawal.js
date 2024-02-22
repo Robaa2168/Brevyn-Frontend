@@ -94,6 +94,9 @@ const BankWithdrawal = () => {
 
     return (
         <div className="container mx-auto p-4 bg-white rounded-lg ">
+             <div className="flex justify-center">
+                <img src="https://cdn-icons-png.flaticon.com/256/848/848533.png" alt="Withdrawal Icon" className="w-24 h-auto mb-1" />
+            </div>
             {showConfetti && <Confetti />}
             <h2 className="text-lg font-bold mb-2">Withdraw Funds</h2>
 

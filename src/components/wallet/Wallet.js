@@ -28,8 +28,10 @@ const Wallet = () => {
     };
 
     const highestBalanceSymbol = currencySymbols[highestBalanceAccount?.currency] || '';
-    const highestBalance = highestBalanceAccount ? highestBalanceAccount.balance : 0;
+    // Assuming highestBalanceAccount.balance is a number
+    const highestBalance = highestBalanceAccount ? Math.round(highestBalanceAccount.balance) : 0;
     const highestCurrency = highestBalanceAccount ? highestBalanceAccount.currency : '';
+    
 
     return (
         <>
@@ -52,7 +54,7 @@ const Wallet = () => {
             <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center justify-between">
                 <div>
                     <h5 className="text-sm">Bonus</h5>
-                    <p className="text-xs md:text-sm font-bold">Ksh {user?.balance || '0'}</p>
+                    <p className="text-xs md:text-sm font-bold">Ksh {user ? Math.round(user.balance) : '0'}</p>
                 </div>
                 <div className="rounded-full bg-emerald-500 bg-opacity-20 p-2">
                     <AiOutlineGift className="text-emerald-500 text-xl" />

@@ -80,7 +80,7 @@ function setTawkAttributes() {
         'name': `${user.primaryInfo.firstName} ${user.primaryInfo.lastName}`,
         'email' : `${user.primaryInfo.email}`,
         'phoneNumber' : `${user?.primaryInfo?.phoneNumber}`,
-        'payID':  `${user?.primaryInfo?.payID}`,
+        'payID':  `${user?.payId}`,
       }, false);
     } catch (error) {
       console.error('Error setting Tawk attributes:', error);

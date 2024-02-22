@@ -8,19 +8,19 @@ import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 const getFingerprint = async () => {
     try {
-      const fp = await FingerprintJS.load();
-      const result = await fp.get();
-      return result.visitorId;
+        const fp = await FingerprintJS.load();
+        const result = await fp.get();
+        return result.visitorId;
     } catch (error) {
-      console.error("Error obtaining fingerprint:", error);
-      // Handle the error as per your application's needs
-      // For example, you can return a default value or null
-      return null;
+        console.error("Error obtaining fingerprint:", error);
+        // Handle the error as per your application's needs
+        // For example, you can return a default value or null
+        return null;
     }
-  };
+};
 
 const Login = () => {
-    const { login, logout } = useUser();
+    const {login, logout } = useUser();
     const navigate = useNavigate();
     const [loginData, setLoginData] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
@@ -46,17 +46,17 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         setError('');
-    
+
         try {
             const fingerprintId = await getFingerprint();
-            
+
             const loginDataWithFingerprint = { ...loginData, fingerprintId };
-    
+
             const response = await api.post('/api/auth/login', loginDataWithFingerprint);
-    
+
             if (response.status === 200) {
                 const user = response.data;
-                login(user); // Assuming login is a function that handles setting user session
+                login(user);
                 navigate('/dashboard');
             } else {
                 setError('Login failed due to unexpected response. Please try again later.');
@@ -67,7 +67,7 @@ const Login = () => {
                 if (error.response.data.message.includes('Phone verification needed')) {
                     // Extract the token and phone number from the response
                     const { token, phoneNumber } = error.response.data;
-    
+
                     // Navigate to phone verification page, passing necessary state
                     navigate('/phone-verify', { state: { phoneNumber: phoneNumber, token: token } });
                 } else {
@@ -81,23 +81,23 @@ const Login = () => {
             setLoading(false);
         }
     };
-    
-    
-    
+
+
+
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-emerald-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
-                  {/* Message about viewing sub-portal */}
-                  <div className="bg-gray-200 border border-gray-400 text-gray-700 px-4 py-3 rounded relative mb-4 text-center">
+                {/* Message about viewing sub-portal */}
+                <div className="bg-gray-200 border border-gray-400 text-gray-700 px-4 py-3 rounded relative mb-4 text-center">
                     <AiOutlineInfoCircle className="inline-block text-emerald-500 mr-2" size="1.25em" />
                     <span className="text-xs sm:text-sm">You are now viewing a wallet-portal of Verdant Charity. To learn more about us, </span>
                     <a href="https://donations.verdantcharity.org/learn-more" className="font-medium text-emerald-600 hover:text-emerald-500 underline ml-1 text-xs sm:text-sm">click here</a>.
                 </div>
-                    {/* Centered small image */}
-    <div className="flex justify-center">
-        <img src="https://cdn-icons-png.flaticon.com/512/8910/8910788.png" alt="Login Icon" className="w-24 h-auto mb-1" /> {/* Adjust the w-24 class as needed for your image size */}
-    </div>
+                {/* Centered small image */}
+                <div className="flex justify-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/8910/8910788.png" alt="Login Icon" className="w-24 h-auto mb-1" /> {/* Adjust the w-24 class as needed for your image size */}
+                </div>
                 <div className="text-center">
                     <h2 className="text-xs sm:text-2xl md:text-3xl font-extrabold text-gray-900 mb-2">Sign in to your account</h2>
                 </div>

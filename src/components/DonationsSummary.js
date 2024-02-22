@@ -43,7 +43,7 @@ const DonationsSummary = ({ setActiveComponent }) => {
 
     const handleCreateLinkClick = () => {
         if (user?.primaryInfo?.firstName && user?.primaryInfo?.lastName) {
-            setShowCreateLink(true); 
+            setShowCreateLink(true);
         } else {
             setActiveComponent('kyc');
         }
@@ -67,15 +67,15 @@ const DonationsSummary = ({ setActiveComponent }) => {
                             </div>
                         )}
 
-<div className="text-left mt-4">
-    <button
-        onClick={handleCreateLinkClick}
-        className="w-full text-sm sm:w-auto border border-emerald-500 text-emerald-500 px-4 py-1 rounded hover:bg-emerald-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition duration-300 inline-flex items-center justify-center"
-    >
-        <MdAdd className="mr-2 text-xs" size={24} />
-        Create Fund Me Link
-    </button>
-</div>
+                        <div className="text-left mt-4">
+                            <button
+                                onClick={handleCreateLinkClick}
+                                className="w-full text-sm sm:w-auto border border-emerald-500 text-emerald-500 px-4 py-1 rounded hover:bg-emerald-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition duration-300 inline-flex items-center justify-center"
+                            >
+                                <MdAdd className="mr-2 text-xs" size={24} />
+                                Create Fund Me Link
+                            </button>
+                        </div>
 
                     </>
                 ) : (
