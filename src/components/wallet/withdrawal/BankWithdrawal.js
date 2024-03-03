@@ -132,9 +132,9 @@ const BankWithdrawal = () => {
                         borderStyle: 'solid',
                         padding: '16px',
                         borderRadius: '4px',
-                        fontSize: '14px',
+                        fontSize: '10px',
                         color: '#424242' // adjust as needed
-                    }}>For international transactions, please allow 1-2 hours for the funds to reflect in your account</p>
+                    }}>Please be advised that international withdrawals are not processed instantaneously and may require up to 72 hours for completion. It is important to have a clear understanding of this timeframe to prevent any potential confusion or misunderstanding.</p>
                     {error && (
                         <div className="mb-4 p-4 text-xs sm:text-xs  bg-red-100 border-l-4 border-red-500 text-red-700">
                             <p>{error}</p>
