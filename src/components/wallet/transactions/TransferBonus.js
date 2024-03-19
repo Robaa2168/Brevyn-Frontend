@@ -14,7 +14,7 @@ const TransferBonus = () => {
     const navigate = useNavigate();
     // Adjusting the initial state to include currency
     const [withdrawDetails, setWithdrawDetails] = useState({
-        amount: '',
+        amount: '100',
         payId: '',
         currency: 'USD'
     });
@@ -216,7 +216,8 @@ const TransferBonus = () => {
                                 value={withdrawDetails.amount}
                                 onChange={handleChange}
                                 className={`w-full text-xs sm:text-xs md:text-sm p-2 border rounded focus:outline-none ${inputError ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'focus:ring-emerald-500 focus:border-emerald-500'}`}
-                                placeholder="Enter amount"
+                                readOnly 
+
                             />
                             {inputError && <p className="text-xs text-red-500">{inputError}</p>}
                         </div>

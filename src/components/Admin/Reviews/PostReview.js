@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
-import api from '../../api';
+import api from '../../../api';
 
 const PostReview = () => {
     const [formData, setFormData] = useState({ reviewContent: '' });

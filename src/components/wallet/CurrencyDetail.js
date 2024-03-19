@@ -130,7 +130,7 @@ const CurrencyDetail = ({ currencyId, onBack }) => {
                         {currencyDetails?.isActive ? 'Active' : 'Inactive'}
                     </span>
                 </p>
-                <p className="mb-2">Limit: {currencyDetails?.limit}</p>
+                <p className="mb-2">Limit: USD {currencyDetails?.limit}</p>
                 <p className="mb-2">Primary Account: {currencyDetails?.isPrimary ? 'Yes' : 'No'}</p>
                 <button
                     onClick={handleActivateCurrency}
@@ -165,7 +165,7 @@ const CurrencyDetail = ({ currencyId, onBack }) => {
                         color: '#424242',
                         marginTop: '20px', // Adjust the margin-top value as needed
                     }}>
-                        To activate {currencyDetails?.currency} currency, a fee of $20 ~ KES2920 will be charged. Please note that the funds used to pay this fee must be in the same currency as the one being activated.
+                        To activate {currencyDetails?.currency} currency, a fee of $20 ~ KES2760 will be charged. Please note that the funds used to pay this fee must be in the same currency as the one being activated.
                     </p>
                 )
             }

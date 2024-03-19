@@ -1,7 +1,7 @@
 module.exports = {
   mode: 'jit',
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: 'media', 
+  content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'], // Changed from 'purge' to 'content'
+  darkMode: 'media',
   theme: {
     extend: {
       colors: {
@@ -11,7 +11,7 @@ module.exports = {
           200: '#b3d9f3',
           300: '#99cdef',
           400: '#80c2ec',
-          500: '#0070ba', 
+          500: '#0070ba',
           600: '#0070ba',
           700: '#339fcf',
           800: '#1a93cb',
@@ -20,9 +20,8 @@ module.exports = {
       },
     },
   },
-
   variants: {
     extend: {},
   },
   plugins: [],
-}
+};

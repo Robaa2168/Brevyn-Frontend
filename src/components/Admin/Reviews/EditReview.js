@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { useParams, useNavigate } from 'react-router-dom';
-import api from '../../api';
+import api from '../../../api';
 
 const EditReview = () => {
     const navigate = useNavigate();

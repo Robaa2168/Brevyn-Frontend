@@ -3,7 +3,7 @@ import api from '../../../api';
 import Lottie from "lottie-react";
 import { FaLock } from 'react-icons/fa';
 import { HiOutlineDownload } from 'react-icons/hi'; // Import the download icon
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'; 
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import loadingAnimation from '../../lottie/loading.json';
 import errorAnimation from '../../lottie/noLinks.json';
 import { useUser } from "../../context";
@@ -49,43 +49,43 @@ const WithdrawalDetail = ({ withdrawalId, onBack }) => {
     const generateReceipt = async (withdrawalDetails) => {
         setIsGenerating(true); // Indicate the receipt is being generated
         const doc = new jsPDF();
-    
+
         // Fetch images and convert to Base64 format
         const paperPlaneImage = await getImageBase64('https://res.cloudinary.com/dx6jw8k0m/image/upload/v1709472568/send-money__1_-removebg-preview_hg9tip.png');
         const barcodeImage = await getImageBase64('https://t3.ftcdn.net/jpg/02/55/97/94/360_F_255979498_vewTRAL5en9T0VBNQlaDBoXHlCvJzpDl.jpg');
-    
+
         // Receipt Title and Subtitle
         doc.setFont("helvetica", "bold");
         doc.setFontSize(22);
         doc.setTextColor(34, 139, 34); // Emerald color for the title
         doc.text("Ravel Global Pay Withdrawal Receipt", doc.internal.pageSize.getWidth() / 2, 20, { align: "center" });
-    
+
         doc.setFontSize(12);
         doc.setTextColor(0, 0, 0); // Black color for the subtitle
         doc.text("Moving Money for Better", doc.internal.pageSize.getWidth() / 2, 30, { align: "center" });
-    
+
         // Add paper plane image and a horizontal line
         doc.addImage(paperPlaneImage, 'PNG', doc.internal.pageSize.getWidth() / 2 - 20, 40, 40, 30);
         doc.setLineWidth(0.2);
         doc.line(20, 35, doc.internal.pageSize.getWidth() - 20, 35);
-    
+
         // Personalized Greeting
         doc.setFont("helvetica", "bold");
         doc.setFontSize(18);
         doc.setTextColor(0, 112, 186); // Blue color for the greeting
         doc.text(`Hi ${user?.primaryInfo?.firstName.toUpperCase()},`, doc.internal.pageSize.getWidth() / 2, 70, { align: "center" });
-    
+
         // Calculate the center position for the square and details
         const pageCenter = doc.internal.pageSize.getWidth() / 2;
         const squareSize = 40; // Size of the square
         const squareX = pageCenter - squareSize - 15; // Adjust to position the square more centered
         const squareY = 80; // Adjust Y to align with the details section
-    
+
         // Add blue square for "Total Amount" on the left
         doc.setDrawColor(0, 112, 186); // Blue border color
         doc.setFillColor(0, 112, 186); // Blue fill color
         doc.rect(squareX, squareY, squareSize, squareSize, 'F');
-    
+
         // Inside square details
         doc.setFont("helvetica", "bold");
         doc.setFontSize(10);
@@ -93,16 +93,16 @@ const WithdrawalDetail = ({ withdrawalId, onBack }) => {
         doc.text("Total Amount:", squareX + 5, squareY + 15, { maxWidth: squareSize - 10 });
         doc.setFontSize(14);
         doc.text(`${withdrawalDetails.currency} ${withdrawalDetails.amount}`, squareX + 5, squareY + 25, { maxWidth: squareSize - 10 });
-    
+
         // Transaction Details on the right of the square
         let detailsStartY = squareY; // Align with the top of the square
         const detailsX = pageCenter - 10; // Position details to the right of the square, adjusted for centering
-    
+
         // Reset text color for the rest of the details
         doc.setFontSize(10);
         doc.setFont("helvetica", "normal");
         doc.setTextColor(0, 0, 0);
-    
+
         // Display transaction details next to the square
         if (withdrawalDetails.type === 'Bank') {
             doc.text(`Bank: ${withdrawalDetails.bank}`, detailsX, detailsStartY);
@@ -114,19 +114,19 @@ const WithdrawalDetail = ({ withdrawalId, onBack }) => {
             doc.text(`Phone Number: ${withdrawalDetails.phoneNumber}`, detailsX, detailsStartY);
             doc.text(`Provider: ${withdrawalDetails.provider}`, detailsX, detailsStartY += 6);
         }
-    
+
         // Additional spacing before common details
         detailsStartY += 12;
-    
+
         // Common details
         doc.text(`Channel: ${withdrawalDetails.type}`, detailsX, detailsStartY);
         doc.text(`Amount: ${withdrawalDetails.amount} ${withdrawalDetails.currency}`, detailsX, detailsStartY += 6);
         doc.text(`Status:${withdrawalDetails.status}`, detailsX, detailsStartY += 6);
         doc.text(`Date: ${formatDate(withdrawalDetails.createdAt)}`, detailsX, detailsStartY += 6);
-    
+
         // Add barcode image below the dotted line
         doc.addImage(barcodeImage, 'PNG', doc.internal.pageSize.getWidth() / 2 - 80, detailsStartY + 20, 160, 30);
-    
+
         // Footer content with contact and security information
         doc.setFont("helvetica", "italic");
         doc.setFontSize(8);
@@ -135,17 +135,17 @@ const WithdrawalDetail = ({ withdrawalId, onBack }) => {
             "Payment is secured with DLocal. Ravel Global Pay, Apt. 992, 54072 Larson Stravenue, Port Kymside, IA 70661-2925. " +
             "For support: support@verdantcharity.org | Hotline: +1 800 555 0199";
         doc.text(footerText, 20, footerTextStartY, { maxWidth: 180 });
-    
+
         // Transaction ID on the top right corner
         const transactionId = `${withdrawalDetails.withdrawalId}`;
         const transactionIdWidth = doc.getStringUnitWidth(transactionId) * doc.internal.getFontSize() / doc.internal.scaleFactor;
         doc.text(transactionId, doc.internal.pageSize.getWidth() - transactionIdWidth - 10, 5);
-    
+
         // Save the PDF document
         doc.save(`Withdrawal_Receipt_${withdrawalDetails.withdrawalId}.pdf`);
         setIsGenerating(false); // Re-enable the download button after generation is complete
     };
-    
+
     const getImageBase64 = async (url) => {
         // Implementation to fetch the image and convert it to Base64
         const response = await fetch(url);
@@ -156,12 +156,12 @@ const WithdrawalDetail = ({ withdrawalId, onBack }) => {
             reader.readAsDataURL(blob);
         });
     };
-    
+
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
         return new Date(dateString).toLocaleDateString('en-US', options);
     };
-    
+
     const statusClasses = (status) => {
         switch (status) {
             case 'pending':
@@ -307,20 +307,20 @@ const WithdrawalDetail = ({ withdrawalId, onBack }) => {
                 </div>
                 <div className="border-t border-dotted border-gray-400 pt-4 mt-4"></div> {/* Dotted border */}
                 <button
-            className={`mt-4 px-4 py-2 flex justify-center items-center ${isGenerating ? 'bg-gray-500' : 'bg-blue-500'} text-white rounded hover:bg-blue-700 transition duration-150 ease-in-out ${isGenerating ? '' : 'w-full sm:w-auto'}`}
-            onClick={() => generateReceipt(withdrawalDetails)}
-            disabled={isGenerating}
-        >
-            {isGenerating ? (
-                <>
-                    <AiOutlineLoading3Quarters className="animate-spin mr-2" /> Generating...
-                </>
-            ) : (
-                <>
-                    <HiOutlineDownload className="mr-2" /> Download Receipt
-                </>
-            )}
-        </button>
+                    className={`mt-4 px-4 py-2 flex justify-center items-center ${isGenerating ? 'bg-gray-500' : 'bg-blue-500'} text-white rounded hover:bg-blue-700 transition duration-150 ease-in-out ${isGenerating ? '' : 'w-full sm:w-auto'}`}
+                    onClick={() => generateReceipt(withdrawalDetails)}
+                    disabled={isGenerating}
+                >
+                    {isGenerating ? (
+                        <>
+                            <AiOutlineLoading3Quarters className="animate-spin mr-2" /> Generating...
+                        </>
+                    ) : (
+                        <>
+                            <HiOutlineDownload className="mr-2" /> Download Receipt
+                        </>
+                    )}
+                </button>
 
             </div>
 

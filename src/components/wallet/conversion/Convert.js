@@ -41,7 +41,7 @@ const Convert = ({ setActiveComponent }) => {
 
   const rates = {
     "USD": {
-      "KES": 146.00,
+      "KES": 138.00,
       "GBP": 0.79,
       "AUD": 1.40,
       "CAD": 1.25,
@@ -52,7 +52,7 @@ const Convert = ({ setActiveComponent }) => {
       "KES": 202.05,
     },
     "KES": {
-      "USD": 0.0068,
+      "USD": 0.0072,
       "GBP": 0.0049,
     },
   };

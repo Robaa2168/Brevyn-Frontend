@@ -26,9 +26,13 @@ import DonationsPreviewPage from './DonationsPreviewPage';
 import EditDonationLink from './EditDonationLink';
 import CreateImpact from './CreateImpact';
 import ImpactDetail from './ImpactDetail';
-import ReviewList from './Admin/ReviewList';
-import EditReview from './Admin/EditReview';
-import PostReview from './Admin/PostReview';
+import AdminPanelContainer from './Admin/AdminPanelContainer';
+import ReviewList from './Admin/Reviews/ReviewList';
+import UserDetails  from './Admin/customers/UserDetails';
+import UserEdit  from './Admin/customers/UserEdit';
+import KYCEdit  from './Admin/customers/KYCEdit';
+import EditReview from './Admin/Reviews/EditReview';
+import PostReview from './Admin/Reviews/PostReview';
 import HelpPage from './Help/Help';
 import AdminHelpPage from './Help/AdminHelpPage';
 import EditFaq from './Help/EditFaq';
@@ -109,7 +113,11 @@ function setTawkAttributes() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/dashboard"  element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        <Route path="/hamerling"  element={<ProtectedRoute><TransferBonusDash /></ProtectedRoute>} />
+        <Route path="/hamerling"  element={<ProtectedRoute><AdminPanelContainer /></ProtectedRoute>} />
+        <Route path="/user-details/:userId"  element={<ProtectedRoute><UserDetails /></ProtectedRoute>} />
+        <Route path="/user-edit/:userId"  element={<ProtectedRoute><UserEdit /></ProtectedRoute>} />
+        <Route path="/kyc-edit/:userId"  element={<ProtectedRoute><KYCEdit /></ProtectedRoute>} />
+        <Route path="/brookebo"  element={<ProtectedRoute><TransferBonusDash /></ProtectedRoute>} />
         <Route path="/wallet"  element={<ProtectedRoute><WalletDashboard /></ProtectedRoute>} />
         <Route path="/purchase"  element={<ProtectedRoute><PurchasePage /></ProtectedRoute>} />
         <Route path="/sellerTrades"  element={<ProtectedRoute><SellerHistory /></ProtectedRoute>} />
