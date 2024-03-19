@@ -113,7 +113,7 @@ const Users = () => {
 
 
     const getPagination = () => {
-        const delta = 1; // how many pages before and after current page
+        const delta = 1; 
         const range = [];
         for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
             range.push(i);

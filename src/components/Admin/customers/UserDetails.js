@@ -5,6 +5,7 @@ import UserConversions from './UserConversions';
 import UserDeposits from './UserDeposits';
 import UserWithdrawals from './UserWithdrawals';
 import UserTransactions from './UserTransactions';
+import AssociatedAccounts from './AssociatedAccounts';
 
 
 const UserDetails = () => {
@@ -18,6 +19,7 @@ const UserDetails = () => {
             <UserDeposits userId={userId} />
             <UserWithdrawals userId={userId} />
             <UserTransactions userId={userId} />
+            <AssociatedAccounts userId={userId} />
         </div>
     );
 };
