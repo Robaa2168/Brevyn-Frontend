@@ -76,7 +76,7 @@ const UserEdit = () => {
     };
 
     return (
-        <div className="container mx-auto p-4 bg-white rounded-lg shadow">
+        <div className="container mx-auto p-4 bg-white rounded-lg shadow pb-20">
             <ToastContainer />
           <h2 className="text-xl font-semibold mb-6">Edit User</h2>
           <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
