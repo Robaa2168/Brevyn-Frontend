@@ -25,7 +25,7 @@ const SellerChat = (tradeId) => {
     const [messages, setMessages] = useState([
         {
             id: 1,
-            text: "Away? Reach out on WhatsApp +254759191545.",
+            text: "Away? Reach out on WhatsApp +254762735994.",
             sender: 'seller',
             timestamp: new Date(),
             isSending: false,
@@ -37,11 +37,11 @@ const SellerChat = (tradeId) => {
 
     const sellerProfile = {
         _id: '658db0c10bfefbb749a5c308',
-        name: 'Alice Mugo',
-        image: 'https://thescoop.co.ke/wp-content/uploads/2023/08/33D897BE-CBD3-420E-A4C3-000D7DF8FFB6.jpeg',
+        name: 'Margaret Wanjiru',
+        image: 'https://data.ibtimes.sg/en/full/70891/margaret-mbitu.jpg',
         lastSeen: 'online',
-        positiveFeedback: 1216,
-        negativeFeedback: 3,
+        positiveFeedback: 2503,
+        negativeFeedback: 13,
     };
 
  // Function to fetch messages

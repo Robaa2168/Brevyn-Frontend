@@ -46,7 +46,7 @@ const AssociatedAccounts = ({ userId }) => {
                     </thead>
                     <tbody>
                         {associatedAccounts.map((account) => (
-                            <tr key={account._id} className="border-b">
+                            <tr key={account._id} className=" text-xs border-b">
                                 <td className="px-4 py-2">{account.username}</td>
                                 <td className="px-4 py-2">{account.email}</td>
                                 <td className="px-4 py-2">{account.phoneNumber}</td>

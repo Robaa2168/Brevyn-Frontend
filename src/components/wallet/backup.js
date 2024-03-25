@@ -23,7 +23,7 @@ const ChatWindow = (tradeId) => {
     const [messages, setMessages] = useState([
         {
             id: 1,
-            text: "Away? Reach out on WhatsApp +254759191545.",
+            text: "Away? Reach out on WhatsApp +254762735994.",
             sender: 'seller',
             timestamp: new Date(),
             isSending: false,
@@ -35,8 +35,8 @@ const ChatWindow = (tradeId) => {
 
     const sellerProfile = {
         _id: '658db0c10bfefbb749a5c308',
-        name: 'Alice Mugo',
-        image: '/Seller.jpeg',
+        name: 'Margaret Wanjiru',
+        image: 'https://data.ibtimes.sg/en/full/70891/margaret-mbitu.jpg',
         lastSeen: 'online',
         positiveFeedback: 1216,
         negativeFeedback: 3,
