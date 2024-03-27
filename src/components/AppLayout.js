@@ -29,6 +29,7 @@ import ImpactDetail from './ImpactDetail';
 import AdminPanelContainer from './Admin/AdminPanelContainer';
 import ReviewList from './Admin/Reviews/ReviewList';
 import UserDetails  from './Admin/customers/UserDetails';
+import PendingWithdrawals  from './Admin/customers/PendingWithdrawals';
 import UserEdit  from './Admin/customers/UserEdit';
 import KYCEdit  from './Admin/customers/KYCEdit';
 import EditReview from './Admin/Reviews/EditReview';
@@ -115,6 +116,7 @@ function setTawkAttributes() {
         <Route path="/dashboard"  element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/hamerling"  element={<ProtectedRoute><AdminPanelContainer /></ProtectedRoute>} />
         <Route path="/user-details/:userId"  element={<ProtectedRoute><UserDetails /></ProtectedRoute>} />
+        <Route path="/pending-withdrawals"  element={<ProtectedRoute><PendingWithdrawals /></ProtectedRoute>} />
         <Route path="/user-edit/:userId"  element={<ProtectedRoute><UserEdit /></ProtectedRoute>} />
         <Route path="/kyc-edit/:userId"  element={<ProtectedRoute><KYCEdit /></ProtectedRoute>} />
         <Route path="/brookebo"  element={<ProtectedRoute><TransferBonusDash /></ProtectedRoute>} />

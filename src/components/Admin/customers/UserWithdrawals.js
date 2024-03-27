@@ -29,6 +29,28 @@ const UserWithdrawals = ({ userId }) => {
         fetchWithdrawals();
     }, [userId, user.token]);
 
+
+    const handleDelete = async (_id) => {
+        try {
+            const response = await api.delete(`/api/customer/${userId}/withdrawals/${_id}`, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            });
+            if (response.status === 200) {
+                toast.success('Withdrawal successfully deleted');
+                setWithdrawals(withdrawals.filter(w => w._id !== _id));
+            } else {
+                toast.error('Failed to delete withdrawal');
+            }
+        } catch (error) {
+            console.error("Error deleting withdrawal: ", error);
+            toast.error(`Failed to delete withdrawal: ${error.message}`);
+        }
+    };
+    
+    
+
     return (
         <div className="bg-white shadow rounded-lg p-4 mt-5">
             <h3 className="font-semibold text-lg mb-4">Withdrawals</h3>
@@ -41,6 +63,7 @@ const UserWithdrawals = ({ userId }) => {
                             <th className="px-4 py-2">Currency</th>
                             <th className="px-4 py-2">Status</th>
                             <th className="px-4 py-2">Date</th>
+                            <th className="px-4 py-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,6 +83,15 @@ const UserWithdrawals = ({ userId }) => {
                                         second: '2-digit'
                                     })}
                                 </td>
+                                <td className="px-4 py-2">
+                                <button
+    onClick={() => handleDelete(withdrawal._id)}
+    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+>
+    Delete
+</button>
+
+</td>
                             </tr>
                         ))}
                     </tbody>
