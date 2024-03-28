@@ -162,7 +162,7 @@ const PurchasePage = () => {
                     <div className="border-t border-gray-300 pt-4">
                         <p className="flex items-center justify-center text-gray-500 text-xs">
                             <FaShieldAlt className="mr-1" />
-                            Secure escrow + Automated trade with Margaret
+                            Secure escrow + Automated trade with Lucy
                         </p>
                     </div>
                 </div>
@@ -207,9 +207,9 @@ const PurchasePage = () => {
                         <h3 className=" font-semibold text-emerald-600 mb-2">About this seller</h3>
                         <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 sm:space-x-4">
                             <div className="flex items-center space-x-2">
-                                <img src="https://data.ibtimes.sg/en/full/70891/margaret-mbitu.jpg" alt="Seller" className="w-12 h-12 rounded-full" /> 
+                                <img src="https://www.immunizationadvocates.org/app/uploads/2020/06/Lucy-Kiarie_350x350_acf_cropped.jpg" alt="Seller" className="w-12 h-12 rounded-full" /> 
                                 <div className="flex flex-col justify-between">
-                                    <span className=" font-semibold">Margaret Wanjiru</span>
+                                    <span className=" font-semibold">Lucy Kiarie</span>
                                     <div className="flex items-center text-sm text-gray-400">
                                         <FaCheckCircle className="text-green-500 mr-1" size="0.75em" />
                                         Verified
@@ -225,11 +225,11 @@ const PurchasePage = () => {
                         <div className="flex items-center justify-between mt-2">
                             <div className="flex items-center text-green-800 text-xs font-semibold mr-2 bg-green-50 border border-green-200 rounded-md py-1 px-2">
                                 <FaThumbsUp className="text-green-500" />
-                                <span className="ml-1">2305</span>
+                                <span className="ml-1">3115</span>
                             </div>
                             <div className="flex items-center text-red-800 text-xs font-semibold bg-red-100 border border-red-200 rounded-md py-1 px-2">
                                 <FaThumbsDown className="text-red-500" />
-                                <span className="ml-1">13</span>
+                                <span className="ml-1">23</span>
                             </div>
                         </div>
                         <div className="flex flex-col mt-2 space-y-1 lg:grid lg:grid-cols-2 lg:gap-4">

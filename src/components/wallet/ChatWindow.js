@@ -23,7 +23,7 @@ const ChatWindow = (tradeId) => {
     const [messages, setMessages] = useState([
         {
             id: 1,
-            text: "Away? Reach out on WhatsApp +254762735994.",
+            text: "Away? Reach out on WhatsApp +254112118243.",
             sender: 'seller',
             timestamp: new Date(),
             isSending: false,
@@ -35,14 +35,13 @@ const ChatWindow = (tradeId) => {
 
     const sellerProfile = {
         _id: '658db0c10bfefbb749a5c308',
-        name: 'Margaret Wanjiru',
-        image: 'https://data.ibtimes.sg/en/full/70891/margaret-mbitu.jpg',
+        name: 'Lucy Kiarie',
+        image: 'https://www.immunizationadvocates.org/app/uploads/2020/06/Lucy-Kiarie_350x350_acf_cropped.jpg',
         lastSeen: 'online',
-        positiveFeedback: 1216,
-        negativeFeedback: 3,
+        positiveFeedback: 3115,
+        negativeFeedback: 23,
     };
 
- // Function to fetch messages
 // Function to fetch messages
 const fetchMessages = async (isPolling = false) => {
     console.log(`Fetching messages. Polling: ${isPolling}`);  // Log when fetching messages
